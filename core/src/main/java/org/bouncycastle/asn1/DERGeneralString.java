@@ -1,3 +1,6 @@
+/***************************************************************/
+/******    DO NOT EDIT THIS CLASS bc-java SOURCE FILE     ******/
+/***************************************************************/
 package org.bouncycastle.asn1;
 
 import java.io.IOException;
@@ -6,29 +9,25 @@ import org.bouncycastle.util.Arrays;
 import org.bouncycastle.util.Strings;
 
 /**
- * ASN.1 GENERAL-STRING data type.
- * <p>
- * This is an 8-bit encoded ISO 646 (ASCII) character set
- * with optional escapes to other character sets.
- * </p>
+ * Carrier class for a DER encoding GeneralString
  */
-public class DERGeneralString 
+public class DERGeneralString
     extends ASN1Primitive
     implements ASN1String
 {
     private final byte[] string;
 
     /**
-     * Return a GeneralString from the given object.
+     * return a GeneralString from the given object.
      *
      * @param obj the object we want converted.
      * @exception IllegalArgumentException if the object cannot be converted.
      * @return a DERBMPString instance, or null.
      */
     public static DERGeneralString getInstance(
-        Object obj) 
+        Object obj)
     {
-        if (obj == null || obj instanceof DERGeneralString) 
+        if (obj == null || obj instanceof DERGeneralString)
         {
             return (DERGeneralString) obj;
         }
@@ -50,7 +49,7 @@ public class DERGeneralString
     }
 
     /**
-     * Return a GeneralString from a tagged object.
+     * return a GeneralString from a tagged object.
      *
      * @param obj the tagged object holding the object we want
      * @param explicit true if the object is meant to be explicitly
@@ -60,8 +59,8 @@ public class DERGeneralString
      * @return a DERGeneralString instance.
      */
     public static DERGeneralString getInstance(
-        ASN1TaggedObject obj, 
-        boolean explicit) 
+        ASN1TaggedObject obj,
+        boolean explicit)
     {
         ASN1Primitive o = obj.getObject();
 
@@ -85,7 +84,7 @@ public class DERGeneralString
      *
      * @param string the string to be contained in this object.
      */
-    public DERGeneralString(String string) 
+    public DERGeneralString(String string)
     {
         this.string = Strings.toByteArray(string);
     }
@@ -95,7 +94,7 @@ public class DERGeneralString
      *
      * @return a Java String representing our contents.
      */
-    public String getString() 
+    public String getString()
     {
         return Strings.fromByteArray(string);
     }

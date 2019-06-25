@@ -1,3 +1,6 @@
+/***************************************************************/
+/******    DO NOT EDIT THIS CLASS bc-java SOURCE FILE     ******/
+/***************************************************************/
 package org.bouncycastle.asn1;
 
 import java.io.ByteArrayOutputStream;
@@ -82,15 +85,6 @@ public abstract class ASN1Object
         ASN1Encodable other = (ASN1Encodable)o;
 
         return this.toASN1Primitive().equals(other.toASN1Primitive());
-    }
-
-    /**
-     * @deprecated use toASN1Primitive()
-     * @return the underlying primitive type.
-     */
-    public ASN1Primitive toASN1Object()
-    {
-        return this.toASN1Primitive();
     }
 
     /**

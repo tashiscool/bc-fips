@@ -1,3 +1,6 @@
+/***************************************************************/
+/******    DO NOT EDIT THIS CLASS bc-java SOURCE FILE     ******/
+/***************************************************************/
 package org.bouncycastle.asn1.sec;
 
 import java.math.BigInteger;
@@ -1033,8 +1036,14 @@ public class SECNamedCurves
     public static X9ECParameters getByName(
         String name)
     {
-        ASN1ObjectIdentifier oid = getOID(name);
-        return oid == null ? null : getByOID(oid);
+        ASN1ObjectIdentifier oid = (ASN1ObjectIdentifier)objIds.get(Strings.toLowerCase(name));
+
+        if (oid != null)
+        {
+            return getByOID(oid);
+        }
+
+        return null;
     }
 
     /**
@@ -1047,7 +1056,13 @@ public class SECNamedCurves
         ASN1ObjectIdentifier oid)
     {
         X9ECParametersHolder holder = (X9ECParametersHolder)curves.get(oid);
-        return holder == null ? null : holder.getParameters();
+
+        if (holder != null)
+        {
+            return holder.getParameters();
+        }
+
+        return null;
     }
 
     /**
@@ -1077,6 +1092,6 @@ public class SECNamedCurves
      */
     public static Enumeration getNames()
     {
-        return names.elements();
+        return objIds.keys();
     }
 }

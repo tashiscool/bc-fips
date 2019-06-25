@@ -1,3 +1,6 @@
+/***************************************************************/
+/******    DO NOT EDIT THIS CLASS bc-java SOURCE FILE     ******/
+/***************************************************************/
 package org.bouncycastle.asn1.crmf;
 
 import java.util.Enumeration;
@@ -90,19 +93,9 @@ public class CertTemplate
         return null;
     }
 
-    /**
-     * Return Version - -1 if not set.
-     *
-     * @return Version value.
-     */
     public int getVersion()
     {
-        if (version != null)
-        {
-            return version.getValue().intValue();
-        }
-
-        return -1;
+        return version.getValue().intValue();
     }
 
     public ASN1Integer getSerialNumber()

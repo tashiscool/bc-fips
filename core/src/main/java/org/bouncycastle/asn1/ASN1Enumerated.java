@@ -1,10 +1,12 @@
+/***************************************************************/
+/******    DO NOT EDIT THIS CLASS bc-java SOURCE FILE     ******/
+/***************************************************************/
 package org.bouncycastle.asn1;
 
 import java.io.IOException;
 import java.math.BigInteger;
 
 import org.bouncycastle.util.Arrays;
-import org.bouncycastle.util.Properties;
 
 /**
  * Class representing the ASN.1 ENUMERATED type.
@@ -12,7 +14,7 @@ import org.bouncycastle.util.Properties;
 public class ASN1Enumerated
     extends ASN1Primitive
 {
-    private final byte[] bytes;
+    byte[]      bytes;
 
     /**
      * return an enumerated from the passed in object
@@ -41,7 +43,7 @@ public class ASN1Enumerated
             }
         }
 
-        throw new IllegalArgumentException("illegal object in getInstance: " + obj.getClass().getName());
+        throw new IllegalArgumentException("Illegal object in getInstance: " + obj.getClass().getName());
     }
 
     /**
@@ -100,9 +102,13 @@ public class ASN1Enumerated
     public ASN1Enumerated(
         byte[]   bytes)
     {
-        if (!Properties.isOverrideSet("org.bouncycastle.asn1.allow_unsafe_integer"))
+        if (bytes.length > 1)
         {
-            if (ASN1Integer.isMalformed(bytes))
+            if (bytes[0] == 0 && (bytes[1] & 0x80) == 0)
+            {
+                throw new IllegalArgumentException("malformed enumerated");
+            }
+            if (bytes[0] == (byte)0xff && (bytes[1] & 0x80) != 0)
             {
                 throw new IllegalArgumentException("malformed enumerated");
             }

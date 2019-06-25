@@ -1,11 +1,14 @@
+/***************************************************************/
+/******    DO NOT EDIT THIS CLASS bc-java SOURCE FILE     ******/
+/***************************************************************/
 package org.bouncycastle.math.ec.custom.sec;
 
 import java.math.BigInteger;
 
-import org.bouncycastle.math.raw.Nat;
-import org.bouncycastle.math.raw.Nat384;
+import org.bouncycastle.math.internal.Nat;
+import org.bouncycastle.math.internal.Nat384;
 
-public class SecP384R1Field
+class SecP384R1Field
 {
     private static final long M = 0xFFFFFFFFL;
 
@@ -107,10 +110,9 @@ public class SecP384R1Field
         long t4 = xx17 + xx21;
         long t5 = xx21 - xx23;
         long t6 = xx22 - xx23;
-        long t7 = t0 + t5;
 
         long cc = 0;
-        cc += (xx[0] & M) + t7;
+        cc += (xx[0] & M) + t0 + t5;
         z[0] = (int)cc;
         cc >>= 32;
         cc += (xx[1] & M) + xx23 - t0 + t1;
@@ -119,10 +121,10 @@ public class SecP384R1Field
         cc += (xx[2] & M) - xx21 - t1 + t2;
         z[2] = (int)cc;
         cc >>= 32;
-        cc += (xx[3] & M) - t2 + t3 + t7;
+        cc += (xx[3] & M) + t0 - t2 + t3 + t5;
         z[3] = (int)cc;
         cc >>= 32;
-        cc += (xx[4] & M) + xx16 + xx21 + t1 - t3 + t7;
+        cc += (xx[4] & M) + xx16 + xx21 + t0 + t1 - t3 + t5;
         z[4] = (int)cc;
         cc >>= 32;
         cc += (xx[5] & M) - xx16 + t1 + t2 + t4;

@@ -1,26 +1,30 @@
+/***************************************************************/
+/******    DO NOT EDIT THIS CLASS bc-java SOURCE FILE     ******/
+/***************************************************************/
 package org.bouncycastle.asn1;
 
 import java.io.IOException;
 
 /**
- * Interface for the parsing of a generic tagged ASN.1 object.
+ * Parser interface for general tagged objects.
  */
 public interface ASN1TaggedObjectParser
     extends ASN1Encodable, InMemoryRepresentable
 {
     /**
-     * Return the tag number associated with the underlying tagged object.
-     * @return the object's tag number.
+     * Return the tag found at the start of this tagged object.
+     *
+     * @return tag No.
      */
     int getTagNo();
 
     /**
-     * Return a parser for the actual object tagged.
+     * Return an object parser for the object found in this object.
      *
-     * @param tag the primitive tag value for the object tagged originally.
-     * @param isExplicit true if the tagging was done explicitly.
-     * @return a parser for the tagged object.
-     * @throws IOException if a parser cannot be constructed.
+     * @param tag the actual tag number of the object (needed if implicit).
+     * @param isExplicit true if the contained object was explicitly tagged, false if implicit.
+     * @return a parser for the contained object,
+     * @throws IOException in case of exception building the parser.
      */
     ASN1Encodable getObjectParser(int tag, boolean isExplicit)
         throws IOException;

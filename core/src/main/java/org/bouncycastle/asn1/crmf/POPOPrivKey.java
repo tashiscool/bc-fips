@@ -1,3 +1,6 @@
+/***************************************************************/
+/******    DO NOT EDIT THIS CLASS bc-java SOURCE FILE     ******/
+/***************************************************************/
 package org.bouncycastle.asn1.crmf;
 
 import org.bouncycastle.asn1.ASN1Choice;
@@ -66,12 +69,6 @@ public class POPOPrivKey
     public static POPOPrivKey getInstance(ASN1TaggedObject obj, boolean explicit)
     {
         return getInstance(ASN1TaggedObject.getInstance(obj, explicit));
-    }
-
-    public POPOPrivKey(PKMACValue agreeMac)
-    {
-        this.tagNo = agreeMAC;
-        this.obj = agreeMac;
     }
 
     public POPOPrivKey(SubsequentMessage msg)

@@ -1,3 +1,6 @@
+/***************************************************************/
+/******    DO NOT EDIT THIS CLASS bc-java SOURCE FILE     ******/
+/***************************************************************/
 package org.bouncycastle.util.io.pem;
 
 import java.io.BufferedReader;
@@ -22,12 +25,6 @@ public class PemReader
         super(reader);
     }
 
-    /**
-     * Read the next PEM object as a blob of raw data with header information.
-     *
-     * @return the next object in the stream, null if no objects left.
-     * @throws IOException in case of a parse error.
-     */
     public PemObject readPemObject()
         throws IOException
     {

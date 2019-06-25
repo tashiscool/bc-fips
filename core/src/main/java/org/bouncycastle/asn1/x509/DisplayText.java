@@ -1,3 +1,6 @@
+/***************************************************************/
+/******    DO NOT EDIT THIS CLASS bc-java SOURCE FILE     ******/
+/***************************************************************/
 
 package org.bouncycastle.asn1.x509;
 
@@ -143,7 +146,7 @@ public class DisplayText
       }
       else
       {
-         throw new IllegalArgumentException("unknown STRING type in DisplayText");
+         throw new IllegalArgumentException("Unknown STRING type in DisplayText");
       }
    }
 
@@ -158,7 +161,7 @@ public class DisplayText
           return (DisplayText)obj;
       }
 
-      throw new IllegalArgumentException("illegal object in getInstance: " + obj.getClass().getName());
+      throw new IllegalArgumentException("Illegal object in getInstance: " + obj.getClass().getName());
    }
 
    public static DisplayText getInstance(
@@ -171,6 +174,11 @@ public class DisplayText
    public ASN1Primitive toASN1Primitive()
    {
       return (ASN1Primitive)contents;
+   }
+
+   public int getContentType()
+   {
+      return contentType;
    }
 
    /**

@@ -1,3 +1,6 @@
+/***************************************************************/
+/******    DO NOT EDIT THIS CLASS bc-java SOURCE FILE     ******/
+/***************************************************************/
 package org.bouncycastle.asn1.x9;
 
 import java.math.BigInteger;
@@ -36,7 +39,7 @@ public class X9ECParameters
         ASN1Sequence  seq)
     {
         if (!(seq.getObjectAt(0) instanceof ASN1Integer)
-            || !((ASN1Integer)seq.getObjectAt(0)).getValue().equals(ONE))
+           || !((ASN1Integer)seq.getObjectAt(0)).getValue().equals(ONE))
         {
             throw new IllegalArgumentException("bad version in X9ECParameters");
         }
@@ -48,11 +51,12 @@ public class X9ECParameters
             this.h = ((ASN1Integer)seq.getObjectAt(5)).getValue();
         }
 
-        X9Curve x9c = new X9Curve(
-            X9FieldID.getInstance(seq.getObjectAt(1)), n, h,
-            ASN1Sequence.getInstance(seq.getObjectAt(2)));
+        X9Curve     x9c = new X9Curve(
+                        X9FieldID.getInstance(seq.getObjectAt(1)), n, h,
+                        ASN1Sequence.getInstance(seq.getObjectAt(2)));
 
         this.curve = x9c.getCurve();
+
         Object p = seq.getObjectAt(3);
 
         if (p instanceof X9ECPoint)
@@ -87,12 +91,12 @@ public class X9ECParameters
         ECPoint     g,
         BigInteger  n)
     {
-        this(curve, g, n, null, null);
+        this(curve, g, n, ONE, null);
     }
 
     public X9ECParameters(
         ECCurve     curve,
-        X9ECPoint     g,
+        ECPoint     g,
         BigInteger  n,
         BigInteger  h)
     {
@@ -101,7 +105,7 @@ public class X9ECParameters
 
     public X9ECParameters(
         ECCurve     curve,
-        ECPoint     g,
+        X9ECPoint     g,
         BigInteger  n,
         BigInteger  h)
     {
@@ -230,7 +234,7 @@ public class X9ECParameters
     {
         ASN1EncodableVector v = new ASN1EncodableVector();
 
-        v.add(new ASN1Integer(ONE));
+        v.add(new ASN1Integer(1));
         v.add(fieldID);
         v.add(new X9Curve(curve, seed));
         v.add(g);

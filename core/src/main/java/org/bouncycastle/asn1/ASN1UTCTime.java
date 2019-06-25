@@ -1,3 +1,6 @@
+/***************************************************************/
+/******    DO NOT EDIT THIS CLASS bc-java SOURCE FILE     ******/
+/***************************************************************/
 package org.bouncycastle.asn1;
 
 import java.io.IOException;
@@ -11,11 +14,11 @@ import org.bouncycastle.util.Arrays;
 import org.bouncycastle.util.Strings;
 
 /**
-- * UTC time object.
+ * UTC time object.
  * Internal facade of {@link ASN1UTCTime}.
  * <p>
  * This datatype is valid only from 1950-01-01 00:00:00 UTC until 2049-12-31 23:59:59 UTC.
- * </p>
+ * <p>
  * <hr>
  * <p><b>X.690</b></p>
  * <p><b>11: Restrictions on BER employed by both CER and DER</b></p>
@@ -37,7 +40,7 @@ public class ASN1UTCTime
     private byte[]      time;
 
     /**
-     * Return an UTC Time from the passed in object.
+     * return an UTC Time from the passed in object.
      *
      * @param obj an ASN1UTCTime or an object that can be converted into one.
      * @exception IllegalArgumentException if the object cannot be converted.
@@ -63,11 +66,11 @@ public class ASN1UTCTime
             }
         }
 
-        throw new IllegalArgumentException("illegal object in getInstance: " + obj.getClass().getName());
+        throw new IllegalArgumentException("Illegal object in getInstance: " + obj.getClass().getName());
     }
 
     /**
-     * Return an UTC Time from a tagged object.
+     * return an UTC Time from a tagged object.
      *
      * @param obj the tagged object holding the object we want
      * @param explicit true if the object is meant to be explicitly
@@ -117,13 +120,13 @@ public class ASN1UTCTime
     }
 
     /**
-     * Base constructor from a java.util.date object
+     * base constructor from a java.util.date object
      * @param time the Date to build the time from.
      */
     public ASN1UTCTime(
         Date time)
     {
-        SimpleDateFormat dateF = new SimpleDateFormat("yyMMddHHmmss'Z'", DateUtil.EN_Locale);
+        SimpleDateFormat dateF = new SimpleDateFormat("yyMMddHHmmss'Z'");
 
         dateF.setTimeZone(new SimpleTimeZone(0,"Z"));
 
@@ -155,7 +158,7 @@ public class ASN1UTCTime
     }
 
     /**
-     * Return the time as a date based on whatever a 2 digit year will return. For
+     * return the time as a date based on whatever a 2 digit year will return. For
      * standardised processing use getAdjustedDate().
      *
      * @return the resulting date
@@ -166,11 +169,11 @@ public class ASN1UTCTime
     {
         SimpleDateFormat dateF = new SimpleDateFormat("yyMMddHHmmssz");
 
-        return DateUtil.epochAdjust(dateF.parse(getTime()));
+        return dateF.parse(getTime());
     }
 
     /**
-     * Return the time as an adjusted date
+     * return the time as an adjusted date
      * in the range of 1950 - 2049.
      *
      * @return a date in the range of 1950 to 2049.
@@ -181,13 +184,13 @@ public class ASN1UTCTime
     {
         SimpleDateFormat dateF = new SimpleDateFormat("yyyyMMddHHmmssz");
 
-        dateF.setTimeZone(new SimpleTimeZone(0,"Z"));
-        
-        return DateUtil.epochAdjust(dateF.parse(getAdjustedTime()));
+        dateF.setTimeZone(new SimpleTimeZone(0, "Z"));
+
+        return dateF.parse(getAdjustedTime());
     }
 
     /**
-     * Return the time - always in the form of
+     * return the time - always in the form of
      *  YYMMDDhhmmssGMT(+hh:mm|-hh:mm).
      * <p>
      * Normally in a certificate we would expect "Z" rather than "GMT",
@@ -246,7 +249,7 @@ public class ASN1UTCTime
     }
 
     /**
-     * Return a time string as an adjusted date with a 4 digit year. This goes
+     * return a time string as an adjusted date with a 4 digit year. This goes
      * in the range of 1950 - 2049.
      */
     public String getAdjustedTime()

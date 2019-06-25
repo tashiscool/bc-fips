@@ -1,3 +1,6 @@
+/***************************************************************/
+/******    DO NOT EDIT THIS CLASS bc-java SOURCE FILE     ******/
+/***************************************************************/
 package org.bouncycastle.asn1.cms;
 
 import java.text.ParseException;
@@ -44,10 +47,7 @@ public class Time
         return getInstance(obj.getObject());
     }
 
-    /**
-     * @deprecated use getInstance()
-     */
-    public Time(
+    private Time(
         ASN1Primitive   time)
     {
         if (!(time instanceof ASN1UTCTime)

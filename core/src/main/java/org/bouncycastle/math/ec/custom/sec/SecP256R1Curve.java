@@ -1,12 +1,13 @@
+/***************************************************************/
+/******    DO NOT EDIT THIS CLASS bc-java SOURCE FILE     ******/
+/***************************************************************/
 package org.bouncycastle.math.ec.custom.sec;
 
 import java.math.BigInteger;
 
 import org.bouncycastle.math.ec.ECCurve;
 import org.bouncycastle.math.ec.ECFieldElement;
-import org.bouncycastle.math.ec.ECLookupTable;
 import org.bouncycastle.math.ec.ECPoint;
-import org.bouncycastle.math.raw.Nat256;
 import org.bouncycastle.util.encoders.Hex;
 
 public class SecP256R1Curve extends ECCurve.AbstractFp
@@ -65,63 +66,18 @@ public class SecP256R1Curve extends ECCurve.AbstractFp
         return new SecP256R1FieldElement(x);
     }
 
-    protected ECPoint createRawPoint(ECFieldElement x, ECFieldElement y, boolean withCompression)
+    protected ECPoint createRawPoint(ECFieldElement x, ECFieldElement y)
     {
-        return new SecP256R1Point(this, x, y, withCompression);
+        return new SecP256R1Point(this, x, y);
     }
 
-    protected ECPoint createRawPoint(ECFieldElement x, ECFieldElement y, ECFieldElement[] zs, boolean withCompression)
+    protected ECPoint createRawPoint(ECFieldElement x, ECFieldElement y, ECFieldElement[] zs)
     {
-        return new SecP256R1Point(this, x, y, zs, withCompression);
+        return new SecP256R1Point(this, x, y, zs);
     }
 
     public ECPoint getInfinity()
     {
         return infinity;
-    }
-
-    public ECLookupTable createCacheSafeLookupTable(ECPoint[] points, int off, final int len)
-    {
-        final int FE_INTS = 8;
-
-        final int[] table = new int[len * FE_INTS * 2];
-        {
-            int pos = 0;
-            for (int i = 0; i < len; ++i)
-            {
-                ECPoint p = points[off + i];
-                Nat256.copy(((SecP256R1FieldElement)p.getRawXCoord()).x, 0, table, pos); pos += FE_INTS;
-                Nat256.copy(((SecP256R1FieldElement)p.getRawYCoord()).x, 0, table, pos); pos += FE_INTS;
-            }
-        }
-
-        return new ECLookupTable()
-        {
-            public int getSize()
-            {
-                return len;
-            }
-
-            public ECPoint lookup(int index)
-            {
-                int[] x = Nat256.create(), y = Nat256.create();
-                int pos = 0;
-
-                for (int i = 0; i < len; ++i)
-                {
-                    int MASK = ((i ^ index) - 1) >> 31;
-
-                    for (int j = 0; j < FE_INTS; ++j)
-                    {
-                        x[j] ^= table[pos + j] & MASK;
-                        y[j] ^= table[pos + FE_INTS + j] & MASK;
-                    }
-
-                    pos += (FE_INTS * 2);
-                }
-
-                return createRawPoint(new SecP256R1FieldElement(x), new SecP256R1FieldElement(y), false);
-            }
-        };
     }
 }

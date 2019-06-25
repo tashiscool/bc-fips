@@ -1,3 +1,6 @@
+/***************************************************************/
+/******    DO NOT EDIT THIS CLASS bc-java SOURCE FILE     ******/
+/***************************************************************/
 package org.bouncycastle.asn1.dvcs;
 
 import java.math.BigInteger;
@@ -103,7 +106,7 @@ public class DVCSRequestInformation
                     this.extensions = Extensions.getInstance(t, false);
                     break;
                 default:
-                    throw new IllegalArgumentException("unknown tag number encountered: " + tagNo);
+                    throw new IllegalArgumentException("Unknown tag number encountered: " + tagNo);
                 }
             }
             else

@@ -1,3 +1,6 @@
+/***************************************************************/
+/******    DO NOT EDIT THIS CLASS bc-java SOURCE FILE     ******/
+/***************************************************************/
 package org.bouncycastle.util;
 
 /**
@@ -118,7 +121,7 @@ public class IPAddress
      *
      * @param address the IP address as a String.
      *
-     * @return true if a valid IPv6 address, false otherwise
+     * @return true if a valid IPv4 address, false otherwise
      */
     public static boolean isValidIPv6(
         String address)

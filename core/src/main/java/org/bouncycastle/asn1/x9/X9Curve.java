@@ -1,3 +1,6 @@
+/***************************************************************/
+/******    DO NOT EDIT THIS CLASS bc-java SOURCE FILE     ******/
+/***************************************************************/
 package org.bouncycastle.asn1.x9;
 
 import java.math.BigInteger;
@@ -30,7 +33,9 @@ public class X9Curve
     public X9Curve(
         ECCurve     curve)
     {
-        this(curve, null);
+        this.curve = curve;
+        this.seed = null;
+        setFieldIdentifier();
     }
 
     public X9Curve(
@@ -44,19 +49,19 @@ public class X9Curve
 
     public X9Curve(
         X9FieldID     fieldID,
-        BigInteger    order,
-        BigInteger    cofactor,
+        BigInteger    n,
+        BigInteger    h,
         ASN1Sequence  seq)
-    {   
+    {
         fieldIdentifier = fieldID.getIdentifier();
         if (fieldIdentifier.equals(prime_field))
-        {   
-            BigInteger p = ((ASN1Integer)fieldID.getParameters()).getValue();
-            BigInteger A = new BigInteger(1, ASN1OctetString.getInstance(seq.getObjectAt(0)).getOctets());      
-            BigInteger B = new BigInteger(1, ASN1OctetString.getInstance(seq.getObjectAt(1)).getOctets());      
-            curve = new ECCurve.Fp(p, A, B, order, cofactor);
+        {
+            BigInteger      p = ((ASN1Integer)fieldID.getParameters()).getValue();
+            BigInteger      A = new BigInteger(1, ASN1OctetString.getInstance(seq.getObjectAt(0)).getOctets());
+            BigInteger      B = new BigInteger(1, ASN1OctetString.getInstance(seq.getObjectAt(1)).getOctets());
+            curve = new ECCurve.Fp(p, A, B, n, h);
         }
-        else if (fieldIdentifier.equals(characteristic_two_field))
+        else if (fieldIdentifier.equals(characteristic_two_field)) 
         {
             // Characteristic two field
             ASN1Sequence parameters = ASN1Sequence.getInstance(fieldID.getParameters());
@@ -69,11 +74,11 @@ public class X9Curve
             int k2 = 0;
             int k3 = 0;
 
-            if (representation.equals(tpBasis))
+            if (representation.equals(tpBasis)) 
             {
                 // Trinomial basis representation
                 k1 = ASN1Integer.getInstance(parameters.getObjectAt(2)).getValue().intValue();
-            }   
+            }
             else if (representation.equals(ppBasis))
             {
                 // Pentanomial basis representation
@@ -81,25 +86,25 @@ public class X9Curve
                 k1 = ASN1Integer.getInstance(pentanomial.getObjectAt(0)).getValue().intValue();
                 k2 = ASN1Integer.getInstance(pentanomial.getObjectAt(1)).getValue().intValue();
                 k3 = ASN1Integer.getInstance(pentanomial.getObjectAt(2)).getValue().intValue();
-            }   
+            }
             else
             {
                 throw new IllegalArgumentException("This type of EC basis is not implemented");
-            }   
-            BigInteger A = new BigInteger(1, ASN1OctetString.getInstance(seq.getObjectAt(0)).getOctets());      
-            BigInteger B = new BigInteger(1, ASN1OctetString.getInstance(seq.getObjectAt(1)).getOctets());      
-            curve = new ECCurve.F2m(m, k1, k2, k3, A, B, order, cofactor);
-        }   
+            }
+            BigInteger      A = new BigInteger(1, ASN1OctetString.getInstance(seq.getObjectAt(0)).getOctets());
+            BigInteger      B = new BigInteger(1, ASN1OctetString.getInstance(seq.getObjectAt(1)).getOctets());
+            curve = new ECCurve.F2m(m, k1, k2, k3, A, B, n, h);
+        }
         else
         {
             throw new IllegalArgumentException("This type of ECCurve is not implemented");
-        }   
+        }
 
         if (seq.size() == 3)
         {
-            seed = Arrays.clone(((DERBitString)seq.getObjectAt(2)).getBytes());
-        }   
-    }   
+            seed = ((DERBitString)seq.getObjectAt(2)).getBytes();
+        }
+    }
 
     private void setFieldIdentifier()
     {

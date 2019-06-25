@@ -9,11 +9,16 @@ import java.util.Collections;
 import java.util.HashMap;
 import java.util.Map;
 
-import org.bouncycastle.asn1.x9.X9ECParameters;
-import org.bouncycastle.crypto.params.DHParameters;
-import org.bouncycastle.crypto.params.DHValidationParameters;
-import org.bouncycastle.crypto.params.DSAParameters;
-import org.bouncycastle.crypto.params.DSAValidationParameters;
+import org.bouncycastle.crypto.asymmetric.DHDomainParameters;
+import org.bouncycastle.crypto.asymmetric.DHValidationParameters;
+import org.bouncycastle.crypto.asymmetric.DSADomainParameters;
+import org.bouncycastle.crypto.asymmetric.DSAValidationParameters;
+import org.bouncycastle.crypto.asymmetric.ECDomainParameters;
+import org.bouncycastle.crypto.fips.FipsSecureRandom;
+import org.bouncycastle.crypto.fips.FipsStatus;
+import org.bouncycastle.crypto.fips.FipsUnapprovedOperationError;
+import org.bouncycastle.jcajce.provider.BouncyCastleFipsProvider;
+import org.bouncycastle.util.Properties;
 import org.bouncycastle.util.encoders.Hex;
 
 /**
@@ -21,12 +26,16 @@ import org.bouncycastle.util.encoders.Hex;
  */
 public final class CryptoServicesRegistrar
 {
+    public static final String MODULE_HMAC_KEY = "Legion of the Bouncy Castle Inc.";
+    private static final Permission AbleToUseUnapprovedMode = new CryptoServicesPermission(CryptoServicesPermission.FIPS_MODE_UNAPPROVED_MODE_ENABLED);
+    private static final Permission AbleToChangeToApprovedMode = new CryptoServicesPermission(CryptoServicesPermission.FIPS_MODE_CHANGE_TO_APPROVED_MODE_ENABLED);
     private static final Permission CanSetDefaultProperty = new CryptoServicesPermission(CryptoServicesPermission.GLOBAL_CONFIG);
     private static final Permission CanSetThreadProperty = new CryptoServicesPermission(CryptoServicesPermission.THREAD_LOCAL_CONFIG);
     private static final Permission CanSetDefaultRandom = new CryptoServicesPermission(CryptoServicesPermission.DEFAULT_RANDOM);
-
+    private static final ThreadLocal<Boolean> threadFipsMode = new ThreadLocal<Boolean>();
     private static final ThreadLocal<Map<String, Object[]>> threadProperties = new ThreadLocal<Map<String, Object[]>>();
-    private static final Map<String, Object[]> globalProperties = Collections.synchronizedMap(new HashMap<String, Object[]>());
+    private static final Map<String, Object[]>  globalProperties = Collections.synchronizedMap(new HashMap<String, Object[]>());
+    private static final boolean isDefaultModeApprovedMode = getDefaultMode();
 
     private static volatile SecureRandom defaultSecureRandom;
 
@@ -34,13 +43,13 @@ public final class CryptoServicesRegistrar
     {
         // default domain parameters for DSA and Diffie-Hellman
 
-        DSAParameters def512Params = new DSAParameters(
+        DSADomainParameters def512Params = new DSADomainParameters(
             new BigInteger("fca682ce8e12caba26efccf7110e526db078b05edecbcd1eb4a208f3ae1617ae01f35b91a47e6df63413c5e12ed0899bcd132acd50d99151bdc43ee737592e17", 16),
             new BigInteger("962eddcc369cba8ebb260ee6b6a126d9346e38c5", 16),
             new BigInteger("678471b27a9cf44ee91a49c5147db1a9aaf244f05a434d6486931d2d14271b9e35030b71fd73da179069b32e2935630e1c2062354d0da20a6c416e50be794ca4", 16),
             new DSAValidationParameters(Hex.decode("b869c82b35d70e1b1ff91b28e37a62ecdc34409b"), 123));
 
-        DSAParameters def768Params = new DSAParameters(
+        DSADomainParameters def768Params = new DSADomainParameters(
             new BigInteger("e9e642599d355f37c97ffd3567120b8e25c9cd43e927b3a9670fbec5" +
                            "d890141922d2c3b3ad2480093799869d1e846aab49fab0ad26d2ce6a" +
                            "22219d470bce7d777d4a21fbe9c270b57f607002f3cef8393694cf45" +
@@ -52,7 +61,7 @@ public final class CryptoServicesRegistrar
                            "7064f316933a346d3f529252", 16),
             new DSAValidationParameters(Hex.decode("77d0f8c4dad15eb8c4f2f8d6726cefd96d5bb399"), 263));
 
-        DSAParameters def1024Params = new DSAParameters(
+        DSADomainParameters def1024Params = new DSADomainParameters(
             new BigInteger("fd7f53811d75122952df4a9c2eece4e7f611b7523cef4400c31e3f80" +
                             "b6512669455d402251fb593d8d58fabfc5f5ba30f6cb9b556cd7813b" +
                             "801d346ff26660b76b9950a5a49f9fe8047b1022c24fbba9d7feb7c6" +
@@ -66,7 +75,7 @@ public final class CryptoServicesRegistrar
                             "928b665e807b552564014c3bfecf492a", 16),
             new DSAValidationParameters(Hex.decode("8d5155894229d5e689ee01e6018a237e2cae64cd"), 92));
 
-        DSAParameters def2048Params = new DSAParameters(
+        DSADomainParameters def2048Params = new DSADomainParameters(
             new BigInteger("95475cf5d93e596c3fcd1d902add02f427f5f3c7210313bb45fb4d5b" +
                             "b2e5fe1cbd678cd4bbdd84c9836be1f31c0777725aeb6c2fc38b85f4" +
                             "8076fa76bcd8146cc89a6fb2f706dd719898c2083dc8d896f84062e2" +
@@ -99,6 +108,72 @@ public final class CryptoServicesRegistrar
 
     }
 
+    static boolean getDefaultMode()
+    {
+        FipsStatus.isReady();
+
+         try
+         {
+             checkPermission(AbleToUseUnapprovedMode);
+
+             return Properties.isOverrideSet("org.bouncycastle.fips.approved_only");
+         }
+         catch (SecurityException e)
+         {
+             return true;
+         }
+    }
+
+    /**
+     * Set the calling thread's approved mode status.
+     * <p>
+     * <b>Note</b>: a thread cannot move to unapproved mode once it has moved into approved mode.
+     * </p>
+     *
+     * @param isApprovedOnly true if should be approved mode, false otherwise.
+     * @return true if the function has set the thread to approved mode, false otherwise.
+     */
+    public static boolean setApprovedOnlyMode(boolean isApprovedOnly)
+    {
+        boolean inApprovedMode = isInApprovedOnlyMode();
+
+        if (isApprovedOnly != inApprovedMode)
+        {
+            if (inApprovedMode)
+            {
+                 throw new FipsUnapprovedOperationError("Attempt to move from approved mode to unapproved mode");
+            }
+
+            checkPermission(AbleToChangeToApprovedMode);
+
+            threadFipsMode.set(isApprovedOnly);
+        }
+
+        return isInApprovedOnlyMode();
+    }
+
+    /**
+     * Return true or false depending on whether the current thread is in approved mode.
+     *
+     * @return true if the current thread is in approved mode, false otherwise.
+     */
+    public static boolean isInApprovedOnlyMode()
+    {
+        if (isDefaultModeApprovedMode)
+        {
+            return true;
+        }
+
+        Boolean approvedMode = threadFipsMode.get();
+
+        if (approvedMode == null)
+        {
+            return isDefaultModeApprovedMode;
+        }
+
+        return approvedMode.booleanValue();
+    }
+
     /**
      * Return the default source of randomness.
      *
@@ -109,9 +184,17 @@ public final class CryptoServicesRegistrar
     {
         if (defaultSecureRandom == null)
         {
-            return new SecureRandom();
+            throw new IllegalStateException("No default SecureRandom specified and one requested - use CryptoServicesRegistrar.setSecureRandom().");
         }
-        
+
+        if (isInApprovedOnlyMode())
+        {
+            if (!(defaultSecureRandom instanceof FipsSecureRandom) && !(defaultSecureRandom.getProvider() instanceof BouncyCastleFipsProvider))
+            {
+                throw new FipsUnapprovedOperationError("Default SecureRandom not FIPS approved!");
+            }
+        }
+
         return defaultSecureRandom;
     }
 
@@ -123,6 +206,14 @@ public final class CryptoServicesRegistrar
     public static void setSecureRandom(SecureRandom secureRandom)
     {
         checkPermission(CanSetDefaultRandom);
+
+        if (isInApprovedOnlyMode())
+        {
+            if (!(secureRandom instanceof FipsSecureRandom) && !(secureRandom.getProvider() instanceof BouncyCastleFipsProvider))
+            {
+                throw new FipsUnapprovedOperationError("Attempt to set default SecureRandom to not be a FIPS approved one.");
+            }
+        }
 
         defaultSecureRandom = secureRandom;
     }
@@ -201,11 +292,11 @@ public final class CryptoServicesRegistrar
             return null;
         }
 
-        if (property.type.isAssignableFrom(DHParameters.class))
+        if (property.type.isAssignableFrom(DHDomainParameters.class))
         {
             for (int i = 0; i != values.length; i++)
             {
-                DHParameters params = (DHParameters)values[i];
+                DHDomainParameters params = (DHDomainParameters)values[i];
 
                 if (params.getP().bitLength() == size)
                 {
@@ -213,11 +304,11 @@ public final class CryptoServicesRegistrar
                 }
             }
         }
-        else if (property.type.isAssignableFrom(DSAParameters.class))
+        else if (property.type.isAssignableFrom(DSADomainParameters.class))
         {
             for (int i = 0; i != values.length; i++)
             {
-                DSAParameters params = (DSAParameters)values[i];
+                DSADomainParameters params = (DSADomainParameters)values[i];
 
                 if (params.getP().bitLength() == size)
                 {
@@ -354,38 +445,10 @@ public final class CryptoServicesRegistrar
         }
     }
 
-    private static DHParameters toDH(DSAParameters dsaParams)
+    private static DHDomainParameters toDH(DSADomainParameters dsaParams)
     {
-        int pSize = dsaParams.getP().bitLength();
-        int m = chooseLowerBound(pSize);
-        return new DHParameters(dsaParams.getP(), dsaParams.getG(), dsaParams.getQ(), m, 0, null,
+        return new DHDomainParameters(dsaParams.getP(), dsaParams.getQ(), dsaParams.getG(), 160, dsaParams.getP().bitLength(), null,
             new DHValidationParameters(dsaParams.getValidationParameters().getSeed(), dsaParams.getValidationParameters().getCounter()));
-    }
-
-    // based on lower limit of at least 2^{2 * bits_of_security}
-    private static int chooseLowerBound(int pSize)
-    {
-        int m = 160;
-        if (pSize > 1024)
-        {
-            if (pSize <= 2048)
-            {
-                m = 224;
-            }
-            else if (pSize <= 3072)
-            {
-                m = 256;
-            }
-            else if (pSize <= 7680)
-            {
-                m = 384;
-            }
-            else
-            {
-                m = 512;
-            }
-        }
-        return m;
     }
 
     /**
@@ -396,15 +459,15 @@ public final class CryptoServicesRegistrar
         /**
          * The parameters to be used for processing implicitlyCA X9.62 parameters
          */
-        public static final Property EC_IMPLICITLY_CA = new Property("ecImplicitlyCA", X9ECParameters.class);
+        public static final Property EC_IMPLICITLY_CA = new Property("ecImplicitlyCA", ECDomainParameters.class);
         /**
          * The default parameters for a particular size of Diffie-Hellman key.This is a sized property.
          */
-        public static final Property DH_DEFAULT_PARAMS= new Property("dhDefaultParams", DHParameters.class);
+        public static final Property DH_DEFAULT_PARAMS= new Property("dhDefaultParams", DHDomainParameters.class);
         /**
          * The default parameters for a particular size of DSA key. This is a sized property.
          */
-        public static final Property DSA_DEFAULT_PARAMS= new Property("dsaDefaultParams", DSAParameters.class);
+        public static final Property DSA_DEFAULT_PARAMS= new Property("dsaDefaultParams", DSADomainParameters.class);
         private final String name;
         private final Class type;
 

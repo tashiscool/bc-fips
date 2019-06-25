@@ -1,3 +1,6 @@
+/***************************************************************/
+/******    DO NOT EDIT THIS CLASS bc-java SOURCE FILE     ******/
+/***************************************************************/
 package org.bouncycastle.asn1;
 
 import java.io.IOException;
@@ -5,21 +8,16 @@ import java.io.IOException;
 import org.bouncycastle.util.Arrays;
 
 /**
- * DER BMPString object encodes BMP (<i>Basic Multilingual Plane</i>) subset
- * (aka UCS-2) of UNICODE (ISO 10646) characters in codepoints 0 to 65535.
- * <p>
- * At ISO-10646:2011 the term "BMP" has been withdrawn, and replaced by
- * term "UCS-2".
- * </p>
+ * Carrier class for DER encoding BMPString object.
  */
 public class DERBMPString
     extends ASN1Primitive
     implements ASN1String
 {
-    private final char[]  string;
+    private char[]  string;
 
     /**
-     * Return a BMP String from the given object.
+     * return a BMP String from the given object.
      *
      * @param obj the object we want converted.
      * @exception IllegalArgumentException if the object cannot be converted.
@@ -49,7 +47,7 @@ public class DERBMPString
     }
 
     /**
-     * Return a BMP String from a tagged object.
+     * return a BMP String from a tagged object.
      *
      * @param obj the tagged object holding the object we want
      * @param explicit true if the object is meant to be explicitly
@@ -75,7 +73,7 @@ public class DERBMPString
     }
 
     /**
-     * Basic constructor - byte encoded string.
+     * basic constructor - byte encoded string.
      * @param string the encoded BMP STRING to wrap.
      */
     DERBMPString(
@@ -97,7 +95,7 @@ public class DERBMPString
     }
 
     /**
-     * Basic constructor
+     * basic constructor
      * @param string a String to wrap as a BMP STRING.
      */
     public DERBMPString(

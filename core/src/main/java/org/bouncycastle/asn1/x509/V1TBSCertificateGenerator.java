@@ -1,10 +1,12 @@
+/***************************************************************/
+/******    DO NOT EDIT THIS CLASS bc-java SOURCE FILE     ******/
+/***************************************************************/
 package org.bouncycastle.asn1.x509;
 
 import org.bouncycastle.asn1.ASN1EncodableVector;
 import org.bouncycastle.asn1.ASN1Integer;
 import org.bouncycastle.asn1.ASN1UTCTime;
 import org.bouncycastle.asn1.DERSequence;
-import org.bouncycastle.asn1.DERTaggedObject;
 import org.bouncycastle.asn1.x500.X500Name;
 
 /**
@@ -24,9 +26,7 @@ import org.bouncycastle.asn1.x500.X500Name;
  */
 public class V1TBSCertificateGenerator
 {
-    DERTaggedObject         version = new DERTaggedObject(true, 0, new ASN1Integer(0));
-
-    ASN1Integer              serialNumber;
+    ASN1Integer             serialNumber;
     AlgorithmIdentifier     signature;
     X500Name                issuer;
     Time                    startDate, endDate;
@@ -47,15 +47,6 @@ public class V1TBSCertificateGenerator
         AlgorithmIdentifier    signature)
     {
         this.signature = signature;
-    }
-
-        /**
-     * @deprecated use X500Name method
-     */
-    public void setIssuer(
-        X509Name    issuer)
-    {
-        this.issuer = X500Name.getInstance(issuer.toASN1Primitive());
     }
 
     public void setIssuer(
@@ -86,15 +77,6 @@ public class V1TBSCertificateGenerator
         ASN1UTCTime endDate)
     {
         this.endDate = new Time(endDate);
-    }
-
-    /**
-     * @deprecated use X500Name method
-     */
-    public void setSubject(
-        X509Name    subject)
-    {
-        this.subject = X500Name.getInstance(subject.toASN1Primitive());
     }
 
     public void setSubject(

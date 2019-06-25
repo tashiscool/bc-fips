@@ -1,3 +1,6 @@
+/***************************************************************/
+/******    DO NOT EDIT THIS CLASS bc-java SOURCE FILE     ******/
+/***************************************************************/
 package org.bouncycastle.asn1;
 
 import java.io.IOException;
@@ -168,7 +171,7 @@ public class ASN1OutputStream
         return new DLOutputStream(os);
     }
 
-    private class ImplicitOutputStream
+    private static class ImplicitOutputStream
         extends ASN1OutputStream
     {
         private boolean first = true;

@@ -1,10 +1,13 @@
+/***************************************************************/
+/******    DO NOT EDIT THIS CLASS bc-java SOURCE FILE     ******/
+/***************************************************************/
 package org.bouncycastle.asn1;
 
 import java.io.IOException;
 import java.io.InputStream;
 
 /**
- * Parser for DER encoded OCTET STRINGS
+ * Parse for DER encoded OCTET STRINGS
  */
 public class DEROctetStringParser
     implements ASN1OctetStringParser

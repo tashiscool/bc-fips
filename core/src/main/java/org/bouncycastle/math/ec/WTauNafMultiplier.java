@@ -1,3 +1,6 @@
+/***************************************************************/
+/******    DO NOT EDIT THIS CLASS bc-java SOURCE FILE     ******/
+/***************************************************************/
 package org.bouncycastle.math.ec;
 
 import java.math.BigInteger;
@@ -12,7 +15,7 @@ public class WTauNafMultiplier extends AbstractECMultiplier
     static final String PRECOMP_NAME = "bc_wtnaf";
 
     /**
-     * Multiplies a {@link org.bouncycastle.math.ec.ECPoint.AbstractF2m ECPoint.AbstractF2m}
+     * Multiplies a {@link org.bouncycastle.math.ec.ECPoint.AbstractF2m}
      * by <code>k</code> using the reduced <code>&tau;</code>-adic NAF (RTNAF)
      * method.
      * @param point The ECPoint.AbstractF2m to multiply.
@@ -36,7 +39,7 @@ public class WTauNafMultiplier extends AbstractECMultiplier
 
         ZTauElement rho = Tnaf.partModReduction(k, m, a, s, mu, (byte)10);
 
-        return multiplyWTnaf(p, rho, a, mu);
+        return multiplyWTnaf(p, rho, curve.getPreCompInfo(p, PRECOMP_NAME), a, mu);
     }
 
     /**
@@ -49,7 +52,8 @@ public class WTauNafMultiplier extends AbstractECMultiplier
      * <code>[&tau;]</code>-adic NAF.
      * @return <code>p</code> multiplied by <code>&lambda;</code>.
      */
-    private ECPoint.AbstractF2m multiplyWTnaf(ECPoint.AbstractF2m p, ZTauElement lambda, byte a, byte mu)
+    private ECPoint.AbstractF2m multiplyWTnaf(ECPoint.AbstractF2m p, ZTauElement lambda,
+            PreCompInfo preCompInfo, byte a, byte mu)
     {
         ZTauElement[] alpha = (a == 0) ? Tnaf.alpha0 : Tnaf.alpha1;
 
@@ -58,7 +62,7 @@ public class WTauNafMultiplier extends AbstractECMultiplier
         byte[]u = Tnaf.tauAdicWNaf(mu, lambda, Tnaf.WIDTH,
             BigInteger.valueOf(Tnaf.POW_2_WIDTH), tw, alpha);
 
-        return multiplyFromWTnaf(p, u);
+        return multiplyFromWTnaf(p, u, preCompInfo);
     }
 
     /**
@@ -70,27 +74,24 @@ public class WTauNafMultiplier extends AbstractECMultiplier
      * @param u The the WTNAF of <code>&lambda;</code>..
      * @return <code>&lambda; * p</code>
      */
-    private static ECPoint.AbstractF2m multiplyFromWTnaf(final ECPoint.AbstractF2m p, byte[] u)
+    private static ECPoint.AbstractF2m multiplyFromWTnaf(ECPoint.AbstractF2m p, byte[] u, PreCompInfo preCompInfo)
     {
         ECCurve.AbstractF2m curve = (ECCurve.AbstractF2m)p.getCurve();
-        final byte a = curve.getA().toBigInteger().byteValue();
+        byte a = curve.getA().toBigInteger().byteValue();
 
-        WTauNafPreCompInfo preCompInfo = (WTauNafPreCompInfo)curve.precompute(p, PRECOMP_NAME, new PreCompCallback()
+        ECPoint.AbstractF2m[] pu;
+        if ((preCompInfo == null) || !(preCompInfo instanceof WTauNafPreCompInfo))
         {
-            public PreCompInfo precompute(PreCompInfo existing)
-            {
-                if (existing instanceof WTauNafPreCompInfo)
-                {
-                    return existing;
-                }
+            pu = Tnaf.getPreComp(p, a);
 
-                WTauNafPreCompInfo result = new WTauNafPreCompInfo();
-                result.setPreComp(Tnaf.getPreComp(p, a));
-                return result;
-            }
-        });
-
-        ECPoint.AbstractF2m[] pu = preCompInfo.getPreComp();
+            WTauNafPreCompInfo pre = new WTauNafPreCompInfo();
+            pre.setPreComp(pu);
+            curve.setPreCompInfo(p, PRECOMP_NAME, pre);
+        }
+        else
+        {
+            pu = ((WTauNafPreCompInfo)preCompInfo).getPreComp();
+        }
 
         // TODO Include negations in precomp (optionally) and use from here
         ECPoint.AbstractF2m[] puNeg = new ECPoint.AbstractF2m[pu.length];

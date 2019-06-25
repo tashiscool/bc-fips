@@ -6,6 +6,7 @@ class ValidityPrecompInfo implements PreCompInfo
 
     private boolean failed = false;
     private boolean curveEquationPassed = false;
+    private boolean cofactorPassed = false;
     private boolean orderPassed = false;
 
     boolean hasFailed()
@@ -26,6 +27,16 @@ class ValidityPrecompInfo implements PreCompInfo
     void reportCurveEquationPassed()
     {
         curveEquationPassed = true;
+    }
+
+    boolean hasCofactorPassed()
+    {
+        return cofactorPassed;
+    }
+
+    void reportCofactorPassed()
+    {
+        cofactorPassed = true;
     }
 
     boolean hasOrderPassed()

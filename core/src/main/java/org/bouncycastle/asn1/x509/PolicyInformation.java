@@ -1,3 +1,6 @@
+/***************************************************************/
+/******    DO NOT EDIT THIS CLASS bc-java SOURCE FILE     ******/
+/***************************************************************/
 package org.bouncycastle.asn1.x509;
 
 import org.bouncycastle.asn1.ASN1EncodableVector;
@@ -65,13 +68,11 @@ public class PolicyInformation
         return policyQualifiers;
     }
     
-    /*
-     * <pre>
+    /* 
      * PolicyInformation ::= SEQUENCE {
      *      policyIdentifier   CertPolicyId,
      *      policyQualifiers   SEQUENCE SIZE (1..MAX) OF
      *              PolicyQualifierInfo OPTIONAL }
-     * </pre>
      */ 
     public ASN1Primitive toASN1Primitive()
     {
@@ -89,14 +90,14 @@ public class PolicyInformation
 
     public String toString()
     {
-        StringBuffer sb = new StringBuffer();
+        StringBuilder sb = new StringBuilder();
 
         sb.append("Policy information: ");
         sb.append(policyIdentifier);
 
         if (policyQualifiers != null)
         {
-            StringBuffer p = new StringBuffer();
+            StringBuilder p = new StringBuilder();
             for (int i = 0; i < policyQualifiers.size(); i++)
             {
                 if (p.length() != 0)

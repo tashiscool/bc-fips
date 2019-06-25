@@ -1,9 +1,12 @@
+/***************************************************************/
+/******    DO NOT EDIT THIS CLASS bc-java SOURCE FILE     ******/
+/***************************************************************/
 package org.bouncycastle.asn1;
 
 import java.io.IOException;
 
 /**
- * A parser for indefinite-length ASN.1 ApplicationSpecific objects.
+ * A parser for indefinite-length application specific objects.
  */
 public class BERApplicationSpecificParser
     implements ASN1ApplicationSpecificParser

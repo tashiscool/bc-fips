@@ -1,3 +1,6 @@
+/***************************************************************/
+/******    DO NOT EDIT THIS CLASS bc-java SOURCE FILE     ******/
+/***************************************************************/
 
 package org.bouncycastle.asn1.x509;
 
@@ -57,10 +60,9 @@ public class CertificateList
     }
 
     /**
-     * @deprecated use getInstance() method.
      * @param seq
      */
-    public CertificateList(
+    private CertificateList(
         ASN1Sequence seq)
     {
         if (seq.size() == 3)

@@ -1,3 +1,6 @@
+/***************************************************************/
+/******    DO NOT EDIT THIS CLASS bc-java SOURCE FILE     ******/
+/***************************************************************/
 package org.bouncycastle.asn1.pkcs;
 
 import org.bouncycastle.asn1.ASN1EncodableVector;
@@ -59,10 +62,9 @@ public class RSAESOAEPparams
     }
 
     /**
-     * @deprecated use getInstance()
      * @param seq
      */
-    public RSAESOAEPparams(
+    private RSAESOAEPparams(
         ASN1Sequence seq)
     {
         hashAlgorithm = DEFAULT_HASH_ALGORITHM;

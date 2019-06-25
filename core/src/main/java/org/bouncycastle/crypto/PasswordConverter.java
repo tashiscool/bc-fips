@@ -1,5 +1,7 @@
 package org.bouncycastle.crypto;
 
+import org.bouncycastle.crypto.internal.PBEParametersGenerator;
+
 /**
  * Standard char[] to byte[] converters for password based derivation algorithms.
  */

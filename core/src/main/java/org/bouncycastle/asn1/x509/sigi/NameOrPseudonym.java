@@ -1,3 +1,6 @@
+/***************************************************************/
+/******    DO NOT EDIT THIS CLASS bc-java SOURCE FILE     ******/
+/***************************************************************/
 package org.bouncycastle.asn1.x509.sigi;
 
 import java.util.Enumeration;
@@ -54,7 +57,7 @@ public class NameOrPseudonym
             return new NameOrPseudonym((ASN1Sequence)obj);
         }
 
-        throw new IllegalArgumentException("illegal object in getInstance: "
+        throw new IllegalArgumentException("Illegal object in getInstance: "
             + obj.getClass().getName());
     }
 
@@ -80,8 +83,9 @@ public class NameOrPseudonym
 
     /**
      * Constructor from ASN1Sequence.
-     * <p>
+     * <p/>
      * The sequence is of type NameOrPseudonym:
+     * <p/>
      * <pre>
      *       NameOrPseudonym ::= CHOICE {
      *            surAndGivenName SEQUENCE {
@@ -91,7 +95,7 @@ public class NameOrPseudonym
      *            pseudonym DirectoryString
      *       }
      * </pre>
-     * </p>
+     *
      * @param seq The ASN.1 sequence.
      */
     private NameOrPseudonym(ASN1Sequence seq)

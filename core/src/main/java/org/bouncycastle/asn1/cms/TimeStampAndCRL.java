@@ -1,3 +1,6 @@
+/***************************************************************/
+/******    DO NOT EDIT THIS CLASS bc-java SOURCE FILE     ******/
+/***************************************************************/
 package org.bouncycastle.asn1.cms;
 
 import org.bouncycastle.asn1.ASN1EncodableVector;
@@ -67,12 +70,6 @@ public class TimeStampAndCRL
     public ContentInfo getTimeStampToken()
     {
         return this.timeStamp;
-    }
-
-    /** @deprecated use getCRL() */
-    public CertificateList getCertificateList()
-    {
-        return this.crl;
     }
 
     public CertificateList getCRL()

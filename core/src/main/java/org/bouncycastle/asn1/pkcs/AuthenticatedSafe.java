@@ -1,3 +1,6 @@
+/***************************************************************/
+/******    DO NOT EDIT THIS CLASS bc-java SOURCE FILE     ******/
+/***************************************************************/
 package org.bouncycastle.asn1.pkcs;
 
 import org.bouncycastle.asn1.ASN1EncodableVector;
@@ -45,21 +48,12 @@ public class AuthenticatedSafe
     public AuthenticatedSafe(
         ContentInfo[]       info)
     {
-        this.info = copy(info);
+        this.info = info.clone();
     }
 
     public ContentInfo[] getContentInfo()
     {
-        return copy(info);
-    }
-
-    private ContentInfo[] copy(ContentInfo[] infos)
-    {
-        ContentInfo[] tmp = new ContentInfo[infos.length];
-
-        System.arraycopy(infos, 0, tmp, 0, tmp.length);
-
-        return tmp;
+        return info.clone();
     }
 
     public ASN1Primitive toASN1Primitive()

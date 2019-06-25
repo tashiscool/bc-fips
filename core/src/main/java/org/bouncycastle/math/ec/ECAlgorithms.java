@@ -1,3 +1,6 @@
+/***************************************************************/
+/******    DO NOT EDIT THIS CLASS bc-java SOURCE FILE     ******/
+/***************************************************************/
 package org.bouncycastle.math.ec;
 
 import java.math.BigInteger;
@@ -217,17 +220,6 @@ public class ECAlgorithms
         return p;
     }
 
-    public static ECPoint cleanPoint(ECCurve c, ECPoint p)
-    {
-        ECCurve cp = p.getCurve();
-        if (!c.equals(cp))
-        {
-            throw new IllegalArgumentException("Point must be on the same curve");
-        }
-
-        return c.decodePoint(p.getEncoded(false));
-    }
-
     static ECPoint implCheckResult(ECPoint p)
     {
         if (!p.isValidPartial())
@@ -398,14 +390,15 @@ public class ECAlgorithms
 
     static ECPoint implSumOfMultipliesGLV(ECPoint[] ps, BigInteger[] ks, GLVEndomorphism glvEndomorphism)
     {
-        BigInteger n = ps[0].getCurve().getOrder();
+        ECCurve c = ps[0].getCurve();
+        BigInteger order = c.getOrder().multiply(c.getCofactor());
 
         int len = ps.length;
 
         BigInteger[] abs = new BigInteger[len << 1];
         for (int i = 0, j = 0; i < len; ++i)
         {
-            BigInteger[] ab = glvEndomorphism.decomposeScalar(ks[i].mod(n));
+            BigInteger[] ab = glvEndomorphism.decomposeScalar(ks[i].mod(order));
             abs[j++] = ab[0];
             abs[j++] = ab[1];
         }

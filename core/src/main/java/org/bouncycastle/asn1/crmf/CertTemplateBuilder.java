@@ -1,3 +1,6 @@
+/***************************************************************/
+/******    DO NOT EDIT THIS CLASS bc-java SOURCE FILE     ******/
+/***************************************************************/
 package org.bouncycastle.asn1.crmf;
 
 import org.bouncycastle.asn1.ASN1Encodable;
@@ -10,7 +13,6 @@ import org.bouncycastle.asn1.x500.X500Name;
 import org.bouncycastle.asn1.x509.AlgorithmIdentifier;
 import org.bouncycastle.asn1.x509.Extensions;
 import org.bouncycastle.asn1.x509.SubjectPublicKeyInfo;
-import org.bouncycastle.asn1.x509.X509Extensions;
 
 public class CertTemplateBuilder
 {
@@ -89,14 +91,6 @@ public class CertTemplateBuilder
         subjectUID = uid;
 
         return this;
-    }
-
-    /**
-     * @deprecated use method taking Extensions
-     */
-    public CertTemplateBuilder setExtensions(X509Extensions extens)
-    {
-        return setExtensions(Extensions.getInstance(extens));
     }
 
     public CertTemplateBuilder setExtensions(Extensions extens)

@@ -1,9 +1,12 @@
+/***************************************************************/
+/******    DO NOT EDIT THIS CLASS bc-java SOURCE FILE     ******/
+/***************************************************************/
 package org.bouncycastle.asn1;
 
 import java.io.IOException;
 
 /**
- * A BIT STRING with DER encoding - the first byte contains the count of padding bits included in the byte array's last byte.
+ * A BIT STRING with DER encoding.
  */
 public class DERBitString
     extends ASN1BitString

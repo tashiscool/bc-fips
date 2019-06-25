@@ -1,11 +1,14 @@
+/***************************************************************/
+/******    DO NOT EDIT THIS CLASS bc-java SOURCE FILE     ******/
+/***************************************************************/
 package org.bouncycastle.math.ec.custom.sec;
 
 import java.math.BigInteger;
 
-import org.bouncycastle.math.raw.Nat;
-import org.bouncycastle.math.raw.Nat192;
+import org.bouncycastle.math.internal.Nat;
+import org.bouncycastle.math.internal.Nat192;
 
-public class SecP192R1Field
+class SecP192R1Field
 {
     private static final long M = 0xFFFFFFFFL;
 

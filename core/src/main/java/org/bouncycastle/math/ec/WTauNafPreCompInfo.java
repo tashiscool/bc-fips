@@ -1,3 +1,6 @@
+/***************************************************************/
+/******    DO NOT EDIT THIS CLASS bc-java SOURCE FILE     ******/
+/***************************************************************/
 package org.bouncycastle.math.ec;
 
 /**
@@ -8,7 +11,8 @@ public class WTauNafPreCompInfo implements PreCompInfo
 {
     /**
      * Array holding the precomputed <code>ECPoint.AbstractF2m</code>s used for the
-     * WTNAF multiplication.
+     * WTNAF multiplication in <code>
+     * {@link org.bouncycastle.math.ec.WTauNafMultiplier }</code>.
      */
     protected ECPoint.AbstractF2m[] preComp = null;
 

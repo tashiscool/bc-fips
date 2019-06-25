@@ -1,3 +1,6 @@
+/***************************************************************/
+/******    DO NOT EDIT THIS CLASS bc-java SOURCE FILE     ******/
+/***************************************************************/
 package org.bouncycastle.asn1.pkcs;
 
 import org.bouncycastle.asn1.ASN1ObjectIdentifier;
@@ -133,7 +136,7 @@ public interface PKCSObjectIdentifiers
     //       iso(1) member-body(2) us(840) rsadsi(113549) pkcs(1) 7 }
     //
     /** pkcs#7: 1.2.840.113549.1.7 */
-    ASN1ObjectIdentifier    pkcs_7                  = new ASN1ObjectIdentifier("1.2.840.113549.1.7").intern();
+    ASN1ObjectIdentifier    pkcs_7                  = new ASN1ObjectIdentifier("1.2.840.113549.1.7");
     /** PKCS#7: 1.2.840.113549.1.7.1 */
     ASN1ObjectIdentifier    data                    = new ASN1ObjectIdentifier("1.2.840.113549.1.7.1").intern();
     /** PKCS#7: 1.2.840.113549.1.7.2 */
@@ -155,58 +158,54 @@ public interface PKCSObjectIdentifiers
     ASN1ObjectIdentifier    pkcs_9                  = new ASN1ObjectIdentifier("1.2.840.113549.1.9");
 
     /** PKCS#9: 1.2.840.113549.1.9.1 */
-    ASN1ObjectIdentifier    pkcs_9_at_emailAddress        = pkcs_9.branch("1").intern();
+    ASN1ObjectIdentifier    pkcs_9_at_emailAddress        = pkcs_9.branch("1");
     /** PKCS#9: 1.2.840.113549.1.9.2 */
-    ASN1ObjectIdentifier    pkcs_9_at_unstructuredName    = pkcs_9.branch("2").intern();
+    ASN1ObjectIdentifier    pkcs_9_at_unstructuredName    = pkcs_9.branch("2");
     /** PKCS#9: 1.2.840.113549.1.9.3 */
-    ASN1ObjectIdentifier    pkcs_9_at_contentType         = pkcs_9.branch("3").intern();
+    ASN1ObjectIdentifier    pkcs_9_at_contentType         = pkcs_9.branch("3");
     /** PKCS#9: 1.2.840.113549.1.9.4 */
-    ASN1ObjectIdentifier    pkcs_9_at_messageDigest       = pkcs_9.branch("4").intern();
+    ASN1ObjectIdentifier    pkcs_9_at_messageDigest       = pkcs_9.branch("4");
     /** PKCS#9: 1.2.840.113549.1.9.5 */
-    ASN1ObjectIdentifier    pkcs_9_at_signingTime         = pkcs_9.branch("5").intern();
+    ASN1ObjectIdentifier    pkcs_9_at_signingTime         = pkcs_9.branch("5");
     /** PKCS#9: 1.2.840.113549.1.9.6 */
-    ASN1ObjectIdentifier    pkcs_9_at_counterSignature    = pkcs_9.branch("6").intern();
+    ASN1ObjectIdentifier    pkcs_9_at_counterSignature    = pkcs_9.branch("6");
     /** PKCS#9: 1.2.840.113549.1.9.7 */
-    ASN1ObjectIdentifier    pkcs_9_at_challengePassword   = pkcs_9.branch("7").intern();
+    ASN1ObjectIdentifier    pkcs_9_at_challengePassword   = pkcs_9.branch("7");
     /** PKCS#9: 1.2.840.113549.1.9.8 */
-    ASN1ObjectIdentifier    pkcs_9_at_unstructuredAddress = pkcs_9.branch("8").intern();
+    ASN1ObjectIdentifier    pkcs_9_at_unstructuredAddress = pkcs_9.branch("8");
     /** PKCS#9: 1.2.840.113549.1.9.9 */
-    ASN1ObjectIdentifier    pkcs_9_at_extendedCertificateAttributes = pkcs_9.branch("9").intern();
+    ASN1ObjectIdentifier    pkcs_9_at_extendedCertificateAttributes = pkcs_9.branch("9");
 
     /** PKCS#9: 1.2.840.113549.1.9.13 */
-    ASN1ObjectIdentifier    pkcs_9_at_signingDescription = pkcs_9.branch("13").intern();
+    ASN1ObjectIdentifier    pkcs_9_at_signingDescription = pkcs_9.branch("13");
     /** PKCS#9: 1.2.840.113549.1.9.14 */
-    ASN1ObjectIdentifier    pkcs_9_at_extensionRequest   = pkcs_9.branch("14").intern();
+    ASN1ObjectIdentifier    pkcs_9_at_extensionRequest   = pkcs_9.branch("14");
     /** PKCS#9: 1.2.840.113549.1.9.15 */
-    ASN1ObjectIdentifier    pkcs_9_at_smimeCapabilities  = pkcs_9.branch("15").intern();
+    ASN1ObjectIdentifier    pkcs_9_at_smimeCapabilities  = pkcs_9.branch("15");
     /** PKCS#9: 1.2.840.113549.1.9.16 */
-    ASN1ObjectIdentifier    id_smime                     = pkcs_9.branch("16").intern();
+    ASN1ObjectIdentifier    id_smime                     = pkcs_9.branch("16");
 
     /** PKCS#9: 1.2.840.113549.1.9.20 */
-    ASN1ObjectIdentifier    pkcs_9_at_friendlyName  = pkcs_9.branch("20").intern();
+    ASN1ObjectIdentifier    pkcs_9_at_friendlyName  = pkcs_9.branch("20");
     /** PKCS#9: 1.2.840.113549.1.9.21 */
-    ASN1ObjectIdentifier    pkcs_9_at_localKeyId    = pkcs_9.branch("21").intern();
-
-    /** PKCS#9: 1.2.840.113549.1.9.22.1
-     * @deprecated use x509Certificate instead */
-    ASN1ObjectIdentifier    x509certType            = pkcs_9.branch("22.1");
+    ASN1ObjectIdentifier    pkcs_9_at_localKeyId    = pkcs_9.branch("21");
 
     /** PKCS#9: 1.2.840.113549.1.9.22 */
     ASN1ObjectIdentifier    certTypes               = pkcs_9.branch("22");
     /** PKCS#9: 1.2.840.113549.1.9.22.1 */
-    ASN1ObjectIdentifier    x509Certificate         = certTypes.branch("1").intern();
+    ASN1ObjectIdentifier    x509Certificate         = certTypes.branch("1");
     /** PKCS#9: 1.2.840.113549.1.9.22.2 */
-    ASN1ObjectIdentifier    sdsiCertificate         = certTypes.branch("2").intern();
+    ASN1ObjectIdentifier    sdsiCertificate         = certTypes.branch("2");
 
     /** PKCS#9: 1.2.840.113549.1.9.23 */
     ASN1ObjectIdentifier    crlTypes                = pkcs_9.branch("23");
     /** PKCS#9: 1.2.840.113549.1.9.23.1 */
-    ASN1ObjectIdentifier    x509Crl                 = crlTypes.branch("1").intern();
+    ASN1ObjectIdentifier    x509Crl                 = crlTypes.branch("1");
 
-    /** RFC 6211 -  id-aa-cmsAlgorithmProtect OBJECT IDENTIFIER ::= {
+    /** RFC 6211 - id-aa-cmsAlgorithmProtect OBJECT IDENTIFIER ::= {
             iso(1) member-body(2) us(840) rsadsi(113549) pkcs(1)
-            pkcs9(9) 52 }  */
-    ASN1ObjectIdentifier   id_aa_cmsAlgorithmProtect = pkcs_9.branch("52").intern();
+            pkcs9(9) 52 } */
+    ASN1ObjectIdentifier   id_aa_cmsAlgorithmProtect = pkcs_9.branch("52");
 
     //
     // SMIME capability sub oids.
@@ -277,88 +276,65 @@ public interface PKCSObjectIdentifiers
     // id-aa OBJECT IDENTIFIER ::= {iso(1) member-body(2) usa(840)
     // rsadsi(113549) pkcs(1) pkcs-9(9) smime(16) attributes(2)}
     //
-    /** PKCS#9: 1.2.840.113549.1.9.16.2 - smime attributes */
+    /** PKCS#9: 1.2.840.113549.1.9.16.6.2 - smime attributes */
     ASN1ObjectIdentifier    id_aa = new ASN1ObjectIdentifier("1.2.840.113549.1.9.16.2");
 
 
-    /** PKCS#9: 1.2.840.113549.1.9.16.2.1 -- smime attribute receiptRequest */
+    /** PKCS#9: 1.2.840.113549.1.9.16.6.2.1 -- smime attribute receiptRequest */
     ASN1ObjectIdentifier id_aa_receiptRequest = id_aa.branch("1");
     
-    /** PKCS#9: 1.2.840.113549.1.9.16.2.4 - See <a href="http://tools.ietf.org/html/rfc2634">RFC 2634</a> */
+    /** PKCS#9: 1.2.840.113549.1.9.16.6.2.4 - See <a href="http://tools.ietf.org/html/rfc2634">RFC 2634</a> */
     ASN1ObjectIdentifier id_aa_contentHint      = id_aa.branch("4"); // See RFC 2634
-    /** PKCS#9: 1.2.840.113549.1.9.16.2.5 */
+    /** PKCS#9: 1.2.840.113549.1.9.16.6.2.5 */
     ASN1ObjectIdentifier id_aa_msgSigDigest     = id_aa.branch("5");
-    /** PKCS#9: 1.2.840.113549.1.9.16.2.10 */
+    /** PKCS#9: 1.2.840.113549.1.9.16.6.2.10 */
     ASN1ObjectIdentifier id_aa_contentReference = id_aa.branch("10");
     /*
      * id-aa-encrypKeyPref OBJECT IDENTIFIER ::= {id-aa 11}
      * 
      */
-    /** PKCS#9: 1.2.840.113549.1.9.16.2.11 */
+    /** PKCS#9: 1.2.840.113549.1.9.16.6.2.11 */
     ASN1ObjectIdentifier id_aa_encrypKeyPref        = id_aa.branch("11");
-    /** PKCS#9: 1.2.840.113549.1.9.16.2.12 */
+    /** PKCS#9: 1.2.840.113549.1.9.16.6.2.12 */
     ASN1ObjectIdentifier id_aa_signingCertificate   = id_aa.branch("12");
-    /** PKCS#9: 1.2.840.113549.1.9.16.2.47 */
+    /** PKCS#9: 1.2.840.113549.1.9.16.6.2.47 */
     ASN1ObjectIdentifier id_aa_signingCertificateV2 = id_aa.branch("47");
-
-    /** PKCS#9: 1.2.840.113549.1.9.16.2.7 - See <a href="http://tools.ietf.org/html/rfc2634">RFC 2634</a> */
+     
+    /** PKCS#9: 1.2.840.113549.1.9.16.6.2.7 - See <a href="http://tools.ietf.org/html/rfc2634">RFC 2634</a> */
     ASN1ObjectIdentifier id_aa_contentIdentifier = id_aa.branch("7"); // See RFC 2634
 
     /*
      * RFC 3126
      */
-    /** PKCS#9: 1.2.840.113549.1.9.16.2.14 - <a href="http://tools.ietf.org/html/rfc3126">RFC 3126</a> */
+    /** PKCS#9: 1.2.840.113549.1.9.16.6.2.14 - <a href="http://tools.ietf.org/html/rfc3126">RFC 3126</a> */
     ASN1ObjectIdentifier id_aa_signatureTimeStampToken = id_aa.branch("14");
     
-    /** PKCS#9: 1.2.840.113549.1.9.16.2.15 - <a href="http://tools.ietf.org/html/rfc3126">RFC 3126</a> */
+    /** PKCS#9: 1.2.840.113549.1.9.16.6.2.15 - <a href="http://tools.ietf.org/html/rfc3126">RFC 3126</a> */
     ASN1ObjectIdentifier id_aa_ets_sigPolicyId = id_aa.branch("15");
-    /** PKCS#9: 1.2.840.113549.1.9.16.2.16 - <a href="http://tools.ietf.org/html/rfc3126">RFC 3126</a> */
+    /** PKCS#9: 1.2.840.113549.1.9.16.6.2.16 - <a href="http://tools.ietf.org/html/rfc3126">RFC 3126</a> */
     ASN1ObjectIdentifier id_aa_ets_commitmentType = id_aa.branch("16");
-    /** PKCS#9: 1.2.840.113549.1.9.16.2.17 - <a href="http://tools.ietf.org/html/rfc3126">RFC 3126</a> */
+    /** PKCS#9: 1.2.840.113549.1.9.16.6.2.17 - <a href="http://tools.ietf.org/html/rfc3126">RFC 3126</a> */
     ASN1ObjectIdentifier id_aa_ets_signerLocation = id_aa.branch("17");
-    /** PKCS#9: 1.2.840.113549.1.9.16.2.18 - <a href="http://tools.ietf.org/html/rfc3126">RFC 3126</a> */
+    /** PKCS#9: 1.2.840.113549.1.9.16.6.2.18 - <a href="http://tools.ietf.org/html/rfc3126">RFC 3126</a> */
     ASN1ObjectIdentifier id_aa_ets_signerAttr = id_aa.branch("18");
     /** PKCS#9: 1.2.840.113549.1.9.16.6.2.19 - <a href="http://tools.ietf.org/html/rfc3126">RFC 3126</a> */
     ASN1ObjectIdentifier id_aa_ets_otherSigCert = id_aa.branch("19");
-    /** PKCS#9: 1.2.840.113549.1.9.16.2.20 - <a href="http://tools.ietf.org/html/rfc3126">RFC 3126</a> */
+    /** PKCS#9: 1.2.840.113549.1.9.16.6.2.20 - <a href="http://tools.ietf.org/html/rfc3126">RFC 3126</a> */
     ASN1ObjectIdentifier id_aa_ets_contentTimestamp = id_aa.branch("20");
-    /** PKCS#9: 1.2.840.113549.1.9.16.2.21 - <a href="http://tools.ietf.org/html/rfc3126">RFC 3126</a> */
+    /** PKCS#9: 1.2.840.113549.1.9.16.6.2.21 - <a href="http://tools.ietf.org/html/rfc3126">RFC 3126</a> */
     ASN1ObjectIdentifier id_aa_ets_certificateRefs = id_aa.branch("21");
-    /** PKCS#9: 1.2.840.113549.1.9.16.2.22 - <a href="http://tools.ietf.org/html/rfc3126">RFC 3126</a> */
+    /** PKCS#9: 1.2.840.113549.1.9.16.6.2.22 - <a href="http://tools.ietf.org/html/rfc3126">RFC 3126</a> */
     ASN1ObjectIdentifier id_aa_ets_revocationRefs = id_aa.branch("22");
-    /** PKCS#9: 1.2.840.113549.1.9.16.2.23 - <a href="http://tools.ietf.org/html/rfc3126">RFC 3126</a> */
+    /** PKCS#9: 1.2.840.113549.1.9.16.6.2.23 - <a href="http://tools.ietf.org/html/rfc3126">RFC 3126</a> */
     ASN1ObjectIdentifier id_aa_ets_certValues = id_aa.branch("23");
-    /** PKCS#9: 1.2.840.113549.1.9.16.2.24 - <a href="http://tools.ietf.org/html/rfc3126">RFC 3126</a> */
+    /** PKCS#9: 1.2.840.113549.1.9.16.6.2.24 - <a href="http://tools.ietf.org/html/rfc3126">RFC 3126</a> */
     ASN1ObjectIdentifier id_aa_ets_revocationValues = id_aa.branch("24");
-    /** PKCS#9: 1.2.840.113549.1.9.16.2.25 - <a href="http://tools.ietf.org/html/rfc3126">RFC 3126</a> */
+    /** PKCS#9: 1.2.840.113549.1.9.16.6.2.25 - <a href="http://tools.ietf.org/html/rfc3126">RFC 3126</a> */
     ASN1ObjectIdentifier id_aa_ets_escTimeStamp = id_aa.branch("25");
-    /** PKCS#9: 1.2.840.113549.1.9.16.2.26 - <a href="http://tools.ietf.org/html/rfc3126">RFC 3126</a> */
+    /** PKCS#9: 1.2.840.113549.1.9.16.6.2.26 - <a href="http://tools.ietf.org/html/rfc3126">RFC 3126</a> */
     ASN1ObjectIdentifier id_aa_ets_certCRLTimestamp = id_aa.branch("26");
-    /** PKCS#9: 1.2.840.113549.1.9.16.2.27 - <a href="http://tools.ietf.org/html/rfc3126">RFC 3126</a> */
+    /** PKCS#9: 1.2.840.113549.1.9.16.6.2.27 - <a href="http://tools.ietf.org/html/rfc3126">RFC 3126</a> */
     ASN1ObjectIdentifier id_aa_ets_archiveTimestamp = id_aa.branch("27");
-
-    /** PKCS#9: 1.2.840.113549.1.9.16.2.37 - <a href="https://tools.ietf.org/html/rfc4108#section-2.2.5">RFC 4108</a> */
-    ASN1ObjectIdentifier id_aa_decryptKeyID = id_aa.branch("37");
-
-    /** PKCS#9: 1.2.840.113549.1.9.16.2.38 - <a href="https://tools.ietf.org/html/rfc4108#section-2.2.6">RFC 4108</a> */
-    ASN1ObjectIdentifier id_aa_implCryptoAlgs = id_aa.branch("38");
-
-    /** PKCS#9: 1.2.840.113549.1.9.16.2.54 <a href="https://tools.ietf.org/html/rfc7030">RFC7030</a>*/
-    ASN1ObjectIdentifier id_aa_asymmDecryptKeyID = id_aa.branch("54");
-
-    /** PKCS#9: 1.2.840.113549.1.9.16.2.43   <a href="https://tools.ietf.org/html/rfc7030">RFC7030</a>*/
-    ASN1ObjectIdentifier id_aa_implCompressAlgs = id_aa.branch("43");
-    /** PKCS#9: 1.2.840.113549.1.9.16.2.40   <a href="https://tools.ietf.org/html/rfc7030">RFC7030</a>*/
-    ASN1ObjectIdentifier id_aa_communityIdentifiers = id_aa.branch("40");
-
-    /** @deprecated use id_aa_ets_sigPolicyId instead */
-    ASN1ObjectIdentifier id_aa_sigPolicyId    = id_aa_ets_sigPolicyId;
-    /** @deprecated use id_aa_ets_commitmentType instead */
-    ASN1ObjectIdentifier id_aa_commitmentType = id_aa_ets_commitmentType;
-    /** @deprecated use id_aa_ets_signerLocation instead */
-    ASN1ObjectIdentifier id_aa_signerLocation = id_aa_ets_signerLocation;
-    /** @deprecated use id_aa_ets_otherSigCert instead */
-    ASN1ObjectIdentifier id_aa_otherSigCert   = id_aa_ets_otherSigCert;
     
     /**
      * id-spq OBJECT IDENTIFIER ::= {iso(1) member-body(2) usa(840)
@@ -409,12 +385,6 @@ public interface PKCSObjectIdentifiers
     ASN1ObjectIdentifier    pbeWithSHAAnd128BitRC2_CBC      = pkcs_12PbeIds.branch("5");
     /** PKCS#12: 1.2.840.113549.1.12.1.6 */
     ASN1ObjectIdentifier    pbeWithSHAAnd40BitRC2_CBC       = pkcs_12PbeIds.branch("6");
-
-    /**
-     * PKCS#12: 1.2.840.113549.1.12.1.6
-     * @deprecated use pbeWithSHAAnd40BitRC2_CBC
-     */
-    ASN1ObjectIdentifier    pbewithSHAAnd40BitRC2_CBC = pkcs_12PbeIds.branch("6");
 
     /** PKCS#9: 1.2.840.113549.1.9.16.3.6 */
     ASN1ObjectIdentifier    id_alg_CMS3DESwrap = new ASN1ObjectIdentifier("1.2.840.113549.1.9.16.3.6");

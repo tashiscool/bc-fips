@@ -1,18 +1,23 @@
+/***************************************************************/
+/******    DO NOT EDIT THIS CLASS bc-java SOURCE FILE     ******/
+/***************************************************************/
 package org.bouncycastle.asn1.x9;
 
 import org.bouncycastle.asn1.ASN1ObjectIdentifier;
 
 /**
- *
  * Object identifiers for the various X9 standards.
- * <pre>
- * ansi-X9-62 OBJECT IDENTIFIER ::= { iso(1) member-body(2)
- *                                    us(840) ansi-x962(10045) }
- * </pre>
  */
 public interface X9ObjectIdentifiers
 {
-    /** Base OID: 1.2.840.10045 */
+    /**
+     *
+     * X9.62
+     * <pre>
+     * ansi-X9-62 OBJECT IDENTIFIER ::= { iso(1) member-body(2)
+     *                                    us(840) ansi-x962(10045) }
+     * </pre>
+     */
     ASN1ObjectIdentifier ansi_X9_62 = new ASN1ObjectIdentifier("1.2.840.10045");
 
     /** OID: 1.2.840.10045.1 */

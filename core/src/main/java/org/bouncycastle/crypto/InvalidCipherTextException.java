@@ -1,40 +1,29 @@
 package org.bouncycastle.crypto;
 
 /**
- * this exception is thrown whenever we find something we don't expect in a
- * message.
+ * Exception thrown when something unexpected is encountered processing an encrypted stream.
  */
-public class InvalidCipherTextException 
-    extends CryptoException
+public class InvalidCipherTextException
+    extends StreamException
 {
     /**
-     * base constructor.
+     * Base constructor.
+     *
+     * @param msg a message concerning the exception.
      */
-    public InvalidCipherTextException()
+    public InvalidCipherTextException(String msg)
     {
+        super(msg);
     }
 
     /**
-     * create a InvalidCipherTextException with the given message.
+     * Constructor when this exception is due to another one.
      *
-     * @param message the message to be carried with the exception.
+     * @param msg a message concerning the exception.
+     * @param cause the exception that caused this exception to be thrown.
      */
-    public InvalidCipherTextException(
-        String  message)
+    public InvalidCipherTextException(String msg, Throwable cause)
     {
-        super(message);
-    }
-
-    /**
-     * create a InvalidCipherTextException with the given message.
-     *
-     * @param message the message to be carried with the exception.
-     * @param cause the root cause of the exception.
-     */
-    public InvalidCipherTextException(
-        String  message,
-        Throwable cause)
-    {
-        super(message, cause);
+        super(msg, cause);
     }
 }

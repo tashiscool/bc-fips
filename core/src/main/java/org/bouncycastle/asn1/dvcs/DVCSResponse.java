@@ -1,3 +1,6 @@
+/***************************************************************/
+/******    DO NOT EDIT THIS CLASS bc-java SOURCE FILE     ******/
+/***************************************************************/
 package org.bouncycastle.asn1.dvcs;
 
 import java.io.IOException;
@@ -52,7 +55,7 @@ public class DVCSResponse
                 }
                 catch (IOException e)
                 {
-                    throw new IllegalArgumentException("failed to construct sequence from byte[]: " + e.getMessage());
+                    throw new IllegalArgumentException("Failed to construct sequence from byte[]: " + e.getMessage());
                 }
             }
             if (obj instanceof ASN1Sequence)

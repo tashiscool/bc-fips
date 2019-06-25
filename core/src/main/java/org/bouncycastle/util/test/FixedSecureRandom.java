@@ -88,31 +88,8 @@ public class FixedSecureRandom
         }
     }
 
-    public FixedSecureRandom(byte[] value)
-    {
-        this(new Source[] { new Data(value) });
-    }
-
     public FixedSecureRandom(
-        byte[][] values)
-    {
-        this(buildDataArray(values));
-    }
-
-    private static Data[] buildDataArray(byte[][] values)
-    {
-        Data[] res = new Data[values.length];
-
-        for (int i = 0; i != values.length; i++)
-        {
-            res[i] = new Data(values[i]);
-        }
-
-        return res;
-    }
-
-    public FixedSecureRandom(
-        Source[] sources)
+        Source... sources)
     {
         super(null, new DummyProvider());   // to prevent recursion in provider creation
 
@@ -296,14 +273,16 @@ public class FixedSecureRandom
         if ((bitLength + 7) / 8 > v.length)
         {
             byte[] tmp = new byte[(bitLength + 7) / 8];
-
             System.arraycopy(v, 0, tmp, tmp.length - v.length, v.length);
             if (isAndroidStyle)
             {
-                if (bitLength % 8 != 0)
+                if (bitLength % 32 != 0)
                 {
+                    tmp = new byte[((bitLength + 31) / 32) * 4];
+                    System.arraycopy(v, 0, tmp, tmp.length - v.length, v.length);
+
                     int i = Pack.bigEndianToInt(tmp, 0);
-                    Pack.intToBigEndian(i << (8 - (bitLength % 8)), tmp, 0);
+                    Pack.intToBigEndian(i << (32 - (bitLength % 32)), tmp, 0);
                 }
             }
 
@@ -313,10 +292,14 @@ public class FixedSecureRandom
         {
             if (isAndroidStyle && bitLength < (v.length * 8))
             {
-                if (bitLength % 8 != 0)
+                if (bitLength % 32 != 0)
                 {
-                    int i = Pack.bigEndianToInt(v, 0);
-                    Pack.intToBigEndian(i << (8 - (bitLength % 8)), v, 0);
+                    byte[] tmp = new byte[((bitLength + 31) / 32) * 4];
+                    System.arraycopy(v, 0, tmp, tmp.length - v.length, v.length);
+                    int i = Pack.bigEndianToInt(tmp, 0);
+                    Pack.intToBigEndian(i << (32 - (bitLength % 32)), tmp, 0);
+
+                    return tmp;
                 }
             }
         }

@@ -1,3 +1,6 @@
+/***************************************************************/
+/******    DO NOT EDIT THIS CLASS bc-java SOURCE FILE     ******/
+/***************************************************************/
 package org.bouncycastle.asn1.eac;
 
 import java.math.BigInteger;
@@ -336,6 +339,6 @@ public class ECDSAPublicKey
 
     public ASN1Primitive toASN1Primitive()
     {
-        return new DERSequence(getASN1EncodableVector(usage, !hasParameters()));
+        return new DERSequence(getASN1EncodableVector(usage, false));
     }
 }

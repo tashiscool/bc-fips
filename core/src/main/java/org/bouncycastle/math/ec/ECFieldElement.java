@@ -1,10 +1,13 @@
+/***************************************************************/
+/******    DO NOT EDIT THIS CLASS bc-java SOURCE FILE     ******/
+/***************************************************************/
 package org.bouncycastle.math.ec;
 
 import java.math.BigInteger;
 import java.util.Random;
 
-import org.bouncycastle.math.raw.Mod;
-import org.bouncycastle.math.raw.Nat;
+import org.bouncycastle.math.internal.Mod;
+import org.bouncycastle.math.internal.Nat;
 import org.bouncycastle.util.Arrays;
 import org.bouncycastle.util.BigIntegers;
 
@@ -24,11 +27,6 @@ public abstract class ECFieldElement
     public abstract ECFieldElement invert();
     public abstract ECFieldElement sqrt();
 
-    public ECFieldElement()
-    {
-
-    }
-    
     public int bitLength()
     {
         return toBigInteger().bitLength();
@@ -109,14 +107,6 @@ public abstract class ECFieldElement
                 }
             }
             return null;
-        }
-
-        /**
-         * @deprecated Use ECCurve.fromBigInteger to construct field elements
-         */
-        public Fp(BigInteger q, BigInteger x)
-        {
-            this(q, calculateResidue(q), x);
         }
 
         Fp(BigInteger q, BigInteger r, BigInteger x)
@@ -504,7 +494,7 @@ public abstract class ECFieldElement
     {
         public ECFieldElement halfTrace()
         {
-            int m = this.getFieldSize();
+            int m = getFieldSize();
             if ((m & 1) == 0)
             {
                 throw new IllegalStateException("Half-trace only defined for odd m");
@@ -523,7 +513,7 @@ public abstract class ECFieldElement
 
         public int trace()
         {
-            int m = this.getFieldSize();
+            int m = getFieldSize();
             ECFieldElement fe = this;
             ECFieldElement tr = fe;
             for (int i = 1; i < m; ++i)
@@ -585,7 +575,7 @@ public abstract class ECFieldElement
         /**
          * The <code>LongArray</code> holding the bits.
          */
-        LongArray x;
+        private LongArray x;
 
         /**
          * Constructor for PPB.
@@ -603,7 +593,7 @@ public abstract class ECFieldElement
          * @param x The BigInteger representing the value of the field element.
          * @deprecated Use ECCurve.fromBigInteger to construct field elements
          */
-        public F2m(
+        F2m(
             int m, 
             int k1, 
             int k2, 
@@ -640,7 +630,23 @@ public abstract class ECFieldElement
             this.x = new LongArray(x);
         }
 
-        F2m(int m, int[] ks, LongArray x)
+        /**
+         * Constructor for TPB.
+         * @param m  The exponent <code>m</code> of
+         * <code>F<sub>2<sup>m</sup></sub></code>.
+         * @param k The integer <code>k</code> where <code>x<sup>m</sup> +
+         * x<sup>k</sup> + 1</code> represents the reduction
+         * polynomial <code>f(z)</code>.
+         * @param x The BigInteger representing the value of the field element.
+         * @deprecated Use ECCurve.fromBigInteger to construct field elements
+         */
+        F2m(int m, int k, BigInteger x)
+        {
+            // Set k1 to k, and set k2 and k3 to 0
+            this(m, k, 0, 0, x);
+        }
+
+        private F2m(int m, int[] ks, LongArray x)
         {
             this.m = m;
             this.representation = (ks.length == 1) ? TPB : PPB;

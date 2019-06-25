@@ -1,6 +1,7 @@
+/***************************************************************/
+/******    DO NOT EDIT THIS CLASS bc-java SOURCE FILE     ******/
+/***************************************************************/
 package org.bouncycastle.asn1.pkcs;
-
-import java.util.Enumeration;
 
 import org.bouncycastle.asn1.ASN1EncodableVector;
 import org.bouncycastle.asn1.ASN1Integer;
@@ -13,7 +14,6 @@ import org.bouncycastle.asn1.DERSequence;
 import org.bouncycastle.asn1.DERTaggedObject;
 import org.bouncycastle.asn1.x500.X500Name;
 import org.bouncycastle.asn1.x509.SubjectPublicKeyInfo;
-import org.bouncycastle.asn1.x509.X509Name;
 
 /**
  * PKCS10 CertificationRequestInfo object.
@@ -70,37 +70,21 @@ public class CertificationRequestInfo
      * @param attributes any attributes to be associated with the request.
      */
     public CertificationRequestInfo(
-        X500Name                subject,
+        X500Name subject,
         SubjectPublicKeyInfo    pkInfo,
         ASN1Set                 attributes)
     {
-        if ((subject == null) || (pkInfo == null))
-        {
-            throw new IllegalArgumentException("Not all mandatory fields set in CertificationRequestInfo generator.");
-        }
-
-        validateAttributes(attributes);
-
         this.subject = subject;
         this.subjectPKInfo = pkInfo;
         this.attributes = attributes;
+
+        if ((subject == null) || (version == null) || (subjectPKInfo == null))
+        {
+            throw new IllegalArgumentException("Not all mandatory fields set in CertificationRequestInfo generator.");
+        }
     }
 
-    /**
-     * @deprecated use X500Name method.
-     */
-    public CertificationRequestInfo(
-        X509Name                subject,
-        SubjectPublicKeyInfo    pkInfo,
-        ASN1Set                 attributes)
-    {
-        this(X500Name.getInstance(subject.toASN1Primitive()), pkInfo, attributes);
-    }
-
-    /**
-     * @deprecated use getInstance().
-     */
-    public CertificationRequestInfo(
+    private CertificationRequestInfo(
         ASN1Sequence  seq)
     {
         version = (ASN1Integer)seq.getObjectAt(0);
@@ -117,8 +101,6 @@ public class CertificationRequestInfo
             ASN1TaggedObject tagobj = (ASN1TaggedObject)seq.getObjectAt(3);
             attributes = ASN1Set.getInstance(tagobj, false);
         }
-
-        validateAttributes(attributes);
 
         if ((subject == null) || (version == null) || (subjectPKInfo == null))
         {
@@ -160,25 +142,5 @@ public class CertificationRequestInfo
         }
 
         return new DERSequence(v);
-    }
-
-    private static void validateAttributes(ASN1Set attributes)
-    {
-        if (attributes == null)
-        {
-            return;
-        }
-
-        for (Enumeration en = attributes.getObjects(); en.hasMoreElements();)
-        {
-            Attribute attr = Attribute.getInstance(en.nextElement());
-            if (attr.getAttrType().equals(PKCSObjectIdentifiers.pkcs_9_at_challengePassword))
-            {
-                if (attr.getAttrValues().size() != 1)
-                {
-                    throw new IllegalArgumentException("challengePassword attribute must have one value");
-                }
-            }
-        }
     }
 }

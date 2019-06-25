@@ -1,3 +1,6 @@
+/***************************************************************/
+/******    DO NOT EDIT THIS CLASS bc-java SOURCE FILE     ******/
+/***************************************************************/
 package org.bouncycastle.asn1.cmp;
 
 import org.bouncycastle.asn1.ASN1EncodableVector;
@@ -10,16 +13,6 @@ import org.bouncycastle.asn1.DERTaggedObject;
 import org.bouncycastle.asn1.crmf.EncryptedValue;
 import org.bouncycastle.asn1.crmf.PKIPublicationInfo;
 
-/**
- * <pre>
- * CertifiedKeyPair ::= SEQUENCE {
- *                                  certOrEncCert       CertOrEncCert,
- *                                  privateKey      [0] EncryptedValue      OPTIONAL,
- *                                  -- see [CRMF] for comment on encoding
- *                                  publicationInfo [1] PKIPublicationInfo  OPTIONAL
- *       }
- * </pre>
- */
 public class CertifiedKeyPair
     extends ASN1Object
 {
@@ -47,8 +40,8 @@ public class CertifiedKeyPair
             }
             else
             {
-                privateKey = EncryptedValue.getInstance(ASN1TaggedObject.getInstance(seq.getObjectAt(1)).getObject());
-                publicationInfo = PKIPublicationInfo.getInstance(ASN1TaggedObject.getInstance(seq.getObjectAt(2)).getObject());
+                privateKey = EncryptedValue.getInstance(ASN1TaggedObject.getInstance(seq.getObjectAt(1)));
+                publicationInfo = PKIPublicationInfo.getInstance(ASN1TaggedObject.getInstance(seq.getObjectAt(2)));
             }
         }
     }
@@ -77,7 +70,8 @@ public class CertifiedKeyPair
     public CertifiedKeyPair(
         CertOrEncCert certOrEncCert,
         EncryptedValue privateKey,
-        PKIPublicationInfo  publicationInfo)
+        PKIPublicationInfo  publicationInfo
+        )
     {
         if (certOrEncCert == null)
         {
@@ -105,8 +99,14 @@ public class CertifiedKeyPair
     }
 
     /**
-     * Return the primitive representation of PKIPublicationInfo.
-     *
+     * <pre>
+     * CertifiedKeyPair ::= SEQUENCE {
+     *                                  certOrEncCert       CertOrEncCert,
+     *                                  privateKey      [0] EncryptedValue      OPTIONAL,
+     *                                  -- see [CRMF] for comment on encoding
+     *                                  publicationInfo [1] PKIPublicationInfo  OPTIONAL
+     *       }
+     * </pre>
      * @return a basic ASN.1 object representation.
      */
     public ASN1Primitive toASN1Primitive()

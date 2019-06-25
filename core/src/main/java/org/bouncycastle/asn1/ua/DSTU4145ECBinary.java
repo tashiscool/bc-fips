@@ -1,3 +1,6 @@
+/***************************************************************/
+/******    DO NOT EDIT THIS CLASS bc-java SOURCE FILE     ******/
+/***************************************************************/
 package org.bouncycastle.asn1.ua;
 
 import java.math.BigInteger;
@@ -12,7 +15,7 @@ import org.bouncycastle.asn1.ASN1TaggedObject;
 import org.bouncycastle.asn1.DEROctetString;
 import org.bouncycastle.asn1.DERSequence;
 import org.bouncycastle.asn1.DERTaggedObject;
-import org.bouncycastle.crypto.params.ECDomainParameters;
+import org.bouncycastle.crypto.asymmetric.ECDomainParameters;
 import org.bouncycastle.math.ec.ECAlgorithms;
 import org.bouncycastle.math.ec.ECCurve;
 import org.bouncycastle.math.field.PolynomialExtensionField;
@@ -48,10 +51,6 @@ public class DSTU4145ECBinary
         else if (exponents.length == 5)
         {
             f = new DSTU4145BinaryField(exponents[4], exponents[1], exponents[2], exponents[3]);
-        }
-        else
-        {
-            throw new IllegalArgumentException("curve must have a trinomial or pentanomial basis");
         }
 
         a = new ASN1Integer(curve.getA().toBigInteger());

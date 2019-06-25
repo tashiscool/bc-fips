@@ -1,12 +1,15 @@
+/***************************************************************/
+/******    DO NOT EDIT THIS CLASS bc-java SOURCE FILE     ******/
+/***************************************************************/
 package org.bouncycastle.math.ec.custom.sec;
 
 import java.math.BigInteger;
 
-import org.bouncycastle.math.raw.Interleave;
-import org.bouncycastle.math.raw.Nat;
-import org.bouncycastle.math.raw.Nat448;
+import org.bouncycastle.math.internal.Interleave;
+import org.bouncycastle.math.internal.Nat;
+import org.bouncycastle.math.internal.Nat448;
 
-public class SecT409Field
+class SecT409Field
 {
     private static final long M25 = -1L >>> 39;
     private static final long M59 = -1L >>> 5;
@@ -166,36 +169,6 @@ public class SecT409Field
         z[zOff    ] ^= t;
         z[zOff + 1] ^= (t << 23);
         z[zOff + 6]  = z6 & M25;
-    }
-
-    public static void sqrt(long[] x, long[] z)
-    {
-        long u0, u1;
-        u0 = Interleave.unshuffle(x[0]); u1 = Interleave.unshuffle(x[1]);
-        long e0 = (u0 & 0x00000000FFFFFFFFL) | (u1 << 32);
-        long c0 = (u0 >>> 32) | (u1 & 0xFFFFFFFF00000000L);
-
-        u0 = Interleave.unshuffle(x[2]); u1 = Interleave.unshuffle(x[3]);
-        long e1 = (u0 & 0x00000000FFFFFFFFL) | (u1 << 32);
-        long c1 = (u0 >>> 32) | (u1 & 0xFFFFFFFF00000000L);
-
-        u0 = Interleave.unshuffle(x[4]); u1 = Interleave.unshuffle(x[5]);
-        long e2 = (u0 & 0x00000000FFFFFFFFL) | (u1 << 32);
-        long c2 = (u0 >>> 32) | (u1 & 0xFFFFFFFF00000000L);
-
-        u0 = Interleave.unshuffle(x[6]);
-        long e3 = (u0 & 0x00000000FFFFFFFFL);
-        long c3 = (u0 >>> 32);
-
-        z[0] = e0 ^ (c0 << 44);
-        z[1] = e1 ^ (c1 << 44) ^ (c0 >>> 20);
-        z[2] = e2 ^ (c2 << 44) ^ (c1 >>> 20);
-        z[3] = e3 ^ (c3 << 44) ^ (c2 >>> 20) ^ (c0 << 13);
-        z[4] =                   (c3 >>> 20) ^ (c1 << 13) ^ (c0 >>> 51);
-        z[5] =                                 (c2 << 13) ^ (c1 >>> 51);
-        z[6] =                                 (c3 << 13) ^ (c2 >>> 51);
-        
-//        assert (c3 >>> 51) == 0;
     }
 
     public static void square(long[] x, long[] z)

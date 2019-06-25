@@ -1,13 +1,16 @@
+/***************************************************************/
+/******    DO NOT EDIT THIS CLASS bc-java SOURCE FILE     ******/
+/***************************************************************/
 package org.bouncycastle.math.ec.custom.sec;
 
 import java.math.BigInteger;
 
 import org.bouncycastle.math.ec.ECFieldElement;
-import org.bouncycastle.math.raw.Mod;
-import org.bouncycastle.math.raw.Nat256;
+import org.bouncycastle.math.internal.Mod;
+import org.bouncycastle.math.internal.Nat256;
 import org.bouncycastle.util.Arrays;
 
-public class SecP256K1FieldElement extends ECFieldElement.AbstractFp
+class SecP256K1FieldElement extends ECFieldElement.AbstractFp
 {
     public static final BigInteger Q = SecP256K1Curve.q;
 

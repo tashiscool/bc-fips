@@ -1,0 +1,2 @@
+This marker file is used to allow Android VMs to find the BouncyCastle FIPS
+Jar file, for HMAC verification.

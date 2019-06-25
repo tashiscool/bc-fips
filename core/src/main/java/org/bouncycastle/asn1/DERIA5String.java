@@ -1,3 +1,6 @@
+/***************************************************************/
+/******    DO NOT EDIT THIS CLASS bc-java SOURCE FILE     ******/
+/***************************************************************/
 package org.bouncycastle.asn1;
 
 import java.io.IOException;
@@ -6,19 +9,16 @@ import org.bouncycastle.util.Arrays;
 import org.bouncycastle.util.Strings;
 
 /**
- * DER IA5String object - this is a ISO 646 (ASCII) string encoding code points 0 to 127.
- * <p>
- * Explicit character set escape sequences are not allowed.
- * </p>
+ * DER IA5String object - this is an ascii string.
  */
 public class DERIA5String
     extends ASN1Primitive
     implements ASN1String
 {
-    private final byte[]  string;
+    private byte[]  string;
 
     /**
-     * Return an IA5 string from the passed in object
+     * return a IA5 string from the passed in object
      *
      * @param obj a DERIA5String or an object that can be converted into one.
      * @exception IllegalArgumentException if the object cannot be converted.
@@ -44,11 +44,11 @@ public class DERIA5String
             }
         }
 
-        throw new IllegalArgumentException("illegal object in getInstance: " + obj.getClass().getName());
+        throw new IllegalArgumentException("Illegal object in getInstance: " + obj.getClass().getName());
     }
 
     /**
-     * Return an IA5 String from a tagged object.
+     * return an IA5 String from a tagged object.
      *
      * @param obj the tagged object holding the object we want
      * @param explicit true if the object is meant to be explicitly
@@ -74,7 +74,7 @@ public class DERIA5String
     }
 
     /**
-     * Basic constructor - with bytes.
+     * basic constructor - with bytes.
      * @param string the byte encoding of the characters making up the string.
      */
     DERIA5String(
@@ -84,7 +84,7 @@ public class DERIA5String
     }
 
     /**
-     * Basic constructor - without validation.
+     * basic constructor - without validation.
      * @param string the base string to use..
      */
     public DERIA5String(

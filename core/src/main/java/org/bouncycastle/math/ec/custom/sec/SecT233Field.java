@@ -1,11 +1,14 @@
+/***************************************************************/
+/******    DO NOT EDIT THIS CLASS bc-java SOURCE FILE     ******/
+/***************************************************************/
 package org.bouncycastle.math.ec.custom.sec;
 
 import java.math.BigInteger;
 
-import org.bouncycastle.math.raw.Interleave;
-import org.bouncycastle.math.raw.Nat256;
+import org.bouncycastle.math.internal.Interleave;
+import org.bouncycastle.math.internal.Nat256;
 
-public class SecT233Field
+class SecT233Field
 {
     private static final long M41 = -1L >>> 23;
     private static final long M59 = -1L >>> 5;
@@ -128,41 +131,6 @@ public class SecT233Field
         z[zOff    ] ^= t;
         z[zOff + 1] ^= (t << 10);
         z[zOff + 3]  = z3 & M41;
-    }
-
-    public static void sqrt(long[] x, long[] z)
-    {
-        long u0, u1;
-        u0 = Interleave.unshuffle(x[0]); u1 = Interleave.unshuffle(x[1]);
-        long e0 = (u0 & 0x00000000FFFFFFFFL) | (u1 << 32);
-        long c0 = (u0 >>> 32) | (u1 & 0xFFFFFFFF00000000L);
-
-        u0 = Interleave.unshuffle(x[2]); u1 = Interleave.unshuffle(x[3]);
-        long e1 = (u0 & 0x00000000FFFFFFFFL) | (u1 << 32);
-        long c1 = (u0 >>> 32) | (u1 & 0xFFFFFFFF00000000L);
-
-        long c2;
-        c2  = (c1 >>> 27);
-        c1 ^= (c0 >>> 27) | (c1 << 37);
-        c0 ^=               (c0 << 37);
-
-        long[] tt = Nat256.createExt64();
-
-        int[] shifts = { 32, 117, 191 };
-        for (int i = 0; i < shifts.length; ++i)
-        {
-            int w = shifts[i] >>> 6, s = shifts[i] & 63;
-//            assert s != 0;
-            tt[w    ] ^= (c0 << s);
-            tt[w + 1] ^= (c1 << s) | (c0 >>> -s);
-            tt[w + 2] ^= (c2 << s) | (c1 >>> -s);
-            tt[w + 3] ^=             (c2 >>> -s);
-        }
-
-        reduce(tt, z);
-
-        z[0] ^= e0;
-        z[1] ^= e1;
     }
 
     public static void square(long[] x, long[] z)

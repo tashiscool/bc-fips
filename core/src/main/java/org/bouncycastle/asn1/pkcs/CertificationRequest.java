@@ -1,3 +1,6 @@
+/***************************************************************/
+/******    DO NOT EDIT THIS CLASS bc-java SOURCE FILE     ******/
+/***************************************************************/
 package org.bouncycastle.asn1.pkcs;
 
 import org.bouncycastle.asn1.ASN1EncodableVector;
@@ -54,9 +57,6 @@ public class CertificationRequest
         this.sigBits = signature;
     }
 
-    /**
-     * @deprecated use getInstance()
-     */
     public CertificationRequest(
         ASN1Sequence seq)
     {

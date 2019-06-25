@@ -7,7 +7,7 @@ import org.bouncycastle.asn1.DERBitString;
 import org.bouncycastle.asn1.x509.AlgorithmIdentifier;
 
 /**
- * <pre>
+ *  <pre>
  *  SignedPublicKeyAndChallenge ::= SEQUENCE {
  *    publicKeyAndChallenge PublicKeyAndChallenge,
  *    signatureAlgorithm AlgorithmIdentifier,

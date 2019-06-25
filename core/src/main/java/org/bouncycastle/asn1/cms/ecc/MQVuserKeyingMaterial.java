@@ -1,3 +1,6 @@
+/***************************************************************/
+/******    DO NOT EDIT THIS CLASS bc-java SOURCE FILE     ******/
+/***************************************************************/
 package org.bouncycastle.asn1.cms.ecc;
 
 import org.bouncycastle.asn1.ASN1EncodableVector;
@@ -32,7 +35,7 @@ public class MQVuserKeyingMaterial
         {
             throw new IllegalArgumentException("Ephemeral public key cannot be null");
         }
-
+        
         this.ephemeralPublicKey = ephemeralPublicKey;
         this.addedukm = addedukm;
     }

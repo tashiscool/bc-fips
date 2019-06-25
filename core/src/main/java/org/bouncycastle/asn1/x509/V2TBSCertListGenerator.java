@@ -1,3 +1,6 @@
+/***************************************************************/
+/******    DO NOT EDIT THIS CLASS bc-java SOURCE FILE     ******/
+/***************************************************************/
 package org.bouncycastle.asn1.x509;
 
 import java.io.IOException;
@@ -72,15 +75,6 @@ public class V2TBSCertListGenerator
         AlgorithmIdentifier    signature)
     {
         this.signature = signature;
-    }
-
-    /**
-     * @deprecated use X500Name method
-     */
-    public void setIssuer(
-        X509Name    issuer)
-    {
-        this.issuer = X500Name.getInstance(issuer.toASN1Primitive());
     }
 
     public void setIssuer(X500Name issuer)
@@ -196,12 +190,6 @@ public class V2TBSCertListGenerator
         }
         
         addCRLEntry(new DERSequence(v));
-    }
-
-    public void setExtensions(
-        X509Extensions    extensions)
-    {
-        setExtensions(Extensions.getInstance(extensions));
     }
 
     public void setExtensions(

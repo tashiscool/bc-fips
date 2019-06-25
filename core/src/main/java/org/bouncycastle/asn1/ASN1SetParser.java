@@ -1,3 +1,6 @@
+/***************************************************************/
+/******    DO NOT EDIT THIS CLASS bc-java SOURCE FILE     ******/
+/***************************************************************/
 package org.bouncycastle.asn1;
 
 import java.io.IOException;
@@ -14,6 +17,6 @@ public interface ASN1SetParser
      * @throws IOException for bad input stream.
      * @return the next object, null if we are at the end.
      */
-    public ASN1Encodable readObject()
+    ASN1Encodable readObject()
         throws IOException;
 }

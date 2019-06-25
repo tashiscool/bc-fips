@@ -1,3 +1,6 @@
+/***************************************************************/
+/******    DO NOT EDIT THIS CLASS bc-java SOURCE FILE     ******/
+/***************************************************************/
 package org.bouncycastle.asn1;
 
 import java.io.ByteArrayOutputStream;
@@ -9,11 +12,11 @@ import java.io.OutputStream;
  */
 public abstract class DERGenerator
     extends ASN1Generator
-{
+{       
     private boolean      _tagged = false;
     private boolean      _isExplicit;
     private int          _tagNo;
-
+    
     protected DERGenerator(
         OutputStream out)
     {
@@ -31,9 +34,9 @@ public abstract class DERGenerator
         OutputStream out,
         int          tagNo,
         boolean      isExplicit)
-    {
+    { 
         super(out);
-
+        
         _tagged = true;
         _isExplicit = isExplicit;
         _tagNo = tagNo;
@@ -86,19 +89,19 @@ public abstract class DERGenerator
         if (_tagged)
         {
             int tagNum = _tagNo | BERTags.TAGGED;
-
+            
             if (_isExplicit)
             {
                 int newTag = _tagNo | BERTags.CONSTRUCTED | BERTags.TAGGED;
 
                 ByteArrayOutputStream bOut = new ByteArrayOutputStream();
-
+                
                 writeDEREncoded(bOut, tag, bytes);
-
+                
                 writeDEREncoded(_out, newTag, bOut.toByteArray());
             }
             else
-            {
+            {   
                 if ((tag & BERTags.CONSTRUCTED) != 0)
                 {
                     writeDEREncoded(_out, tagNum | BERTags.CONSTRUCTED, bytes);

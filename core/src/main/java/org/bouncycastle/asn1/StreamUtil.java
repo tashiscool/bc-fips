@@ -1,3 +1,6 @@
+/***************************************************************/
+/******    DO NOT EDIT THIS CLASS bc-java SOURCE FILE     ******/
+/***************************************************************/
 package org.bouncycastle.asn1;
 
 import java.io.ByteArrayInputStream;
@@ -35,7 +38,7 @@ class StreamUtil
             try
             {
                 FileChannel channel = ((FileInputStream)in).getChannel();
-                long  size = (channel != null) ? channel.size() : Integer.MAX_VALUE;
+                long  size = channel.size();
 
                 if (size < Integer.MAX_VALUE)
                 {

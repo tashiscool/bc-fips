@@ -1,0 +1,98 @@
+package org.bouncycastle.crypto.fips;
+
+
+import org.bouncycastle.crypto.internal.Xof;
+
+/**
+ * implementation of SHAKE based on following KeccakNISTInterface.c from http://keccak.noekeon.org/
+ * <p>
+ * Following the naming conventions used in the C source code to enable easy review of the implementation.
+ */
+class SHAKEDigest
+    extends KeccakDigest
+    implements Xof
+{
+    private static int checkBitLength(int bitLength)
+    {
+        switch (bitLength)
+        {
+        case 128:
+        case 256:
+            return bitLength;
+        default:
+            throw new IllegalArgumentException("'bitLength' " + bitLength + " not supported for SHAKE");
+        }
+    }
+
+    public SHAKEDigest(int bitLength)
+    {
+        super(checkBitLength(bitLength));
+    }
+
+    public String getAlgorithmName()
+    {
+        return "SHAKE" + fixedOutputLength;
+    }
+
+    public int doFinal(byte[] out, int outOff)
+    {
+        return doFinal(out, outOff, getDigestSize());
+    }
+
+    public int doFinal(byte[] out, int outOff, int outLen)
+    {
+        if (!squeezing)
+        {
+            absorb(new byte[]{0x0F}, 0, 4);
+        }
+
+        squeeze(out, outOff, ((long)outLen) * 8);
+
+        // one of the points of these functions is you can keep squeezing!
+        //reset();
+
+        return outLen;
+    }
+
+    /*
+     * TODO Possible API change to support partial-byte suffixes.
+     */
+    protected int doFinal(byte[] out, int outOff, byte partialByte, int partialBits)
+    {
+        return doFinal(out, outOff, getDigestSize(), partialByte, partialBits);
+    }
+
+    /*
+     * TODO Possible API change to support partial-byte suffixes.
+     */
+    protected int doFinal(byte[] out, int outOff, int outLen, byte partialByte, int partialBits)
+    {
+        if (partialBits < 0 || partialBits > 7)
+        {
+            throw new IllegalArgumentException("'partialBits' must be in the range [0,7]");
+        }
+
+        int finalInput = (partialByte & ((1 << partialBits) - 1)) | (0x0F << partialBits);
+        int finalBits = partialBits + 4;
+
+        if (finalBits >= 8)
+        {
+            oneByte[0] = (byte)finalInput;
+            absorb(oneByte, 0, 8);
+            finalBits -= 8;
+            finalInput >>>= 8;
+        }
+
+        if (finalBits > 0)
+        {
+            oneByte[0] = (byte)finalInput;
+            absorb(oneByte, 0, finalBits);
+        }
+
+        squeeze(out, outOff, ((long)outLen) * 8);
+
+        reset();
+
+        return outLen;
+    }
+}

@@ -1,3 +1,6 @@
+/***************************************************************/
+/******    DO NOT EDIT THIS CLASS bc-java SOURCE FILE     ******/
+/***************************************************************/
 package org.bouncycastle.asn1.cms;
 
 import java.util.Enumeration;
@@ -61,10 +64,7 @@ public class EnvelopedData
         this.unprotectedAttrs = ASN1Set.getInstance(unprotectedAttrs);
     }
 
-    /**
-     * @deprecated use getInstance()
-     */
-    public EnvelopedData(
+    private EnvelopedData(
         ASN1Sequence seq)
     {
         int     index = 0;

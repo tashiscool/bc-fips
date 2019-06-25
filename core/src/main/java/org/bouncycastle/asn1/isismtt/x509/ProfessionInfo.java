@@ -1,3 +1,6 @@
+/***************************************************************/
+/******    DO NOT EDIT THIS CLASS bc-java SOURCE FILE     ******/
+/***************************************************************/
 package org.bouncycastle.asn1.isismtt.x509;
 
 import java.util.Enumeration;
@@ -172,12 +175,14 @@ public class ProfessionInfo
             return new ProfessionInfo((ASN1Sequence)obj);
         }
 
-        throw new IllegalArgumentException("illegal object in getInstance: "
+        throw new IllegalArgumentException("Illegal object in getInstance: "
             + obj.getClass().getName());
     }
 
     /**
      * Constructor from ASN1Sequence.
+     * <p/>
+     * <p/>
      * <pre>
      *               ProfessionInfo ::= SEQUENCE
      *               {

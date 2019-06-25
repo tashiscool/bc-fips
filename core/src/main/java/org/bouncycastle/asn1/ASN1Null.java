@@ -46,7 +46,7 @@ public abstract class ASN1Null
             }
             catch (IOException e)
             {
-                throw new IllegalArgumentException("failed to construct NULL from byte[]: " + e.getMessage());
+                throw new IllegalArgumentException("Failed to construct NULL from byte[]: " + e.getMessage());
             }
             catch (ClassCastException e)
             {

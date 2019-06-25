@@ -30,8 +30,8 @@ public class ECCCMSSharedInfo
 
     public ECCCMSSharedInfo(
         AlgorithmIdentifier keyInfo,
-        byte[] entityUInfo,
-        byte[] suppPubInfo)
+        byte[]              entityUInfo,
+        byte[]              suppPubInfo)
     {
         this.keyInfo = keyInfo;
         this.entityUInfo = Arrays.clone(entityUInfo);
@@ -40,7 +40,7 @@ public class ECCCMSSharedInfo
 
     public ECCCMSSharedInfo(
         AlgorithmIdentifier keyInfo,
-        byte[] suppPubInfo)
+        byte[]              suppPubInfo)
     {
         this.keyInfo = keyInfo;
         this.entityUInfo = null;

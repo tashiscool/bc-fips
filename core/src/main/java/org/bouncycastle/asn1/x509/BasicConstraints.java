@@ -1,3 +1,6 @@
+/***************************************************************/
+/******    DO NOT EDIT THIS CLASS bc-java SOURCE FILE     ******/
+/***************************************************************/
 package org.bouncycastle.asn1.x509;
 
 import java.math.BigInteger;
@@ -30,10 +33,6 @@ public class BasicConstraints
         if (obj instanceof BasicConstraints)
         {
             return (BasicConstraints)obj;
-        }
-        if (obj instanceof X509Extension)
-        {
-            return getInstance(X509Extension.convertValueToObject((X509Extension)obj));
         }
         if (obj != null)
         {

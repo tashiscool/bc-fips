@@ -1,3 +1,6 @@
+/***************************************************************/
+/******    DO NOT EDIT THIS CLASS bc-java SOURCE FILE     ******/
+/***************************************************************/
 package org.bouncycastle.asn1.x509;
 
 import java.io.IOException;
@@ -59,22 +62,11 @@ public class GeneralName
     private ASN1Encodable obj;
     private int           tag;
 
-    /**
-     * @deprecated use X500Name constructor.
-     * @param dirName
-     */
-        public GeneralName(
-        X509Name  dirName)
-    {
-        this.obj = X500Name.getInstance(dirName);
-        this.tag = 4;
-    }
-
     public GeneralName(
         X500Name  dirName)
     {
         this.obj = dirName;
-        this.tag = 4;
+        this.tag = directoryName;
     }
 
     /**

@@ -1,3 +1,6 @@
+/***************************************************************/
+/******    DO NOT EDIT THIS CLASS bc-java SOURCE FILE     ******/
+/***************************************************************/
 package org.bouncycastle.asn1.eac;
 
 import java.io.IOException;
@@ -17,8 +20,6 @@ import org.bouncycastle.util.Arrays;
 public class CVCertificateRequest
     extends ASN1Object
 {
-    private final ASN1ApplicationSpecific original;
-
     private CertificateBody certificateBody;
 
     private byte[] innerSignature = null;
@@ -30,9 +31,7 @@ public class CVCertificateRequest
     private CVCertificateRequest(ASN1ApplicationSpecific request)
         throws IOException
     {
-        this.original = request;
-
-        if (request.isConstructed() && request.getApplicationTag() == EACTags.AUTHENTIFICATION_DATA)
+        if (request.getApplicationTag() == EACTags.AUTHENTIFICATION_DATA)
         {
             ASN1Sequence seq = ASN1Sequence.getInstance(request.getObject(BERTags.SEQUENCE));
 
@@ -138,26 +137,19 @@ public class CVCertificateRequest
 
     public ASN1Primitive toASN1Primitive()
     {
-        if (original != null)
+        ASN1EncodableVector v = new ASN1EncodableVector();
+
+        v.add(certificateBody);
+
+        try
         {
-            return original;
+            v.add(new DERApplicationSpecific(false, EACTags.STATIC_INTERNAL_AUTHENTIFICATION_ONE_STEP, new DEROctetString(innerSignature)));
         }
-        else
+        catch (IOException e)
         {
-            ASN1EncodableVector v = new ASN1EncodableVector();
-
-            v.add(certificateBody);
-
-            try
-            {
-                v.add(new DERApplicationSpecific(false, EACTags.STATIC_INTERNAL_AUTHENTIFICATION_ONE_STEP, new DEROctetString(innerSignature)));
-            }
-            catch (IOException e)
-            {
-                throw new IllegalStateException("unable to convert signature!");
-            }
-
-            return new DERApplicationSpecific(EACTags.CARDHOLDER_CERTIFICATE, v);
+            throw new IllegalStateException("unable to convert signature!");
         }
+
+        return new DERApplicationSpecific(EACTags.CARDHOLDER_CERTIFICATE, v);
     }
 }

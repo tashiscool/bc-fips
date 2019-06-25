@@ -1,3 +1,6 @@
+/***************************************************************/
+/******    DO NOT EDIT THIS CLASS bc-java SOURCE FILE     ******/
+/***************************************************************/
 package org.bouncycastle.asn1;
 
 import java.io.IOException;
@@ -15,7 +18,7 @@ public class DERVisibleString
     extends ASN1Primitive
     implements ASN1String
 {
-    private final byte[]  string;
+    private byte[]  string;
 
     /**
      * Return a Visible String from the passed in object.
@@ -44,7 +47,7 @@ public class DERVisibleString
             }
         }
 
-        throw new IllegalArgumentException("illegal object in getInstance: " + obj.getClass().getName());
+        throw new IllegalArgumentException("Illegal object in getInstance: " + obj.getClass().getName());
     }
 
     /**

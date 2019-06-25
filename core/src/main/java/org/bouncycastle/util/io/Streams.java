@@ -1,3 +1,6 @@
+/***************************************************************/
+/******    DO NOT EDIT THIS CLASS bc-java SOURCE FILE     ******/
+/***************************************************************/
 package org.bouncycastle.util.io;
 
 import java.io.ByteArrayOutputStream;
@@ -133,19 +136,13 @@ public final class Streams
         int numRead;
         while ((numRead = inStr.read(bs, 0, bs.length)) >= 0)
         {
-            if ((limit - total) < numRead)
+            total += numRead;
+            if (total > limit)
             {
                 throw new StreamOverflowException("Data Overflow");
             }
-            total += numRead;
             outStr.write(bs, 0, numRead);
         }
         return total;
-    }
-
-    public static void writeBufTo(ByteArrayOutputStream buf, OutputStream output)
-        throws IOException
-    {
-        buf.writeTo(output);
     }
 }

@@ -1,3 +1,6 @@
+/***************************************************************/
+/******    DO NOT EDIT THIS CLASS bc-java SOURCE FILE     ******/
+/***************************************************************/
 package org.bouncycastle.asn1.x509;
 
 import org.bouncycastle.asn1.ASN1Object;
@@ -56,7 +59,7 @@ public class GeneralNames
     public GeneralNames(
         GeneralName[]  names)
     {
-        this.names = copy(names);
+        this.names = names.clone();
     }
 
     private GeneralNames(
@@ -72,14 +75,9 @@ public class GeneralNames
 
     public GeneralName[] getNames()
     {
-        return copy(names);
-    }
+        GeneralName[] tmp = new GeneralName[names.length];
 
-    private GeneralName[] copy(GeneralName[] nms)
-    {
-        GeneralName[] tmp = new GeneralName[nms.length];
-
-        System.arraycopy(nms, 0, tmp, 0, tmp.length);
+        System.arraycopy(names, 0, tmp, 0, names.length);
 
         return tmp;
     }

@@ -1,3 +1,6 @@
+/***************************************************************/
+/******    DO NOT EDIT THIS CLASS bc-java SOURCE FILE     ******/
+/***************************************************************/
 package org.bouncycastle.asn1.isismtt.ocsp;
 
 import org.bouncycastle.asn1.ASN1EncodableVector;
@@ -46,21 +49,22 @@ public class CertHash
             return new CertHash((ASN1Sequence)obj);
         }
 
-        throw new IllegalArgumentException("illegal object in getInstance: "
+        throw new IllegalArgumentException("Illegal object in getInstance: "
             + obj.getClass().getName());
     }
 
     /**
      * Constructor from ASN1Sequence.
-     * <p>
+     * <p/>
      * The sequence is of type CertHash:
+     * <p/>
      * <pre>
      *     CertHash ::= SEQUENCE {
      *       hashAlgorithm AlgorithmIdentifier,
      *       certificateHash OCTET STRING
      *     }
      * </pre>
-     * </p>
+     *
      * @param seq The ASN.1 sequence.
      */
     private CertHash(ASN1Sequence seq)
@@ -83,9 +87,7 @@ public class CertHash
     public CertHash(AlgorithmIdentifier hashAlgorithm, byte[] certificateHash)
     {
         this.hashAlgorithm = hashAlgorithm;
-        this.certificateHash = new byte[certificateHash.length];
-        System.arraycopy(certificateHash, 0, this.certificateHash, 0,
-            certificateHash.length);
+        this.certificateHash = Arrays.clone(certificateHash);
     }
 
     public AlgorithmIdentifier getHashAlgorithm()

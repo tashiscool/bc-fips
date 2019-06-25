@@ -1,3 +1,6 @@
+/***************************************************************/
+/******    DO NOT EDIT THIS CLASS bc-java SOURCE FILE     ******/
+/***************************************************************/
 package org.bouncycastle.asn1;
 
 import java.io.IOException;
@@ -16,7 +19,7 @@ public class DERT61String
     private byte[] string;
 
     /**
-     * Return a T61 string from the passed in object.
+     * return a T61 string from the passed in object.
      *
      * @param obj a DERT61String or an object that can be converted into one.
      * @exception IllegalArgumentException if the object cannot be converted.
@@ -42,11 +45,11 @@ public class DERT61String
             }
         }
 
-        throw new IllegalArgumentException("illegal object in getInstance: " + obj.getClass().getName());
+        throw new IllegalArgumentException("Illegal object in getInstance: " + obj.getClass().getName());
     }
 
     /**
-     * Return an T61 String from a tagged object.
+     * return an T61 String from a tagged object.
      *
      * @param obj the tagged object holding the object we want
      * @param explicit true if the object is meant to be explicitly
@@ -72,7 +75,7 @@ public class DERT61String
     }
 
     /**
-     * Basic constructor - string encoded as a sequence of bytes.
+     * basic constructor - string encoded as a sequence of bytes.
      *
      * @param string the byte encoding of the string to be wrapped.
      */
@@ -83,7 +86,7 @@ public class DERT61String
     }
 
     /**
-     * Basic constructor - with string 8 bit assumed.
+     * basic constructor - with string 8 bit assumed.
      *
      * @param string the string to be wrapped.
      */

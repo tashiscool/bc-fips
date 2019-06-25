@@ -1,17 +1,18 @@
+/***************************************************************/
+/******    DO NOT EDIT THIS CLASS bc-java SOURCE FILE     ******/
+/***************************************************************/
 package org.bouncycastle.math.ec.custom.sec;
 
 import java.math.BigInteger;
 
-import org.bouncycastle.math.raw.Interleave;
-import org.bouncycastle.math.raw.Nat;
-import org.bouncycastle.math.raw.Nat192;
+import org.bouncycastle.math.internal.Interleave;
+import org.bouncycastle.math.internal.Nat;
+import org.bouncycastle.math.internal.Nat192;
 
-public class SecT131Field
+class SecT131Field
 {
     private static final long M03 = -1L >>> 61;
     private static final long M44 = -1L >>> 20;
-
-    private static final long[] ROOT_Z = new long[]{ 0x26BC4D789AF13523L, 0x26BC4D789AF135E2L, 0x6L };
 
     public static void add(long[] x, long[] y, long[] z)
     {
@@ -114,25 +115,6 @@ public class SecT131Field
         z[zOff + 2]  = z2 & M03;
     }
 
-    public static void sqrt(long[] x, long[] z)
-    {
-        long[] odd = Nat192.create64();
-
-        long u0, u1;
-        u0 = Interleave.unshuffle(x[0]); u1 = Interleave.unshuffle(x[1]);
-        long e0 = (u0 & 0x00000000FFFFFFFFL) | (u1 << 32);
-        odd[0]  = (u0 >>> 32) | (u1 & 0xFFFFFFFF00000000L);
-
-        u0 = Interleave.unshuffle(x[2]);
-        long e1 = (u0 & 0x00000000FFFFFFFFL);
-        odd[1]  = (u0 >>> 32);
-
-        multiply(odd, ROOT_Z, z);
-
-        z[0] ^= e0;
-        z[1] ^= e1;
-    }
-
     public static void square(long[] x, long[] z)
     {
         long[] tt = Nat.create64(5);
@@ -216,7 +198,7 @@ public class SecT131Field
         long t4 = H[6] ^ H[8];
         long t5 = H[7] ^ H[9];
 
-    //    assert t5 >>> 44 == 0;
+        assert t5 >>> 44 == 0;
 
         // Calculate V
         long v0 =      (t4 << 1) ^ H[6];
@@ -237,7 +219,7 @@ public class SecT131Field
         w1 ^= (w0 >>> 44); w0 &= M44;
         w2 ^= (w1 >>> 44); w1 &= M44;
 
-   //     assert (w0 & 1L) == 0;
+        assert (w0 & 1L) == 0;
 
         // Divide W by t
 
@@ -272,7 +254,7 @@ public class SecT131Field
         w2 ^= (w2 << 16);
         w2 ^= (w2 << 32);
 
-  //      assert w2 >>> 42 == 0;
+        assert w2 >>> 42 == 0;
 
         zz[0] = u0;
         zz[1] = u1 ^ w0      ^ H[2];

@@ -1,11 +1,12 @@
+/***************************************************************/
+/******    DO NOT EDIT THIS CLASS bc-java SOURCE FILE     ******/
+/***************************************************************/
 package org.bouncycastle.asn1;
 
 import java.io.IOException;
 
 /**
- * An ASN.1 DER NULL object.
- * <p>
- * Preferably use the constant:  DERNull.INSTANCE.
+ * A NULL object.
  */
 public class DERNull
     extends ASN1Null
@@ -14,10 +15,7 @@ public class DERNull
 
     private static final byte[]  zeroBytes = new byte[0];
 
-    /**
-     * @deprecated use DERNull.INSTANCE
-     */
-    public DERNull()
+    private DERNull()
     {
     }
 

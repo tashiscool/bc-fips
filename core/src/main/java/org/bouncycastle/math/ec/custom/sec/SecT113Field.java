@@ -1,11 +1,14 @@
+/***************************************************************/
+/******    DO NOT EDIT THIS CLASS bc-java SOURCE FILE     ******/
+/***************************************************************/
 package org.bouncycastle.math.ec.custom.sec;
 
 import java.math.BigInteger;
 
-import org.bouncycastle.math.raw.Interleave;
-import org.bouncycastle.math.raw.Nat128;
+import org.bouncycastle.math.internal.Interleave;
+import org.bouncycastle.math.internal.Nat128;
 
-public class SecT113Field
+class SecT113Field
 {
     private static final long M49 = -1L >>> 15;
     private static final long M57 = -1L >>> 7;
@@ -102,16 +105,6 @@ public class SecT113Field
         long z1      = z[zOff + 1], t = z1 >>> 49;
         z[zOff    ] ^= t ^ (t << 9);
         z[zOff + 1]  = z1 & M49;
-    }
-
-    public static void sqrt(long[] x, long[] z)
-    {
-        long u0 = Interleave.unshuffle(x[0]), u1 = Interleave.unshuffle(x[1]);
-        long e0 = (u0 & 0x00000000FFFFFFFFL) | (u1 << 32);
-        long c0  = (u0 >>> 32) | (u1 & 0xFFFFFFFF00000000L);
-
-        z[0] = e0 ^ (c0 << 57) ^ (c0 << 5);
-        z[1] =      (c0 >>> 7) ^ (c0 >>> 59); 
     }
 
     public static void square(long[] x, long[] z)

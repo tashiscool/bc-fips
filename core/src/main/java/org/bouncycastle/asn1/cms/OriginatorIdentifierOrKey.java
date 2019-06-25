@@ -1,9 +1,11 @@
+/***************************************************************/
+/******    DO NOT EDIT THIS CLASS bc-java SOURCE FILE     ******/
+/***************************************************************/
 package org.bouncycastle.asn1.cms;
 
 import org.bouncycastle.asn1.ASN1Choice;
 import org.bouncycastle.asn1.ASN1Encodable;
 import org.bouncycastle.asn1.ASN1Object;
-import org.bouncycastle.asn1.ASN1OctetString;
 import org.bouncycastle.asn1.ASN1Primitive;
 import org.bouncycastle.asn1.ASN1Sequence;
 import org.bouncycastle.asn1.ASN1TaggedObject;
@@ -35,15 +37,6 @@ public class OriginatorIdentifierOrKey
         this.id = id;
     }
 
-    /**
-     * @deprecated use version taking a SubjectKeyIdentifier
-     */
-    public OriginatorIdentifierOrKey(
-        ASN1OctetString id)
-    {
-        this(new SubjectKeyIdentifier(id.getOctets()));
-    }
-
     public OriginatorIdentifierOrKey(
         SubjectKeyIdentifier id)
     {
@@ -54,15 +47,6 @@ public class OriginatorIdentifierOrKey
         OriginatorPublicKey id)
     {
         this.id = new DERTaggedObject(false, 1, id);
-    }
-
-    /**
-     * @deprecated use more specific version
-     */
-    public OriginatorIdentifierOrKey(
-        ASN1Primitive id)
-    {
-        this.id = id;
     }
 
     /**

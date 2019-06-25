@@ -1,11 +1,14 @@
+/***************************************************************/
+/******    DO NOT EDIT THIS CLASS bc-java SOURCE FILE     ******/
+/***************************************************************/
 package org.bouncycastle.math.ec.custom.sec;
 
 import java.math.BigInteger;
 
-import org.bouncycastle.math.raw.Nat;
-import org.bouncycastle.math.raw.Nat512;
+import org.bouncycastle.math.internal.Nat;
+import org.bouncycastle.math.internal.Nat512;
 
-public class SecP521R1Field
+class SecP521R1Field
 {
     // 2^521 - 1
     static final int[] P = new int[]{ 0xFFFFFFFF, 0xFFFFFFFF, 0xFFFFFFFF, 0xFFFFFFFF, 0xFFFFFFFF, 0xFFFFFFFF, 0xFFFFFFFF,

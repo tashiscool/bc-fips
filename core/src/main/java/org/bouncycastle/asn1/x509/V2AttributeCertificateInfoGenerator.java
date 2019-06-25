@@ -1,3 +1,6 @@
+/***************************************************************/
+/******    DO NOT EDIT THIS CLASS bc-java SOURCE FILE     ******/
+/***************************************************************/
 package org.bouncycastle.asn1.x509;
 
 import org.bouncycastle.asn1.ASN1Encodable;
@@ -99,16 +102,6 @@ public class V2AttributeCertificateInfoGenerator
         DERBitString    issuerUniqueID)
     {
         this.issuerUniqueID = issuerUniqueID;
-    }
-
-    /**
-     * @deprecated use method taking Extensions
-     * @param extensions
-     */
-    public void setExtensions(
-        X509Extensions    extensions)
-    {
-        this.extensions = Extensions.getInstance(extensions.toASN1Primitive());
     }
 
     public void setExtensions(

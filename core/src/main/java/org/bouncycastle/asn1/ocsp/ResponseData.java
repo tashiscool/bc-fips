@@ -1,3 +1,6 @@
+/***************************************************************/
+/******    DO NOT EDIT THIS CLASS bc-java SOURCE FILE     ******/
+/***************************************************************/
 package org.bouncycastle.asn1.ocsp;
 
 import org.bouncycastle.asn1.ASN1EncodableVector;
@@ -10,19 +13,7 @@ import org.bouncycastle.asn1.ASN1TaggedObject;
 import org.bouncycastle.asn1.DERSequence;
 import org.bouncycastle.asn1.DERTaggedObject;
 import org.bouncycastle.asn1.x509.Extensions;
-import org.bouncycastle.asn1.x509.X509Extensions;
 
-/**
- * OCSP RFC 2560, RFC 6960
- * <pre>
- * ResponseData ::= SEQUENCE {
- *     version              [0] EXPLICIT Version DEFAULT v1,
- *     responderID              ResponderID,
- *     producedAt               GeneralizedTime,
- *     responses                SEQUENCE OF SingleResponse,
- *     responseExtensions   [1] EXPLICIT Extensions OPTIONAL }
- * </pre>
- */
 public class ResponseData
     extends ASN1Object
 {
@@ -48,22 +39,6 @@ public class ResponseData
         this.producedAt = producedAt;
         this.responses = responses;
         this.responseExtensions = responseExtensions;
-    }
-
-    /**
-     * @deprecated use method taking Extensions
-     * @param responderID
-     * @param producedAt
-     * @param responses
-     * @param responseExtensions
-     */
-    public ResponseData(
-        ResponderID         responderID,
-        ASN1GeneralizedTime  producedAt,
-        ASN1Sequence        responses,
-        X509Extensions responseExtensions)
-    {
-        this(V1, responderID, ASN1GeneralizedTime.getInstance(producedAt), responses, Extensions.getInstance(responseExtensions));
     }
 
     public ResponseData(

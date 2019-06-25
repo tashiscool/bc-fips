@@ -1,3 +1,6 @@
+/***************************************************************/
+/******    DO NOT EDIT THIS CLASS bc-java SOURCE FILE     ******/
+/***************************************************************/
 package org.bouncycastle.asn1.crmf;
 
 import java.util.Enumeration;
@@ -51,13 +54,6 @@ public class CertReqMsg
         return null;
     }
 
-    public static CertReqMsg getInstance(
-        ASN1TaggedObject obj,
-        boolean explicit)
-    {
-        return getInstance(ASN1Sequence.getInstance(obj, explicit));
-    }
-
     /**
      * Creates a new CertReqMsg.
      * @param certReq CertRequest
@@ -86,15 +82,6 @@ public class CertReqMsg
     public CertRequest getCertReq()
     {
         return certReq;
-    }
-
-
-    /**
-     * @deprecated use getPopo
-     */
-    public ProofOfPossession getPop()
-    {
-        return pop;
     }
 
 

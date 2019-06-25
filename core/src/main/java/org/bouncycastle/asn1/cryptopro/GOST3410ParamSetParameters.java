@@ -1,3 +1,6 @@
+/***************************************************************/
+/******    DO NOT EDIT THIS CLASS bc-java SOURCE FILE     ******/
+/***************************************************************/
 package org.bouncycastle.asn1.cryptopro;
 
 import java.math.BigInteger;
@@ -61,14 +64,6 @@ public class GOST3410ParamSetParameters
         p = (ASN1Integer)e.nextElement();
         q = (ASN1Integer)e.nextElement();
         a = (ASN1Integer)e.nextElement();
-    }
-
-    /**
-     * @deprecated use getKeySize
-     */
-    public int getLKeySize()
-    {
-        return keySize;
     }
 
     public int getKeySize()

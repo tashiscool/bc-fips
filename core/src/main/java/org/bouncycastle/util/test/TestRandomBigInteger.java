@@ -26,7 +26,7 @@ public class TestRandomBigInteger
      */
     public TestRandomBigInteger(String encoding, int radix)
     {
-        super(new FixedSecureRandom.Source[] { new FixedSecureRandom.BigInteger(BigIntegers.asUnsignedByteArray(new java.math.BigInteger(encoding, radix))) });
+        super(new FixedSecureRandom.BigInteger(BigIntegers.asUnsignedByteArray(new java.math.BigInteger(encoding, radix))));
     }
 
     /**
@@ -36,7 +36,7 @@ public class TestRandomBigInteger
      */
     public TestRandomBigInteger(byte[] encoding)
     {
-        super(new FixedSecureRandom.Source[] { new FixedSecureRandom.BigInteger(encoding) });
+        super(new FixedSecureRandom.BigInteger(encoding));
     }
 
     /**
@@ -47,6 +47,6 @@ public class TestRandomBigInteger
      */
     public TestRandomBigInteger(int bitLength, byte[] encoding)
     {
-        super(new FixedSecureRandom.Source[] { new FixedSecureRandom.BigInteger(bitLength, encoding) });
+        super(new FixedSecureRandom.BigInteger(bitLength, encoding));
     }
 }

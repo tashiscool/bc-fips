@@ -1,3 +1,6 @@
+/***************************************************************/
+/******    DO NOT EDIT THIS CLASS bc-java SOURCE FILE     ******/
+/***************************************************************/
 package org.bouncycastle.asn1;
 
 import java.io.IOException;
@@ -12,7 +15,7 @@ public class BERGenerator
     private boolean      _tagged = false;
     private boolean      _isExplicit;
     private int          _tagNo;
-
+    
     protected BERGenerator(
         OutputStream out)
     {

@@ -1,3 +1,6 @@
+/***************************************************************/
+/******    DO NOT EDIT THIS CLASS bc-java SOURCE FILE     ******/
+/***************************************************************/
 package org.bouncycastle.asn1.eac;
 
 
@@ -49,10 +52,10 @@ public class CVCertificate
             ASN1Primitive tmpObj;
             while ((tmpObj = content.readObject()) != null)
             {
-                ASN1ApplicationSpecific aSpe;
-                if (tmpObj instanceof ASN1ApplicationSpecific)
+                DERApplicationSpecific aSpe;
+                if (tmpObj instanceof DERApplicationSpecific)
                 {
-                    aSpe = (ASN1ApplicationSpecific)tmpObj;
+                    aSpe = (DERApplicationSpecific)tmpObj;
                     switch (aSpe.getApplicationTag())
                     {
                     case EACTags.CERTIFICATE_CONTENT_TEMPLATE:
@@ -103,9 +106,9 @@ public class CVCertificate
         ASN1Primitive obj;
         while ((obj = aIS.readObject()) != null)
         {
-            if (obj instanceof ASN1ApplicationSpecific)
+            if (obj instanceof DERApplicationSpecific)
             {
-                setPrivateData((ASN1ApplicationSpecific)obj);
+                setPrivateData((DERApplicationSpecific)obj);
             }
             else
             {
@@ -115,10 +118,10 @@ public class CVCertificate
     }
 
     /**
-     * Create an iso7816Certificate structure from a ASN1ApplicationSpecific.
+     * Create an iso7816Certificate structure from a DERApplicationSpecific.
      *
-     * @param appSpe the ASN1ApplicationSpecific object.
-     * @return the Iso7816CertificateStructure represented by the ASN1ApplicationSpecific object.
+     * @param appSpe the DERApplicationSpecific object.
+     * @return the Iso7816CertificateStructure represented by the DERApplicationSpecific object.
      * @throws IOException if there is a problem parsing the data.
      */
     private CVCertificate(ASN1ApplicationSpecific appSpe)
@@ -160,7 +163,7 @@ public class CVCertificate
         {
             try
             {
-                return new CVCertificate(ASN1ApplicationSpecific.getInstance(obj));
+                return new CVCertificate(DERApplicationSpecific.getInstance(obj));
             }
             catch (IOException e)
             {

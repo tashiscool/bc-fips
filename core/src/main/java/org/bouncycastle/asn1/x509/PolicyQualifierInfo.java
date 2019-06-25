@@ -1,3 +1,6 @@
+/***************************************************************/
+/******    DO NOT EDIT THIS CLASS bc-java SOURCE FILE     ******/
+/***************************************************************/
 package org.bouncycastle.asn1.x509;
 
 import org.bouncycastle.asn1.ASN1Encodable;
@@ -17,8 +20,6 @@ import org.bouncycastle.asn1.DERSequence;
  *   PolicyQualifierInfo ::= SEQUENCE {
  *       policyQualifierId  PolicyQualifierId,
  *       qualifier          ANY DEFINED BY policyQualifierId }
- *
- *  PolicyQualifierId ::= OBJECT IDENTIFIER ( id-qt-cps | id-qt-unotice )
  * </pre>
  */
 public class PolicyQualifierInfo
@@ -60,9 +61,8 @@ public class PolicyQualifierInfo
     *
     * @param as <code>PolicyQualifierInfo</code> X509 structure
     * encoded as an ASN1Sequence.
-    * @deprecated use PolicyQualifierInfo.getInstance()
     */
-   public PolicyQualifierInfo(
+   private PolicyQualifierInfo(
        ASN1Sequence as)
    {
         if (as.size() != 2)

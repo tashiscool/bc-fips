@@ -1,10 +1,13 @@
+/***************************************************************/
+/******    DO NOT EDIT THIS CLASS bc-java SOURCE FILE     ******/
+/***************************************************************/
 package org.bouncycastle.asn1;
 
 import java.io.ByteArrayOutputStream;
 import java.io.IOException;
 
 /**
- * An indefinite-length encoding version of an ASN.1 ApplicationSpecific object.
+ * An indefinite-length encoding version of an application specific object.
  */
 public class BERApplicationSpecific
     extends ASN1ApplicationSpecific

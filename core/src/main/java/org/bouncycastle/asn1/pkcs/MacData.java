@@ -1,3 +1,6 @@
+/***************************************************************/
+/******    DO NOT EDIT THIS CLASS bc-java SOURCE FILE     ******/
+/***************************************************************/
 package org.bouncycastle.asn1.pkcs;
 
 import java.math.BigInteger;
@@ -42,11 +45,11 @@ public class MacData
     {
         this.digInfo = DigestInfo.getInstance(seq.getObjectAt(0));
 
-        this.salt = Arrays.clone(ASN1OctetString.getInstance(seq.getObjectAt(1)).getOctets());
+        this.salt = ((ASN1OctetString)seq.getObjectAt(1)).getOctets();
 
         if (seq.size() == 3)
         {
-            this.iterationCount = ASN1Integer.getInstance(seq.getObjectAt(2)).getValue();
+            this.iterationCount = ((ASN1Integer)seq.getObjectAt(2)).getValue();
         }
         else
         {

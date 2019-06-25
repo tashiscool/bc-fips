@@ -1,3 +1,6 @@
+/***************************************************************/
+/******    DO NOT EDIT THIS CLASS bc-java SOURCE FILE     ******/
+/***************************************************************/
 package org.bouncycastle.asn1.x509;
 
 import java.io.IOException;
@@ -13,7 +16,7 @@ import org.bouncycastle.asn1.DERBitString;
 import org.bouncycastle.asn1.DERSequence;
 
 /**
- * The object that contains the public key stored in a certificate.
+ * The object that contains the public key stored in a certficate.
  * <p>
  * The getEncoded() method in the public keys in the JCE produces a DER
  * encoded one of these.
@@ -63,10 +66,7 @@ public class SubjectPublicKeyInfo
         this.algId = algId;
     }
 
-    /**
-     @deprecated use SubjectPublicKeyInfo.getInstance()
-     */
-    public SubjectPublicKeyInfo(
+    private SubjectPublicKeyInfo(
         ASN1Sequence  seq)
     {
         if (seq.size() != 2)
@@ -87,15 +87,6 @@ public class SubjectPublicKeyInfo
     }
 
     /**
-     * @deprecated use getAlgorithm()
-     * @return    alg ID.
-     */
-    public AlgorithmIdentifier getAlgorithmId()
-    {
-        return algId;
-    }
-
-    /**
      * for when the public key is an encoded object - if the bitstring
      * can't be decoded this routine throws an IOException.
      *
@@ -104,21 +95,6 @@ public class SubjectPublicKeyInfo
      * @return the public key as an ASN.1 primitive.
      */
     public ASN1Primitive parsePublicKey()
-        throws IOException
-    {
-        return ASN1Primitive.fromByteArray(keyData.getOctets());
-    }
-
-    /**
-     * for when the public key is an encoded object - if the bitstring
-     * can't be decoded this routine throws an IOException.
-     *
-     * @exception IOException - if the bit string doesn't represent a DER
-     * encoded object.
-     * @deprecated use parsePublicKey
-     * @return the public key as an ASN.1 primitive.
-     */
-    public ASN1Primitive getPublicKey()
         throws IOException
     {
         return ASN1Primitive.fromByteArray(keyData.getOctets());

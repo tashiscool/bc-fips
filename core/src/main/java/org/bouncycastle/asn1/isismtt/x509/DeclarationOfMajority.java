@@ -1,3 +1,6 @@
+/***************************************************************/
+/******    DO NOT EDIT THIS CLASS bc-java SOURCE FILE     ******/
+/***************************************************************/
 package org.bouncycastle.asn1.isismtt.x509;
 
 import org.bouncycastle.asn1.ASN1Boolean;
@@ -86,7 +89,7 @@ public class DeclarationOfMajority
             return new DeclarationOfMajority((ASN1TaggedObject)obj);
         }
 
-        throw new IllegalArgumentException("illegal object in getInstance: "
+        throw new IllegalArgumentException("Illegal object in getInstance: "
             + obj.getClass().getName());
     }
 

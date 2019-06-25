@@ -1,3 +1,6 @@
+/***************************************************************/
+/******    DO NOT EDIT THIS CLASS bc-java SOURCE FILE     ******/
+/***************************************************************/
 package org.bouncycastle.asn1.x509;
 
 import org.bouncycastle.asn1.ASN1EncodableVector;
@@ -42,10 +45,7 @@ public class AttributeCertificate
         this.signatureValue = signatureValue;
     }
 
-    /**
-     * @deprecated use getInstance() method.
-     */
-    public AttributeCertificate(
+    private AttributeCertificate(
         ASN1Sequence    seq)
     {
         if (seq.size() != 3)

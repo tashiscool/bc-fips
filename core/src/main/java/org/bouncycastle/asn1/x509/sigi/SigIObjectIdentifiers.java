@@ -1,9 +1,12 @@
+/***************************************************************/
+/******    DO NOT EDIT THIS CLASS bc-java SOURCE FILE     ******/
+/***************************************************************/
 package org.bouncycastle.asn1.x509.sigi;
 
 import org.bouncycastle.asn1.ASN1ObjectIdentifier;
 
 /**
- * Object Identifiers of SigI specifciation (German Signature Law
+ * Object identifiers of SigI specifciation (German Signature Law
  * Interoperability specification).
  */
 public interface SigIObjectIdentifiers

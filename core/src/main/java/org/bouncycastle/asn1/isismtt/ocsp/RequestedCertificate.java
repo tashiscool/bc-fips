@@ -1,3 +1,6 @@
+/***************************************************************/
+/******    DO NOT EDIT THIS CLASS bc-java SOURCE FILE     ******/
+/***************************************************************/
 package org.bouncycastle.asn1.isismtt.ocsp;
 
 import java.io.IOException;
@@ -73,7 +76,7 @@ public class RequestedCertificate
             return new RequestedCertificate((ASN1TaggedObject)obj);
         }
 
-        throw new IllegalArgumentException("illegal object in getInstance: "
+        throw new IllegalArgumentException("Illegal object in getInstance: "
             + obj.getClass().getName());
     }
 

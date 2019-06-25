@@ -1,3 +1,6 @@
+/***************************************************************/
+/******    DO NOT EDIT THIS CLASS bc-java SOURCE FILE     ******/
+/***************************************************************/
 package org.bouncycastle.asn1;
 
 import java.io.IOException;
@@ -14,6 +17,7 @@ import org.bouncycastle.util.Arrays;
  * <li> {@link ASN1Boolean#getInstance(boolean) ASN1Boolean.getInstance(boolean)}</li>
  * <li> {@link ASN1Boolean#getInstance(int) ASN1Boolean.getInstance(int)}</li>
  * </ul>
+ * </p>
  */
 public class ASN1Boolean
     extends ASN1Primitive
@@ -21,13 +25,13 @@ public class ASN1Boolean
     private static final byte[] TRUE_VALUE = new byte[] { (byte)0xff };
     private static final byte[] FALSE_VALUE = new byte[] { 0 };
 
-    private final byte[]         value;
+    private byte[]         value;
 
     public static final ASN1Boolean FALSE = new ASN1Boolean(false);
     public static final ASN1Boolean TRUE  = new ASN1Boolean(true);
 
     /**
-     * Return a boolean from the passed in object.
+     * return a boolean from the passed in object.
      *
      * @param obj an ASN1Boolean or an object that can be converted into one.
      * @exception IllegalArgumentException if the object cannot be converted.
@@ -50,15 +54,15 @@ public class ASN1Boolean
             }
             catch (IOException e)
             {
-                throw new IllegalArgumentException("failed to construct boolean from byte[]: " + e.getMessage());
+                throw new IllegalArgumentException("Failed to construct boolean from byte[]: " + e.getMessage());
             }
         }
 
-        throw new IllegalArgumentException("illegal object in getInstance: " + obj.getClass().getName());
+        throw new IllegalArgumentException("Illegal object in getInstance: " + obj.getClass().getName());
     }
 
     /**
-     * Return an ASN1Boolean from the passed in boolean.
+     * return an ASN1Boolean from the passed in boolean.
      * @param value true or false depending on the ASN1Boolean wanted.
      * @return an ASN1Boolean instance.
      */
@@ -69,7 +73,7 @@ public class ASN1Boolean
     }
 
     /**
-     * Return an ASN1Boolean from the passed in value.
+     * return an ASN1Boolean from the passed in value.
      * @param value non-zero (true) or zero (false) depending on the ASN1Boolean wanted.
      * @return an ASN1Boolean instance.
      */
@@ -80,7 +84,7 @@ public class ASN1Boolean
     }
 
     /**
-     * Return a Boolean from a tagged object.
+     * return a Boolean from a tagged object.
      *
      * @param obj the tagged object holding the object we want
      * @param explicit true if the object is meant to be explicitly
@@ -127,11 +131,7 @@ public class ASN1Boolean
         }
     }
 
-    /**
-     * @deprecated use getInstance(boolean) method.
-     * @param value true or false.
-     */
-    public ASN1Boolean(
+    private ASN1Boolean(
         boolean     value)
     {
         this.value = (value) ? TRUE_VALUE : FALSE_VALUE;

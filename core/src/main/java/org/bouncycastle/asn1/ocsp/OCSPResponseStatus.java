@@ -1,3 +1,6 @@
+/***************************************************************/
+/******    DO NOT EDIT THIS CLASS bc-java SOURCE FILE     ******/
+/***************************************************************/
 package org.bouncycastle.asn1.ocsp;
 
 import java.math.BigInteger;
@@ -6,23 +9,6 @@ import org.bouncycastle.asn1.ASN1Enumerated;
 import org.bouncycastle.asn1.ASN1Object;
 import org.bouncycastle.asn1.ASN1Primitive;
 
-
-/**
- * OCSP RFC 2560, RFC 6960
- * <p>
- * The OCSPResponseStatus enumeration.
- * <pre>
- * OCSPResponseStatus ::= ENUMERATED {
- *     successful            (0),  --Response has valid confirmations
- *     malformedRequest      (1),  --Illegal confirmation request
- *     internalError         (2),  --Internal error in issuer
- *     tryLater              (3),  --Try again later
- *                                 --(4) is not used
- *     sigRequired           (5),  --Must sign the request
- *     unauthorized          (6)   --Request unauthorized
- * }
- * </pre>
- */
 public class OCSPResponseStatus
     extends ASN1Object
 {
@@ -36,8 +22,6 @@ public class OCSPResponseStatus
     private ASN1Enumerated value;
 
     /**
-     * RFC 2560, RFC 6960
-     * <p>
      * The OCSPResponseStatus enumeration.
      * <pre>
      * OCSPResponseStatus ::= ENUMERATED {

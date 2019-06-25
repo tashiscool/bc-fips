@@ -1,3 +1,6 @@
+/***************************************************************/
+/******    DO NOT EDIT THIS CLASS bc-java SOURCE FILE     ******/
+/***************************************************************/
 package org.bouncycastle.asn1.x500;
 
 import org.bouncycastle.asn1.ASN1Choice;
@@ -53,7 +56,7 @@ public class DirectoryString
             return new DirectoryString((DERBMPString)o);
         }
 
-        throw new IllegalArgumentException("illegal object in getInstance: " + o.getClass().getName());
+        throw new IllegalArgumentException("Illegal object in getInstance: " + o.getClass().getName());
     }
 
     public static DirectoryString getInstance(ASN1TaggedObject o, boolean explicit)

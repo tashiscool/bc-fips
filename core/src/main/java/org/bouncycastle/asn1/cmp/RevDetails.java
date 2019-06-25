@@ -1,3 +1,6 @@
+/***************************************************************/
+/******    DO NOT EDIT THIS CLASS bc-java SOURCE FILE     ******/
+/***************************************************************/
 package org.bouncycastle.asn1.cmp;
 
 import org.bouncycastle.asn1.ASN1EncodableVector;
@@ -7,7 +10,6 @@ import org.bouncycastle.asn1.ASN1Sequence;
 import org.bouncycastle.asn1.DERSequence;
 import org.bouncycastle.asn1.crmf.CertTemplate;
 import org.bouncycastle.asn1.x509.Extensions;
-import org.bouncycastle.asn1.x509.X509Extensions;
 
 public class RevDetails
     extends ASN1Object
@@ -42,17 +44,6 @@ public class RevDetails
     public RevDetails(CertTemplate certDetails)
     {
         this.certDetails = certDetails;
-    }
-
-    /**
-     * @deprecated use method taking Extensions
-     * @param certDetails
-     * @param crlEntryDetails
-     */
-    public RevDetails(CertTemplate certDetails, X509Extensions crlEntryDetails)
-    {
-        this.certDetails = certDetails;
-        this.crlEntryDetails = Extensions.getInstance(crlEntryDetails.toASN1Primitive());
     }
 
     public RevDetails(CertTemplate certDetails, Extensions crlEntryDetails)

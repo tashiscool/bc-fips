@@ -1,3 +1,6 @@
+/***************************************************************/
+/******    DO NOT EDIT THIS CLASS bc-java SOURCE FILE     ******/
+/***************************************************************/
 package org.bouncycastle.asn1.cms;
 
 import org.bouncycastle.asn1.ASN1EncodableVector;
@@ -57,10 +60,7 @@ public class RecipientKeyIdentifier
         this(subjectKeyIdentifier, null, null);
     }
 
-    /**
-     * @deprecated use getInstance()
-     */
-    public RecipientKeyIdentifier(
+    private RecipientKeyIdentifier(
         ASN1Sequence seq)
     {
         subjectKeyIdentifier = ASN1OctetString.getInstance(

@@ -1,3 +1,6 @@
+/***************************************************************/
+/******    DO NOT EDIT THIS CLASS bc-java SOURCE FILE     ******/
+/***************************************************************/
 package org.bouncycastle.asn1.isismtt.x509;
 
 import java.util.Enumeration;
@@ -69,28 +72,29 @@ public class ProcurationSyntax
             return new ProcurationSyntax((ASN1Sequence)obj);
         }
 
-        throw new IllegalArgumentException("illegal object in getInstance: "
+        throw new IllegalArgumentException("Illegal object in getInstance: "
             + obj.getClass().getName());
     }
 
     /**
      * Constructor from ASN1Sequence.
-     * <p>
+     * <p/>
      * The sequence is of type ProcurationSyntax:
+     * <p/>
      * <pre>
      *               ProcurationSyntax ::= SEQUENCE {
      *                 country [1] EXPLICIT PrintableString(SIZE(2)) OPTIONAL,
      *                 typeOfSubstitution [2] EXPLICIT DirectoryString (SIZE(1..128)) OPTIONAL,
      *                 signingFor [3] EXPLICIT SigningFor
      *               }
-     *
+     * <p/>
      *               SigningFor ::= CHOICE
      *               {
      *                 thirdPerson GeneralName,
      *                 certRef IssuerSerial
      *               }
      * </pre>
-     * </p>
+     *
      * @param seq The ASN.1 sequence.
      */
     private ProcurationSyntax(ASN1Sequence seq)

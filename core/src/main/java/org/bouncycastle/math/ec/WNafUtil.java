@@ -1,3 +1,6 @@
+/***************************************************************/
+/******    DO NOT EDIT THIS CLASS bc-java SOURCE FILE     ******/
+/***************************************************************/
 package org.bouncycastle.math.ec;
 
 import java.math.BigInteger;
@@ -304,7 +307,12 @@ public abstract class WNafUtil
 
     public static WNafPreCompInfo getWNafPreCompInfo(PreCompInfo preCompInfo)
     {
-        return (preCompInfo instanceof WNafPreCompInfo) ? (WNafPreCompInfo)preCompInfo : null;
+        if ((preCompInfo != null) && (preCompInfo instanceof WNafPreCompInfo))
+        {
+            return (WNafPreCompInfo)preCompInfo;
+        }
+
+        return new WNafPreCompInfo();
     }
 
     /**
@@ -338,214 +346,178 @@ public abstract class WNafUtil
         return w + 2;
     }
 
-    public static ECPoint mapPointWithPrecomp(ECPoint p, final int width, final boolean includeNegated,
-        final ECPointMap pointMap)
+    public static ECPoint mapPointWithPrecomp(ECPoint p, int width, boolean includeNegated,
+        ECPointMap pointMap)
     {
-        final ECCurve c = p.getCurve();
-        final WNafPreCompInfo wnafPreCompP = precompute(p, width, includeNegated);
+        ECCurve c = p.getCurve();
+        WNafPreCompInfo wnafPreCompP = precompute(p, width, includeNegated);
 
         ECPoint q = pointMap.map(p);
-        c.precompute(q, PRECOMP_NAME, new PreCompCallback()
+        WNafPreCompInfo wnafPreCompQ = getWNafPreCompInfo(c.getPreCompInfo(q, PRECOMP_NAME));
+
+        ECPoint twiceP = wnafPreCompP.getTwice();
+        if (twiceP != null)
         {
-            public PreCompInfo precompute(PreCompInfo existing)
+            ECPoint twiceQ = pointMap.map(twiceP);
+            wnafPreCompQ.setTwice(twiceQ);
+        }
+
+        ECPoint[] preCompP = wnafPreCompP.getPreComp();
+        ECPoint[] preCompQ = new ECPoint[preCompP.length];
+        for (int i = 0; i < preCompP.length; ++i)
+        {
+            preCompQ[i] = pointMap.map(preCompP[i]);
+        }
+        wnafPreCompQ.setPreComp(preCompQ);
+
+        if (includeNegated)
+        {
+            ECPoint[] preCompNegQ = new ECPoint[preCompQ.length];
+            for (int i = 0; i < preCompNegQ.length; ++i)
             {
-                WNafPreCompInfo result = new WNafPreCompInfo();
-
-                ECPoint twiceP = wnafPreCompP.getTwice();
-                if (twiceP != null)
-                {
-                    ECPoint twiceQ = pointMap.map(twiceP);
-                    result.setTwice(twiceQ);
-                }
-
-                ECPoint[] preCompP = wnafPreCompP.getPreComp();
-                ECPoint[] preCompQ = new ECPoint[preCompP.length];
-                for (int i = 0; i < preCompP.length; ++i)
-                {
-                    preCompQ[i] = pointMap.map(preCompP[i]);
-                }
-                result.setPreComp(preCompQ);
-
-                if (includeNegated)
-                {
-                    ECPoint[] preCompNegQ = new ECPoint[preCompQ.length];
-                    for (int i = 0; i < preCompNegQ.length; ++i)
-                    {
-                        preCompNegQ[i] = preCompQ[i].negate();
-                    }
-                    result.setPreCompNeg(preCompNegQ);
-                }
-
-                return result;
+                preCompNegQ[i] = preCompQ[i].negate();
             }
-        });
+            wnafPreCompQ.setPreCompNeg(preCompNegQ);
+        }
+
+        c.setPreCompInfo(q, PRECOMP_NAME, wnafPreCompQ);
 
         return q;
     }
 
-    public static WNafPreCompInfo precompute(final ECPoint p, final int width, final boolean includeNegated)
+    public static WNafPreCompInfo precompute(ECPoint p, int width, boolean includeNegated)
     {
-        final ECCurve c = p.getCurve();
+        ECCurve c = p.getCurve();
+        WNafPreCompInfo wnafPreCompInfo = getWNafPreCompInfo(c.getPreCompInfo(p, PRECOMP_NAME));
 
-        return (WNafPreCompInfo)c.precompute(p, PRECOMP_NAME, new PreCompCallback()
+        int iniPreCompLen = 0, reqPreCompLen = 1 << Math.max(0, width - 2);
+
+        ECPoint[] preComp = wnafPreCompInfo.getPreComp();
+        if (preComp == null)
         {
-            public PreCompInfo precompute(PreCompInfo existing)
+            preComp = EMPTY_POINTS;
+        }
+        else
+        {
+            iniPreCompLen = preComp.length;
+        }
+
+        if (iniPreCompLen < reqPreCompLen)
+        {
+            preComp = resizeTable(preComp, reqPreCompLen);
+
+            if (reqPreCompLen == 1)
             {
-                WNafPreCompInfo existingWNaf = (existing instanceof WNafPreCompInfo) ? (WNafPreCompInfo)existing : null;
-
-                int reqPreCompLen = 1 << Math.max(0, width - 2);
-
-                if (checkExisting(existingWNaf, reqPreCompLen, includeNegated))
+                preComp[0] = p.normalize();
+            }
+            else
+            {
+                int curPreCompLen = iniPreCompLen;
+                if (curPreCompLen == 0)
                 {
-                    return existingWNaf;
+                    preComp[0] = p;
+                    curPreCompLen = 1;
                 }
 
-                ECPoint[] preComp = null, preCompNeg = null;
-                ECPoint twiceP = null;
+                ECFieldElement iso = null;
 
-                if (existingWNaf != null)
+                if (reqPreCompLen == 2)
                 {
-                    preComp = existingWNaf.getPreComp();
-                    preCompNeg = existingWNaf.getPreCompNeg();
-                    twiceP = existingWNaf.getTwice();
-                }
-
-                int iniPreCompLen = 0;
-                if (preComp == null)
-                {
-                    preComp = EMPTY_POINTS;
+                    preComp[1] = p.threeTimes();
                 }
                 else
                 {
-                    iniPreCompLen = preComp.length;
-                }
-
-                if (iniPreCompLen < reqPreCompLen)
-                {
-                    preComp = resizeTable(preComp, reqPreCompLen);
-
-                    if (reqPreCompLen == 1)
+                    ECPoint twiceP = wnafPreCompInfo.getTwice(), last = preComp[curPreCompLen - 1];
+                    if (twiceP == null)
                     {
-                        preComp[0] = p.normalize();
-                    }
-                    else
-                    {
-                        int curPreCompLen = iniPreCompLen;
-                        if (curPreCompLen == 0)
-                        {
-                            preComp[0] = p;
-                            curPreCompLen = 1;
-                        }
-
-                        ECFieldElement iso = null;
-
-                        if (reqPreCompLen == 2)
-                        {
-                            preComp[1] = p.threeTimes();
-                        }
-                        else
-                        {
-                            ECPoint isoTwiceP = twiceP, last = preComp[curPreCompLen - 1];
-                            if (isoTwiceP == null)
-                            {
-                                isoTwiceP = preComp[0].twice();
-                                twiceP = isoTwiceP;
-
-                                /*
-                                 * For Fp curves with Jacobian projective coordinates, use a (quasi-)isomorphism
-                                 * where 'twiceP' is "affine", so that the subsequent additions are cheaper. This
-                                 * also requires scaling the initial point's X, Y coordinates, and reversing the
-                                 * isomorphism as part of the subsequent normalization.
-                                 * 
-                                 *  NOTE: The correctness of this optimization depends on:
-                                 *      1) additions do not use the curve's A, B coefficients.
-                                 *      2) no special cases (i.e. Q +/- Q) when calculating 1P, 3P, 5P, ...
-                                 */
-                                if (!twiceP.isInfinity() && ECAlgorithms.isFpCurve(c) && c.getFieldSize() >= 64)
-                                {
-                                    switch (c.getCoordinateSystem())
-                                    {
-                                    case ECCurve.COORD_JACOBIAN:
-                                    case ECCurve.COORD_JACOBIAN_CHUDNOVSKY:
-                                    case ECCurve.COORD_JACOBIAN_MODIFIED:
-                                    {
-                                        iso = twiceP.getZCoord(0);
-                                        isoTwiceP = c.createPoint(twiceP.getXCoord().toBigInteger(), twiceP.getYCoord()
-                                            .toBigInteger());
-
-                                        ECFieldElement iso2 = iso.square(), iso3 = iso2.multiply(iso);
-                                        last = last.scaleX(iso2).scaleY(iso3);
-
-                                        if (iniPreCompLen == 0)
-                                        {
-                                            preComp[0] = last;
-                                        }
-                                        break;
-                                    }
-                                    }
-                                }
-                            }
-
-                            while (curPreCompLen < reqPreCompLen)
-                            {
-                                /*
-                                 * Compute the new ECPoints for the precomputation array. The values 1, 3,
-                                 * 5, ..., 2^(width-1)-1 times p are computed
-                                 */
-                                preComp[curPreCompLen++] = last = last.add(isoTwiceP);
-                            }
-                        }
+                        twiceP = preComp[0].twice();
+                        wnafPreCompInfo.setTwice(twiceP);
 
                         /*
-                         * Having oft-used operands in affine form makes operations faster.
+                         * For Fp curves with Jacobian projective coordinates, use a (quasi-)isomorphism
+                         * where 'twiceP' is "affine", so that the subsequent additions are cheaper. This
+                         * also requires scaling the initial point's X, Y coordinates, and reversing the
+                         * isomorphism as part of the subsequent normalization.
+                         * 
+                         *  NOTE: The correctness of this optimization depends on:
+                         *      1) additions do not use the curve's A, B coefficients.
+                         *      2) no special cases (i.e. Q +/- Q) when calculating 1P, 3P, 5P, ...
                          */
-                        c.normalizeAll(preComp, iniPreCompLen, reqPreCompLen - iniPreCompLen, iso);
-                    }
-                }
-
-                if (includeNegated)
-                {
-                    int pos;
-                    if (preCompNeg == null)
-                    {
-                        pos = 0;
-                        preCompNeg = new ECPoint[reqPreCompLen]; 
-                    }
-                    else
-                    {
-                        pos = preCompNeg.length;
-                        if (pos < reqPreCompLen)
+                        if (ECAlgorithms.isFpCurve(c) && c.getFieldSize() >= 64)
                         {
-                            preCompNeg = resizeTable(preCompNeg, reqPreCompLen);
+                            switch (c.getCoordinateSystem())
+                            {
+                            case ECCurve.COORD_JACOBIAN:
+                            case ECCurve.COORD_JACOBIAN_CHUDNOVSKY:
+                            case ECCurve.COORD_JACOBIAN_MODIFIED:
+                            {
+                                iso = twiceP.getZCoord(0);
+                                twiceP = c.createPoint(twiceP.getXCoord().toBigInteger(), twiceP.getYCoord()
+                                    .toBigInteger());
+
+                                ECFieldElement iso2 = iso.square(), iso3 = iso2.multiply(iso);
+                                last = last.scaleX(iso2).scaleY(iso3);
+
+                                if (iniPreCompLen == 0)
+                                {
+                                    preComp[0] = last;
+                                }
+                                break;
+                            }
+                            }
                         }
                     }
 
-                    while (pos < reqPreCompLen)
+                    while (curPreCompLen < reqPreCompLen)
                     {
-                        preCompNeg[pos] = preComp[pos].negate();
-                        ++pos;
+                        /*
+                         * Compute the new ECPoints for the precomputation array. The values 1, 3,
+                         * 5, ..., 2^(width-1)-1 times p are computed
+                         */
+                        preComp[curPreCompLen++] = last = last.add(twiceP);
                     }
                 }
 
-                WNafPreCompInfo result = new WNafPreCompInfo();
-                result.setPreComp(preComp);
-                result.setPreCompNeg(preCompNeg);
-                result.setTwice(twiceP);
-                return result;
+                /*
+                 * Having oft-used operands in affine form makes operations faster.
+                 */
+                c.normalizeAll(preComp, iniPreCompLen, reqPreCompLen - iniPreCompLen, iso);
+            }
+        }
+
+        wnafPreCompInfo.setPreComp(preComp);
+
+        if (includeNegated)
+        {
+            ECPoint[] preCompNeg = wnafPreCompInfo.getPreCompNeg();
+            
+            int pos;
+            if (preCompNeg == null)
+            {
+                pos = 0;
+                preCompNeg = new ECPoint[reqPreCompLen]; 
+            }
+            else
+            {
+                pos = preCompNeg.length;
+                if (pos < reqPreCompLen)
+                {
+                    preCompNeg = resizeTable(preCompNeg, reqPreCompLen);
+                }
             }
 
-            private boolean checkExisting(WNafPreCompInfo existingWNaf, int reqPreCompLen, boolean includeNegated)
+            while (pos < reqPreCompLen)
             {
-                return existingWNaf != null
-                    && checkTable(existingWNaf.getPreComp(), reqPreCompLen)
-                    && (!includeNegated || checkTable(existingWNaf.getPreCompNeg(), reqPreCompLen));
+                preCompNeg[pos] = preComp[pos].negate();
+                ++pos;
             }
 
-            private boolean checkTable(ECPoint[] table, int reqLen)
-            {
-                return table != null && table.length >= reqLen;
-            }
-        });
+            wnafPreCompInfo.setPreCompNeg(preCompNeg);
+        }
+
+        c.setPreCompInfo(p, PRECOMP_NAME, wnafPreCompInfo);
+
+        return wnafPreCompInfo;
     }
 
     private static byte[] trim(byte[] a, int length)

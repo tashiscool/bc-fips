@@ -1,3 +1,6 @@
+/***************************************************************/
+/******    DO NOT EDIT THIS CLASS bc-java SOURCE FILE     ******/
+/***************************************************************/
 package org.bouncycastle.asn1.cms;
 
 import java.util.Enumeration;
@@ -84,7 +87,7 @@ public class SignedData
      *
      * @param o the object we want converted.
      * @return a reference that can be assigned to SignedData (may be null)
-     * @throws IllegalArgumentException if the object cannot be converted.
+     * @throws  IllegalArgumentException if the object cannot be converted.
      */
     public static SignedData getInstance(
         Object  o)

@@ -1,7 +1,11 @@
+/***************************************************************/
+/******    DO NOT EDIT THIS CLASS bc-java SOURCE FILE     ******/
+/***************************************************************/
 package org.bouncycastle.asn1.x509;
 
 import java.util.Enumeration;
 import java.util.NoSuchElementException;
+import java.util.Vector;
 
 import org.bouncycastle.asn1.ASN1EncodableVector;
 import org.bouncycastle.asn1.ASN1GeneralizedTime;
@@ -102,7 +106,7 @@ public class TBSCertList
         }
     }
 
-    private class RevokedCertificatesEnumeration
+    private static class RevokedCertificatesEnumeration
         implements Enumeration
     {
         private final Enumeration en;
@@ -123,7 +127,7 @@ public class TBSCertList
         }
     }
 
-    private class EmptyEnumeration
+    private static class EmptyEnumeration
         implements Enumeration
     {
         public boolean hasMoreElements()
@@ -306,5 +310,14 @@ public class TBSCertList
         }
 
         return new DERSequence(v);
+    }
+
+    public static void main(String[] args)
+    {
+        Vector v = new Vector();
+
+        Enumeration e = v.elements();
+
+        e.nextElement();
     }
 }

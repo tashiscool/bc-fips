@@ -1,3 +1,6 @@
+/***************************************************************/
+/******    DO NOT EDIT THIS CLASS bc-java SOURCE FILE     ******/
+/***************************************************************/
 package org.bouncycastle.asn1.util;
 
 import java.io.IOException;
@@ -7,7 +10,6 @@ import org.bouncycastle.asn1.ASN1ApplicationSpecific;
 import org.bouncycastle.asn1.ASN1Boolean;
 import org.bouncycastle.asn1.ASN1Encodable;
 import org.bouncycastle.asn1.ASN1Enumerated;
-import org.bouncycastle.asn1.ASN1External;
 import org.bouncycastle.asn1.ASN1GeneralizedTime;
 import org.bouncycastle.asn1.ASN1Integer;
 import org.bouncycastle.asn1.ASN1ObjectIdentifier;
@@ -26,17 +28,16 @@ import org.bouncycastle.asn1.BERTags;
 import org.bouncycastle.asn1.DERApplicationSpecific;
 import org.bouncycastle.asn1.DERBMPString;
 import org.bouncycastle.asn1.DERBitString;
+import org.bouncycastle.asn1.DERExternal;
 import org.bouncycastle.asn1.DERGraphicString;
 import org.bouncycastle.asn1.DERIA5String;
 import org.bouncycastle.asn1.DERNull;
 import org.bouncycastle.asn1.DERPrintableString;
 import org.bouncycastle.asn1.DERSequence;
-import org.bouncycastle.asn1.DERSet;
 import org.bouncycastle.asn1.DERT61String;
 import org.bouncycastle.asn1.DERUTF8String;
 import org.bouncycastle.asn1.DERVideotexString;
 import org.bouncycastle.asn1.DERVisibleString;
-import org.bouncycastle.asn1.DLApplicationSpecific;
 import org.bouncycastle.util.Strings;
 import org.bouncycastle.util.encoders.Hex;
 
@@ -149,14 +150,11 @@ public class ASN1Dump
             {
                 buf.append("BER Set");
             }
-            else if (obj instanceof DERSet)
+            else
             {
                 buf.append("DER Set");
             }
-            else
-            {
-                buf.append("Set");
-            }
+
             buf.append(nl);
 
             while (e.hasMoreElements())
@@ -273,18 +271,14 @@ public class ASN1Dump
         {
             buf.append(outputApplicationSpecific("DER", indent, verbose, obj, nl));
         }
-        else if (obj instanceof DLApplicationSpecific)
-        {
-            buf.append(outputApplicationSpecific("", indent, verbose, obj, nl));
-        }
         else if (obj instanceof ASN1Enumerated)
         {
             ASN1Enumerated en = (ASN1Enumerated) obj;
             buf.append(indent + "DER Enumerated(" + en.getValue() + ")" + nl);
         }
-        else if (obj instanceof ASN1External)
+        else if (obj instanceof DERExternal)
         {
-            ASN1External ext = (ASN1External) obj;
+            DERExternal ext = (DERExternal) obj;
             buf.append(indent + "External " + nl);
             String          tab = indent + TAB;
             if (ext.getDirectReference() != null)

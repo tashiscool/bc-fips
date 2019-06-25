@@ -1,3 +1,6 @@
+/***************************************************************/
+/******    DO NOT EDIT THIS CLASS bc-java SOURCE FILE     ******/
+/***************************************************************/
 package org.bouncycastle.asn1;
 
 import java.io.IOException;
@@ -12,7 +15,7 @@ public class DERUTF8String
     extends ASN1Primitive
     implements ASN1String
 {
-    private final byte[]  string;
+    private byte[]  string;
 
     /**
      * Return an UTF8 string from the passed in object.
@@ -41,7 +44,7 @@ public class DERUTF8String
             }
         }
 
-        throw new IllegalArgumentException("illegal object in getInstance: "
+        throw new IllegalArgumentException("Illegal object in getInstance: "
                 + obj.getClass().getName());
     }
 

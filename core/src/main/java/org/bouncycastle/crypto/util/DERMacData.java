@@ -6,11 +6,14 @@ import org.bouncycastle.util.Arrays;
 import org.bouncycastle.util.Strings;
 
 /**
- * Builder and holder class for preparing SP 800-56A compliant MacData. Elements in the data are encoded
+ * Builder and holder class for preparing SP 800-56A/56B compliant MacData. Elements in the data are encoded
  * as DER objects with empty octet strings used to represent nulls in compulsory fields.
  */
 public final class DERMacData
 {
+    /**
+     * Standard type strings for the headers of KAS/KTS MAC calculations.
+     */
     public enum Type
     {
         UNILATERALU("KC_1_U"),

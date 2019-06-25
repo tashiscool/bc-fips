@@ -1,12 +1,15 @@
+/***************************************************************/
+/******    DO NOT EDIT THIS CLASS bc-java SOURCE FILE     ******/
+/***************************************************************/
 package org.bouncycastle.math.ec.custom.sec;
 
 import java.math.BigInteger;
 
 import org.bouncycastle.math.ec.ECFieldElement;
-import org.bouncycastle.math.raw.Nat576;
+import org.bouncycastle.math.internal.Nat576;
 import org.bouncycastle.util.Arrays;
 
-public class SecT571FieldElement extends ECFieldElement.AbstractF2m
+class SecT571FieldElement extends ECFieldElement.AbstractF2m
 {
     protected long[] x;
 
@@ -173,9 +176,7 @@ public class SecT571FieldElement extends ECFieldElement.AbstractF2m
 
     public ECFieldElement sqrt()
     {
-        long[] z = Nat576.create64();
-        SecT571Field.sqrt(x, z);
-        return new SecT571FieldElement(z);
+        return squarePow(getM() - 1);
     }
 
     public int getRepresentation()

@@ -1,3 +1,6 @@
+/***************************************************************/
+/******    DO NOT EDIT THIS CLASS bc-java SOURCE FILE     ******/
+/***************************************************************/
 package org.bouncycastle.math.ec;
 
 import java.math.BigInteger;
@@ -22,13 +25,19 @@ public class GLVMultiplier extends AbstractECMultiplier
 
     protected ECPoint multiplyPositive(ECPoint p, BigInteger k)
     {
-        if (!curve.equals(p.getCurve()))
+        ECCurve c = p.getCurve();
+        if (!curve.equals(c))
         {
             throw new IllegalStateException();
         }
 
-        BigInteger n = p.getCurve().getOrder();
-        BigInteger[] ab = glvEndomorphism.decomposeScalar(k.mod(n));
+        BigInteger order = c.getOrder();
+        if (k.compareTo(order) >= 0)
+        {
+            k = k.mod(order.multiply(c.getCofactor()));
+        }
+
+        BigInteger[] ab = glvEndomorphism.decomposeScalar(k);
         BigInteger a = ab[0], b = ab[1];
 
         ECPointMap pointMap = glvEndomorphism.getPointMap();

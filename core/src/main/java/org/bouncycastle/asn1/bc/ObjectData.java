@@ -35,7 +35,7 @@ public class ObjectData
     private final String              identifier;
     private final ASN1GeneralizedTime creationDate;
     private final ASN1GeneralizedTime lastModifiedDate;
-    private final ASN1OctetString data;
+    private final ASN1OctetString     data;
     private final String              comment;
 
     private ObjectData(ASN1Sequence seq)

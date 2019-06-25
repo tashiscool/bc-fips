@@ -1,3 +1,6 @@
+/***************************************************************/
+/******    DO NOT EDIT THIS CLASS bc-java SOURCE FILE     ******/
+/***************************************************************/
 package org.bouncycastle.asn1;
 
 import java.io.IOException;
@@ -50,11 +53,9 @@ import org.bouncycastle.util.Arrays;
  *
  * <p><b>11: Restrictions on BER employed by both CER and DER</b></p>
  * <p><b>11.5 Set and sequence components with default value</b></p>
- * <p>
  * The encoding of a set value or sequence value shall not include
  * an encoding for any component value which is equal to
  * its default value.
- * </p>
  */
 public abstract class ASN1Sequence
     extends ASN1Primitive
@@ -88,7 +89,7 @@ public abstract class ASN1Sequence
             }
             catch (IOException e)
             {
-                throw new IllegalArgumentException("failed to construct sequence from byte[]: " + e.getMessage());
+                throw new IllegalArgumentException("Failed to construct sequence from byte[]: " + e.getMessage());
             }
         }
         else if (obj instanceof ASN1Encodable)
@@ -105,7 +106,7 @@ public abstract class ASN1Sequence
     }
 
     /**
-     * Return an ASN1 SEQUENCE from a tagged object. There is a special
+     * Return an ASN1 sequence from a tagged object. There is a special
      * case here, if an object appears to have been explicitly tagged on 
      * reading but we were expecting it to be implicitly tagged in the 
      * normal course of events it indicates that we lost the surrounding
@@ -136,8 +137,6 @@ public abstract class ASN1Sequence
         }
         else
         {
-            ASN1Primitive o = obj.getObject();
-
             //
             // constructed object which appears to be explicitly tagged
             // when it should be implicit means we have to add the
@@ -147,18 +146,18 @@ public abstract class ASN1Sequence
             {
                 if (obj instanceof BERTaggedObject)
                 {
-                    return new BERSequence(o);
+                    return new BERSequence(obj.getObject());
                 }
                 else
                 {
-                    return new DLSequence(o);
+                    return new DLSequence(obj.getObject());
                 }
             }
             else
             {
-                if (o instanceof ASN1Sequence)
+                if (obj.getObject() instanceof ASN1Sequence)
                 {
-                    return (ASN1Sequence)o;
+                    return (ASN1Sequence)obj.getObject();
                 }
             }
         }
@@ -167,14 +166,14 @@ public abstract class ASN1Sequence
     }
 
     /**
-     * Create an empty SEQUENCE
+     * Create an empty sequence
      */
     protected ASN1Sequence()
     {
     }
 
     /**
-     * Create a SEQUENCE containing one object.
+     * Create a sequence containing one object
      * @param obj the object to be put in the SEQUENCE.
      */
     protected ASN1Sequence(
@@ -184,8 +183,8 @@ public abstract class ASN1Sequence
     }
 
     /**
-     * Create a SEQUENCE containing a vector of objects.
-     * @param v the vector of objects to be put in the SEQUENCE.
+     * Create a sequence containing a vector of objects.
+     * @param v the vector of objects to be put in the SEQUENCE
      */
     protected ASN1Sequence(
         ASN1EncodableVector v)
@@ -196,9 +195,8 @@ public abstract class ASN1Sequence
         }
     }
 
-    /**
-     * Create a SEQUENCE containing an array of objects.
-     * @param array the array of objects to be put in the SEQUENCE.
+    /*
+     * Create a sequence containing a vector of objects.
      */
     protected ASN1Sequence(
         ASN1Encodable[]   array)

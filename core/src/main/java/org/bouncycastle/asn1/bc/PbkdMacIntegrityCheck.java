@@ -70,6 +70,7 @@ public class PbkdMacIntegrityCheck
         return Arrays.clone(mac.getOctets());
     }
 
+    @Override
     public ASN1Primitive toASN1Primitive()
     {
         ASN1EncodableVector v = new ASN1EncodableVector();

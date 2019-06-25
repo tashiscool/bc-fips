@@ -1,3 +1,6 @@
+/***************************************************************/
+/******    DO NOT EDIT THIS CLASS bc-java SOURCE FILE     ******/
+/***************************************************************/
 package org.bouncycastle.asn1.x509;
 
 import java.util.Enumeration;
@@ -62,21 +65,22 @@ public class CertificatePair
             return new CertificatePair((ASN1Sequence)obj);
         }
 
-        throw new IllegalArgumentException("illegal object in getInstance: "
+        throw new IllegalArgumentException("Illegal object in getInstance: "
             + obj.getClass().getName());
     }
 
     /**
      * Constructor from ASN1Sequence.
-     * <p>
+     * <p/>
      * The sequence is of type CertificatePair:
+     * <p/>
      * <pre>
      *       CertificatePair ::= SEQUENCE {
      *         forward        [0]    Certificate OPTIONAL,
      *         reverse        [1]    Certificate OPTIONAL,
      *         -- at least one of the pair shall be present -- }
      * </pre>
-     * </p>
+     *
      * @param seq The ASN.1 sequence.
      */
     private CertificatePair(ASN1Sequence seq)

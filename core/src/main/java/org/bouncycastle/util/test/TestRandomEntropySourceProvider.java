@@ -2,11 +2,11 @@ package org.bouncycastle.util.test;
 
 import java.security.SecureRandom;
 
-import org.bouncycastle.crypto.prng.EntropySource;
-import org.bouncycastle.crypto.prng.EntropySourceProvider;
+import org.bouncycastle.crypto.EntropySource;
+import org.bouncycastle.crypto.EntropySourceProvider;
 
 /**
- * A class for returning "quick entropy" for testing purposes.
+ * A class for returning "quick entropy" for testing purposes. It uses a SecureRandom but does not use SecureRandom.generateSeed().
  */
 public class TestRandomEntropySourceProvider
     implements EntropySourceProvider

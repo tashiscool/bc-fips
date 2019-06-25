@@ -1,3 +1,6 @@
+/***************************************************************/
+/******    DO NOT EDIT THIS CLASS bc-java SOURCE FILE     ******/
+/***************************************************************/
 package org.bouncycastle.asn1;
 
 import java.io.ByteArrayInputStream;
@@ -9,7 +12,7 @@ import java.io.InputStream;
 import org.bouncycastle.util.io.Streams;
 
 /**
- * A general purpose ASN.1 decoder - note: this class differs from the
+ * a general purpose ASN.1 decoder - note: this class differs from the
  * others in that it returns null after it has read the last object in
  * the stream. If an ASN.1 NULL is encountered a DER/BER Null object is
  * returned.
@@ -143,7 +146,7 @@ public class ASN1InputStream
 
         if ((tag & APPLICATION) != 0)
         {
-            return new DLApplicationSpecific(isConstructed, tagNo, defIn.toByteArray());
+            return new DERApplicationSpecific(isConstructed, tagNo, defIn.toByteArray());
         }
 
         if ((tag & TAGGED) != 0)
@@ -181,7 +184,7 @@ public class ASN1InputStream
                 case SET:
                     return DERFactory.createSet(buildDEREncodableVector(defIn));
                 case EXTERNAL:
-                    return new DLExternal(buildDEREncodableVector(defIn));
+                    return new DERExternal(buildDEREncodableVector(defIn));                
                 default:
                     throw new IOException("unknown tag " + tagNo + " encountered");
             }
@@ -430,7 +433,7 @@ public class ASN1InputStream
         switch (tagNo)
         {
             case BIT_STRING:
-                return ASN1BitString.fromInputStream(defIn.getRemaining(), defIn);
+                return DERBitString.fromInputStream(defIn.getRemaining(), defIn);
             case BMP_STRING:
                 return new DERBMPString(getBMPCharBuffer(defIn));
             case BOOLEAN:

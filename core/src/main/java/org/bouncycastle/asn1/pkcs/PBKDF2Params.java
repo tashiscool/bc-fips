@@ -1,3 +1,6 @@
+/***************************************************************/
+/******    DO NOT EDIT THIS CLASS bc-java SOURCE FILE     ******/
+/***************************************************************/
 package org.bouncycastle.asn1.pkcs;
 
 import java.math.BigInteger;
@@ -33,8 +36,8 @@ public class PBKDF2Params
     private static final AlgorithmIdentifier algid_hmacWithSHA1 = new AlgorithmIdentifier(PKCSObjectIdentifiers.id_hmacWithSHA1, DERNull.INSTANCE);
 
     private final ASN1OctetString octStr;
-    private final ASN1Integer iterationCount;
-    private final ASN1Integer keyLength;
+    private final ASN1Integer      iterationCount;
+    private final ASN1Integer      keyLength;
     private final AlgorithmIdentifier prf;
 
     /**
@@ -44,7 +47,7 @@ public class PBKDF2Params
      * @return a PBKDF2Params instance.
      */
     public static PBKDF2Params getInstance(
-        Object obj)
+        Object  obj)
     {
         if (obj instanceof PBKDF2Params)
         {
@@ -62,12 +65,12 @@ public class PBKDF2Params
     /**
      * Create a PBKDF2Params with the specified salt, iteration count, and algid-hmacWithSHA1 for the prf.
      *
-     * @param salt           input salt.
+     * @param salt  input salt.
      * @param iterationCount input iteration count.
      */
     public PBKDF2Params(
-        byte[] salt,
-        int iterationCount)
+        byte[]  salt,
+        int     iterationCount)
     {
         this(salt, iterationCount, 0);
     }
@@ -75,14 +78,14 @@ public class PBKDF2Params
     /**
      * Create a PBKDF2Params with the specified salt, iteration count, keyLength, and algid-hmacWithSHA1 for the prf.
      *
-     * @param salt           input salt.
+     * @param salt  input salt.
      * @param iterationCount input iteration count.
-     * @param keyLength      intended key length to be produced.
+     * @param keyLength intended key length to be produced.
      */
     public PBKDF2Params(
-        byte[] salt,
-        int iterationCount,
-        int keyLength)
+        byte[]  salt,
+        int     iterationCount,
+        int     keyLength)
     {
         this(salt, iterationCount, keyLength, null);
     }
@@ -90,15 +93,15 @@ public class PBKDF2Params
     /**
      * Create a PBKDF2Params with the specified salt, iteration count, keyLength, and a defined prf.
      *
-     * @param salt           input salt.
+     * @param salt  input salt.
      * @param iterationCount input iteration count.
-     * @param keyLength      intended key length to be produced.
-     * @param prf            the pseudo-random function to use.
+     * @param keyLength intended key length to be produced.
+     * @param prf the pseudo-random function to use.
      */
     public PBKDF2Params(
-        byte[] salt,
-        int iterationCount,
-        int keyLength,
+        byte[]  salt,
+        int     iterationCount,
+        int     keyLength,
         AlgorithmIdentifier prf)
     {
         this.octStr = new DEROctetString(Arrays.clone(salt));
@@ -119,20 +122,20 @@ public class PBKDF2Params
     /**
      * Create a PBKDF2Params with the specified salt, iteration count, and a defined prf.
      *
-     * @param salt           input salt.
+     * @param salt  input salt.
      * @param iterationCount input iteration count.
-     * @param prf            the pseudo-random function to use.
+     * @param prf the pseudo-random function to use.
      */
     public PBKDF2Params(
-        byte[] salt,
-        int iterationCount,
+        byte[]  salt,
+        int     iterationCount,
         AlgorithmIdentifier prf)
     {
         this(salt, iterationCount, 0, prf);
     }
 
     private PBKDF2Params(
-        ASN1Sequence seq)
+        ASN1Sequence  seq)
     {
         Enumeration e = seq.getObjects();
 
@@ -243,7 +246,7 @@ public class PBKDF2Params
      */
     public ASN1Primitive toASN1Primitive()
     {
-        ASN1EncodableVector v = new ASN1EncodableVector();
+        ASN1EncodableVector  v = new ASN1EncodableVector();
 
         v.add(octStr);
         v.add(iterationCount);

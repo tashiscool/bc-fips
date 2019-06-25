@@ -1,3 +1,6 @@
+/***************************************************************/
+/******    DO NOT EDIT THIS CLASS bc-java SOURCE FILE     ******/
+/***************************************************************/
 package org.bouncycastle.asn1.x509;
 
 import org.bouncycastle.asn1.ASN1Object;
@@ -60,7 +63,7 @@ public class CertificatePolicies
     public CertificatePolicies(
         PolicyInformation[] policyInformation)
     {
-        this.policyInformation = copyPolicyInfo(policyInformation);
+        this.policyInformation = policyInformation.clone();
     }
 
     private CertificatePolicies(
@@ -76,14 +79,9 @@ public class CertificatePolicies
 
     public PolicyInformation[] getPolicyInformation()
     {
-        return copyPolicyInfo(policyInformation);
-    }
+        PolicyInformation[] tmp = new PolicyInformation[policyInformation.length];
 
-    private PolicyInformation[] copyPolicyInfo(PolicyInformation[] policyInfo)
-    {
-        PolicyInformation[] tmp = new PolicyInformation[policyInfo.length];
-
-        System.arraycopy(policyInfo, 0, tmp, 0, policyInfo.length);
+        System.arraycopy(policyInformation, 0, tmp, 0, policyInformation.length);
 
         return tmp;
     }
@@ -114,7 +112,7 @@ public class CertificatePolicies
 
     public String toString()
     {
-        StringBuffer p = new StringBuffer();
+        StringBuilder p = new StringBuilder();
         for (int i = 0; i < policyInformation.length; i++)
         {
             if (p.length() != 0)

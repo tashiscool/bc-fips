@@ -1,3 +1,6 @@
+/***************************************************************/
+/******    DO NOT EDIT THIS CLASS bc-java SOURCE FILE     ******/
+/***************************************************************/
 package org.bouncycastle.asn1.isismtt.x509;
 
 import java.util.Enumeration;
@@ -59,7 +62,7 @@ public class NamingAuthority
             return new NamingAuthority((ASN1Sequence)obj);
         }
 
-        throw new IllegalArgumentException("illegal object in getInstance: "
+        throw new IllegalArgumentException("Illegal object in getInstance: "
             + obj.getClass().getName());
     }
 
@@ -70,6 +73,8 @@ public class NamingAuthority
 
     /**
      * Constructor from ASN1Sequence.
+     * <p/>
+     * <p/>
      * <pre>
      *             NamingAuthority ::= SEQUENCE
      *             {

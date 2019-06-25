@@ -1,3 +1,6 @@
+/***************************************************************/
+/******    DO NOT EDIT THIS CLASS bc-java SOURCE FILE     ******/
+/***************************************************************/
 package org.bouncycastle.asn1;
 
 import java.io.IOException;
@@ -17,7 +20,7 @@ public class BERSequenceParser
 
     /**
      * Read the next object in the SEQUENCE.
-     *
+     * 
      * @return the next object in the SEQUENCE, null if there are no more.
      * @throws IOException if there is an issue reading the underlying stream.
      */
@@ -38,7 +41,7 @@ public class BERSequenceParser
     {
         return new BERSequence(_parser.readVector());
     }
-
+    
     /**
      * Return an BERSequence representing this parser and its contents.
      *

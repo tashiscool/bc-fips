@@ -1,3 +1,6 @@
+/***************************************************************/
+/******    DO NOT EDIT THIS CLASS bc-java SOURCE FILE     ******/
+/***************************************************************/
 package org.bouncycastle.asn1.ocsp;
 
 import org.bouncycastle.asn1.ASN1EncodableVector;
@@ -9,14 +12,6 @@ import org.bouncycastle.asn1.ASN1Sequence;
 import org.bouncycastle.asn1.ASN1TaggedObject;
 import org.bouncycastle.asn1.DERSequence;
 
-/**
- * OCSP RFC 2560, RFC 6960
- * <pre>
- * ResponseBytes ::=       SEQUENCE {
- *     responseType   OBJECT IDENTIFIER,
- *     response       OCTET STRING }
- * </pre>
- */
 public class ResponseBytes
     extends ASN1Object
 {
@@ -31,10 +26,7 @@ public class ResponseBytes
         this.response = response;
     }
 
-    /**
-     * @deprecated use getInstance()
-     */
-    public ResponseBytes(
+    private ResponseBytes(
         ASN1Sequence    seq)
     {
         responseType = (ASN1ObjectIdentifier)seq.getObjectAt(0);

@@ -1,3 +1,6 @@
+/***************************************************************/
+/******    DO NOT EDIT THIS CLASS bc-java SOURCE FILE     ******/
+/***************************************************************/
 package org.bouncycastle.asn1.x500.style;
 
 import java.util.Hashtable;
@@ -10,6 +13,9 @@ import org.bouncycastle.asn1.x500.RDN;
 import org.bouncycastle.asn1.x500.X500Name;
 import org.bouncycastle.asn1.x500.X500NameStyle;
 
+/**
+ * A style template that conforms specifically to RFC 4519.
+ */
 public class RFC4519Style
 	extends AbstractX500NameStyle
 {

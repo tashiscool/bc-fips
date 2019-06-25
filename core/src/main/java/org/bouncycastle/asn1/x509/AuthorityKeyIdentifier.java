@@ -1,3 +1,6 @@
+/***************************************************************/
+/******    DO NOT EDIT THIS CLASS bc-java SOURCE FILE     ******/
+/***************************************************************/
 package org.bouncycastle.asn1.x509;
 
 import java.math.BigInteger;
@@ -13,9 +16,6 @@ import org.bouncycastle.asn1.ASN1TaggedObject;
 import org.bouncycastle.asn1.DEROctetString;
 import org.bouncycastle.asn1.DERSequence;
 import org.bouncycastle.asn1.DERTaggedObject;
-import org.bouncycastle.crypto.Digest;
-import org.bouncycastle.crypto.digests.SHA1Digest;
-import org.bouncycastle.util.encoders.Hex;
 
 /**
  * The AuthorityKeyIdentifier object.
@@ -89,53 +89,6 @@ public class AuthorityKeyIdentifier
                 throw new IllegalArgumentException("illegal tag");
             }
         }
-    }
-
-    /**
-     *
-     * Calulates the keyidentifier using a SHA1 hash over the BIT STRING
-     * from SubjectPublicKeyInfo as defined in RFC2459.
-     *
-     * Example of making a AuthorityKeyIdentifier:
-     * <pre>
-     *   SubjectPublicKeyInfo apki = new SubjectPublicKeyInfo((ASN1Sequence)new ASN1InputStream(
-     *       publicKey.getEncoded()).readObject());
-     *   AuthorityKeyIdentifier aki = new AuthorityKeyIdentifier(apki);
-     * </pre>
-     * @deprecated create the extension using org.bouncycastle.cert.X509ExtensionUtils
-     **/
-    public AuthorityKeyIdentifier(
-        SubjectPublicKeyInfo    spki)
-    {
-        Digest  digest = new SHA1Digest();
-        byte[]  resBuf = new byte[digest.getDigestSize()];
-
-        byte[] bytes = spki.getPublicKeyData().getBytes();
-        digest.update(bytes, 0, bytes.length);
-        digest.doFinal(resBuf, 0);
-        this.keyidentifier = new DEROctetString(resBuf);
-    }
-
-    /**
-     * create an AuthorityKeyIdentifier with the GeneralNames tag and
-     * the serial number provided as well.
-     * @deprecated create the extension using org.bouncycastle.cert.X509ExtensionUtils
-     */
-    public AuthorityKeyIdentifier(
-        SubjectPublicKeyInfo    spki,
-        GeneralNames            name,
-        BigInteger              serialNumber)
-    {
-        Digest  digest = new SHA1Digest();
-        byte[]  resBuf = new byte[digest.getDigestSize()];
-
-        byte[] bytes = spki.getPublicKeyData().getBytes();
-        digest.update(bytes, 0, bytes.length);
-        digest.doFinal(resBuf, 0);
-
-        this.keyidentifier = new DEROctetString(resBuf);
-        this.certissuer = GeneralNames.getInstance(name.toASN1Primitive());
-        this.certserno = new ASN1Integer(serialNumber);
     }
 
     /**
@@ -225,6 +178,6 @@ public class AuthorityKeyIdentifier
 
     public String toString()
     {
-        return ("AuthorityKeyIdentifier: KeyID(" + ((keyidentifier != null) ? Hex.toHexString(this.keyidentifier.getOctets()) : "null") + ")");
+        return ("AuthorityKeyIdentifier: KeyID(" + this.keyidentifier.getOctets() + ")");
     }
 }

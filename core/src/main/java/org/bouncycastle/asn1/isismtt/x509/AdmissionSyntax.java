@@ -1,3 +1,6 @@
+/***************************************************************/
+/******    DO NOT EDIT THIS CLASS bc-java SOURCE FILE     ******/
+/***************************************************************/
 package org.bouncycastle.asn1.isismtt.x509;
 
 import java.util.Enumeration;
@@ -63,7 +66,7 @@ import org.bouncycastle.asn1.x509.GeneralName;
  * can contain the name of the authority, the country and the name of the title
  * register. The URL-option refers to a web page which contains lists with
  * �officially� registered professions (text and possibly OID) as well as
- * further information on these professions. Object identifiers for the
+ * further information on these professions. object identifiers for the
  * component namingAuthorityId are grouped under the OID-branch
  * id-isis-at-namingAuthorities and must be applied for.
  * <li>See
@@ -134,35 +137,36 @@ public class AdmissionSyntax
             return new AdmissionSyntax((ASN1Sequence)obj);
         }
 
-        throw new IllegalArgumentException("illegal object in getInstance: "
+        throw new IllegalArgumentException("Illegal object in getInstance: "
             + obj.getClass().getName());
     }
 
     /**
      * Constructor from ASN1Sequence.
-     * <p>
+     * <p/>
      * The sequence is of type ProcurationSyntax:
+     * <p/>
      * <pre>
      *     AdmissionSyntax ::= SEQUENCE
      *     {
      *       admissionAuthority GeneralName OPTIONAL,
      *       contentsOfAdmissions SEQUENCE OF Admissions
      *     }
-     *
+     * <p/>
      *     Admissions ::= SEQUENCE
      *     {
      *       admissionAuthority [0] EXPLICIT GeneralName OPTIONAL
      *       namingAuthority [1] EXPLICIT NamingAuthority OPTIONAL
      *       professionInfos SEQUENCE OF ProfessionInfo
      *     }
-     *
+     * <p/>
      *     NamingAuthority ::= SEQUENCE
      *     {
      *       namingAuthorityId OBJECT IDENTIFIER OPTIONAL,
      *       namingAuthorityUrl IA5String OPTIONAL,
      *       namingAuthorityText DirectoryString(SIZE(1..128)) OPTIONAL
      *     }
-     *
+     * <p/>
      *     ProfessionInfo ::= SEQUENCE
      *     {
      *       namingAuthority [0] EXPLICIT NamingAuthority OPTIONAL,
@@ -172,7 +176,7 @@ public class AdmissionSyntax
      *       addProfessionInfo OCTET STRING OPTIONAL
      *     }
      * </pre>
-     * </p>
+     *
      * @param seq The ASN.1 sequence.
      */
     private AdmissionSyntax(ASN1Sequence seq)

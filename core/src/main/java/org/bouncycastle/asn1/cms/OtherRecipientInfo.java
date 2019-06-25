@@ -1,3 +1,6 @@
+/***************************************************************/
+/******    DO NOT EDIT THIS CLASS bc-java SOURCE FILE     ******/
+/***************************************************************/
 package org.bouncycastle.asn1.cms;
 
 import org.bouncycastle.asn1.ASN1Encodable;
@@ -31,7 +34,7 @@ public class OtherRecipientInfo
         this.oriType = oriType;
         this.oriValue = oriValue;
     }
-    
+
     private OtherRecipientInfo(
         ASN1Sequence seq)
     {

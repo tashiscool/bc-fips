@@ -1,3 +1,6 @@
+/***************************************************************/
+/******    DO NOT EDIT THIS CLASS bc-java SOURCE FILE     ******/
+/***************************************************************/
 package org.bouncycastle.math.ec;
 
 /**
@@ -5,12 +8,11 @@ package org.bouncycastle.math.ec;
  */
 public class FixedPointPreCompInfo implements PreCompInfo
 {
-    protected ECPoint offset = null;
-
     /**
-     * Lookup table for the precomputed {@link ECPoint}s used for a fixed point multiplication.
+     * Array holding the precomputed <code>ECPoint</code>s used for a fixed
+     * point multiplication.
      */
-    protected ECLookupTable lookupTable = null;
+    protected ECPoint[] preComp = null;
 
     /**
      * The width used for the precomputation. If a larger width precomputation
@@ -19,24 +21,14 @@ public class FixedPointPreCompInfo implements PreCompInfo
      */
     protected int width = -1;
 
-    public ECLookupTable getLookupTable()
+    public ECPoint[] getPreComp()
     {
-        return lookupTable;
+        return preComp;
     }
 
-    public void setLookupTable(ECLookupTable lookupTable)
+    public void setPreComp(ECPoint[] preComp)
     {
-        this.lookupTable = lookupTable;
-    }
-
-    public ECPoint getOffset()
-    {
-        return offset;
-    }
-
-    public void setOffset(ECPoint offset)
-    {
-        this.offset = offset;
+        this.preComp = preComp;
     }
 
     public int getWidth()

@@ -1,3 +1,6 @@
+/***************************************************************/
+/******    DO NOT EDIT THIS CLASS bc-java SOURCE FILE     ******/
+/***************************************************************/
 package org.bouncycastle.asn1.x509;
 
 import org.bouncycastle.asn1.ASN1EncodableVector;
@@ -94,7 +97,7 @@ public class AuthorityInformationAccess
      */
     public AccessDescription[] getAccessDescriptions()
     {
-        return descriptions;
+        return descriptions.clone();
     }
     
     public ASN1Primitive toASN1Primitive()

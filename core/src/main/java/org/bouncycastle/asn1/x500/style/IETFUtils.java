@@ -1,3 +1,6 @@
+/***************************************************************/
+/******    DO NOT EDIT THIS CLASS bc-java SOURCE FILE     ******/
+/***************************************************************/
 package org.bouncycastle.asn1.x500.style;
 
 import java.io.IOException;
@@ -18,6 +21,9 @@ import org.bouncycastle.asn1.x500.X500NameStyle;
 import org.bouncycastle.util.Strings;
 import org.bouncycastle.util.encoders.Hex;
 
+/**
+ * Utility classes that attempt to conform to the practices given in the RFCs published by the IETF.
+ */
 public class IETFUtils
 {
     private static String unescape(String elt)
@@ -359,17 +365,18 @@ public class IETFUtils
             String v = ((ASN1String)value).getString();
             if (v.length() > 0 && v.charAt(0) == '#')
             {
-                vBuf.append('\\');
+                vBuf.append("\\" + v);
             }
-
-            vBuf.append(v);
+            else
+            {
+                vBuf.append(v);
+            }
         }
         else
         {
             try
             {
-                vBuf.append('#');
-                vBuf.append(Hex.toHexString(value.toASN1Primitive().getEncoded(ASN1Encoding.DER)));
+                vBuf.append("#" + bytesToString(Hex.encode(value.toASN1Primitive().getEncoded(ASN1Encoding.DER))));
             }
             catch (IOException e)
             {
@@ -377,8 +384,8 @@ public class IETFUtils
             }
         }
 
-        int end = vBuf.length();
-        int index = 0;
+        int     end = vBuf.length();
+        int     index = 0;
 
         if (vBuf.length() >= 2 && vBuf.charAt(0) == '\\' && vBuf.charAt(1) == '#')
         {
@@ -387,28 +394,21 @@ public class IETFUtils
 
         while (index != end)
         {
-            switch (vBuf.charAt(index))
+            if ((vBuf.charAt(index) == ',')
+               || (vBuf.charAt(index) == '"')
+               || (vBuf.charAt(index) == '\\')
+               || (vBuf.charAt(index) == '+')
+               || (vBuf.charAt(index) == '=')
+               || (vBuf.charAt(index) == '<')
+               || (vBuf.charAt(index) == '>')
+               || (vBuf.charAt(index) == ';'))
             {
-                case ',':
-                case '"':
-                case '\\':
-                case '+':
-                case '=':
-                case '<':
-                case '>':
-                case ';':
-                {
-                    vBuf.insert(index, "\\");
-                    index += 2;
-                    ++end;
-                    break;
-                }
-                default:
-                {
-                    ++index;
-                    break;
-                }
+                vBuf.insert(index, "\\");
+                index++;
+                end++;
             }
+
+            index++;
         }
 
         int start = 0;
@@ -430,6 +430,19 @@ public class IETFUtils
         }
 
         return vBuf.toString();
+    }
+
+    private static String bytesToString(
+        byte[] data)
+    {
+        char[]  cs = new char[data.length];
+
+        for (int i = 0; i != cs.length; i++)
+        {
+            cs[i] = (char)(data[i] & 0xff);
+        }
+
+        return new String(cs);
     }
 
     public static String canonicalize(String s)
@@ -466,12 +479,9 @@ public class IETFUtils
             }
         }
 
-        return stripInternalSpaces(value);
-    }
+        value = stripInternalSpaces(value);
 
-    public static String canonicalString(ASN1Encodable value)
-    {
-        return canonicalize(valueToString(value));
+        return value;
     }
 
     private static ASN1Primitive decodeObject(String oValue)
@@ -489,22 +499,21 @@ public class IETFUtils
     public static String stripInternalSpaces(
         String str)
     {
-        if (str.indexOf("  ") < 0)
-        {
-            return str;
-        }
-
         StringBuffer res = new StringBuffer();
 
-        char c1 = str.charAt(0);
-        res.append(c1);
-
-        for (int k = 1; k < str.length(); k++)
+        if (str.length() != 0)
         {
-            char c2 = str.charAt(k);
-            if (!(c1 == ' ' && c2 == ' '))
+            char c1 = str.charAt(0);
+
+            res.append(c1);
+
+            for (int k = 1; k < str.length(); k++)
             {
-                res.append(c2);
+                char c2 = str.charAt(k);
+                if (!(c1 == ' ' && c2 == ' '))
+                {
+                    res.append(c2);
+                }
                 c1 = c2;
             }
         }
@@ -514,34 +523,38 @@ public class IETFUtils
 
     public static boolean rDNAreEqual(RDN rdn1, RDN rdn2)
     {
-        boolean multiValued = rdn1.isMultiValued();
-
-        if (rdn2.isMultiValued() != multiValued)
+        if (rdn1.isMultiValued())
         {
-            return false;
+            if (rdn2.isMultiValued())
+            {
+                AttributeTypeAndValue[] atvs1 = rdn1.getTypesAndValues();
+                AttributeTypeAndValue[] atvs2 = rdn2.getTypesAndValues();
+
+                if (atvs1.length != atvs2.length)
+                {
+                    return false;
+                }
+
+                for (int i = 0; i != atvs1.length; i++)
+                {
+                    if (!atvAreEqual(atvs1[i], atvs2[i]))
+                    {
+                        return false;
+                    }
+                }
+            }
+            else
+            {
+                return false;
+            }
         }
-
-        if (!multiValued)
+        else
         {
-            return atvAreEqual(rdn1.getFirst(), rdn2.getFirst());
-        }
-
-        if (rdn1.size() != rdn2.size())
-        {
-            return false;
-        }
-
-        AttributeTypeAndValue[] atvs1 = rdn1.getTypesAndValues();
-        AttributeTypeAndValue[] atvs2 = rdn2.getTypesAndValues();
-
-        if (atvs1.length != atvs2.length)
-        {
-            return false;
-        }
-
-        for (int i = 0; i != atvs1.length; i++)
-        {
-            if (!atvAreEqual(atvs1[i], atvs2[i]))
+            if (!rdn2.isMultiValued())
+            {
+                return atvAreEqual(rdn1.getFirst(), rdn2.getFirst());
+            }
+            else
             {
                 return false;
             }
@@ -557,7 +570,12 @@ public class IETFUtils
             return true;
         }
 
-        if (null == atv1 || null == atv2)
+        if (atv1 == null)
+        {
+            return false;
+        }
+
+        if (atv2 == null)
         {
             return false;
         }
@@ -570,8 +588,8 @@ public class IETFUtils
             return false;
         }
 
-        String v1 = canonicalString(atv1.getValue());
-        String v2 = canonicalString(atv2.getValue());
+        String v1 = IETFUtils.canonicalize(IETFUtils.valueToString(atv1.getValue()));
+        String v2 = IETFUtils.canonicalize(IETFUtils.valueToString(atv2.getValue()));
 
         if (!v1.equals(v2))
         {

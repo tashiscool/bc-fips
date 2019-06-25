@@ -1,3 +1,6 @@
+/***************************************************************/
+/******    DO NOT EDIT THIS CLASS bc-java SOURCE FILE     ******/
+/***************************************************************/
 package org.bouncycastle.asn1.cms;
 
 import java.io.IOException;
@@ -88,7 +91,7 @@ public class AuthEnvelopedDataParser
         return recipientInfos;
     }
 
-    public EncryptedContentInfoParser getAuthEncryptedContentInfo()
+    public EncryptedContentInfoParser getAuthEncryptedContentInfo() 
         throws IOException
     {
         if (nextObject == null)

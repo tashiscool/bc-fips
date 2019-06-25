@@ -1,3 +1,6 @@
+/***************************************************************/
+/******    DO NOT EDIT THIS CLASS bc-java SOURCE FILE     ******/
+/***************************************************************/
 package org.bouncycastle.asn1;
 
 import java.io.IOException;
@@ -43,7 +46,7 @@ public abstract class ASN1TaggedObject
             }
             catch (IOException e)
             {
-                throw new IllegalArgumentException("failed to construct tagged object from byte[]: " + e.getMessage());
+                throw new IllegalArgumentException("Failed to construct tagged object from byte[]: " + e.getMessage());
             }
         }
 
@@ -173,7 +176,7 @@ public abstract class ASN1TaggedObject
     }
 
     /**
-     * Return whatever was following the tag.
+     * return whatever was following the tag.
      * <p>
      * Note: tagged objects are generally context dependent if you're
      * trying to extract a tagged object you should be going via the

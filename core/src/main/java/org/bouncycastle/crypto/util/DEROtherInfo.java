@@ -3,7 +3,9 @@ package org.bouncycastle.crypto.util;
 import java.io.IOException;
 
 import org.bouncycastle.asn1.ASN1EncodableVector;
+import org.bouncycastle.asn1.ASN1Encoding;
 import org.bouncycastle.asn1.ASN1OctetString;
+import org.bouncycastle.asn1.ASN1Sequence;
 import org.bouncycastle.asn1.ASN1TaggedObject;
 import org.bouncycastle.asn1.DERSequence;
 import org.bouncycastle.asn1.DERTaggedObject;
@@ -26,6 +28,38 @@ public class DEROtherInfo
 
         private ASN1TaggedObject suppPubInfo;
         private ASN1TaggedObject suppPrivInfo;
+
+        /**
+         * Create a basic builder with just the compulsory fields.
+         *
+         * @param otherInfo the algorithm associated with this invocation of the KDF.
+         */
+        public Builder(DEROtherInfo otherInfo)
+        {
+            ASN1Sequence seq = otherInfo.sequence;
+
+            this.algorithmID = AlgorithmIdentifier.getInstance(seq.getObjectAt(0));
+            this.partyUVInfo = ASN1OctetString.getInstance(seq.getObjectAt(1));
+            this.partyVInfo = ASN1OctetString.getInstance(seq.getObjectAt(2));
+
+            if (seq.size() == 5)
+            {
+                this.suppPubInfo = ASN1TaggedObject.getInstance(seq.getObjectAt(3));
+                this.suppPrivInfo = ASN1TaggedObject.getInstance(seq.getObjectAt(4));
+            }
+            else if (seq.size() == 4)
+            {
+                ASN1TaggedObject suppInfo = ASN1TaggedObject.getInstance(seq.getObjectAt(3));
+                if (suppInfo.getTagNo() == 0)
+                {
+                    this.suppPubInfo = suppInfo;
+                }
+                else
+                {
+                    this.suppPrivInfo = suppInfo;
+                }
+            }
+        }
 
         /**
          * Create a basic builder with just the compulsory fields.
@@ -94,16 +128,21 @@ public class DEROtherInfo
         }
     }
 
-    private final DERSequence sequence;
+    private final ASN1Sequence sequence;
 
     private DEROtherInfo(DERSequence sequence)
     {
         this.sequence = sequence;
     }
 
+    public DEROtherInfo(byte[] encoding)
+    {
+        this.sequence = ASN1Sequence.getInstance(encoding);
+    }
+
     public byte[] getEncoded()
         throws IOException
     {
-        return sequence.getEncoded();
+        return sequence.getEncoded(ASN1Encoding.DER);
     }
 }

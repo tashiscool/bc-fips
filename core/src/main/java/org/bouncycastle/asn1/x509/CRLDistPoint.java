@@ -1,3 +1,6 @@
+/***************************************************************/
+/******    DO NOT EDIT THIS CLASS bc-java SOURCE FILE     ******/
+/***************************************************************/
 package org.bouncycastle.asn1.x509;
 
 import org.bouncycastle.asn1.ASN1EncodableVector;
@@ -18,11 +21,6 @@ public class CRLDistPoint
         boolean          explicit)
     {
         return getInstance(ASN1Sequence.getInstance(obj, explicit));
-    }
-
-    public static CRLDistPoint fromExtensions(Extensions extensions)
-    {
-        return CRLDistPoint.getInstance(extensions.getExtensionParsedValue(Extension.cRLDistributionPoints));
     }
 
     public static CRLDistPoint getInstance(

@@ -1,3 +1,6 @@
+/***************************************************************/
+/******    DO NOT EDIT THIS CLASS bc-java SOURCE FILE     ******/
+/***************************************************************/
 package org.bouncycastle.util;
 
 import java.math.BigInteger;
@@ -8,19 +11,9 @@ import java.util.NoSuchElementException;
  */
 public final class Arrays
 {
-    private Arrays()
+    private Arrays() 
     {
         // static class, hide constructor
-    }
-
-    public static boolean areAllZeroes(byte[] buf, int off, int len)
-    {
-        int bits = 0;
-        for (int i = 0; i < len; ++i)
-        {
-            bits |= buf[off + i];
-        }
-        return bits == 0;
     }
 
     public static boolean areEqual(
@@ -113,9 +106,17 @@ public final class Arrays
         return true;
     }
 
-    public static boolean areEqual(
-        short[]  a,
-        short[]  b)
+    /**
+     * A constant time equals comparison - does not terminate early if
+     * test will fail.
+     *
+     * @param a first array
+     * @param b second array
+     * @return true if arrays equal, false otherwise.
+     */
+    public static boolean constantTimeAreEqual(
+        byte[]  a,
+        byte[]  b)
     {
         if (a == b)
         {
@@ -132,51 +133,11 @@ public final class Arrays
             return false;
         }
 
+        int nonEqual = 0;
+
         for (int i = 0; i != a.length; i++)
         {
-            if (a[i] != b[i])
-            {
-                return false;
-            }
-        }
-
-        return true;
-    }
-
-    /**
-     * A constant time equals comparison - does not terminate early if
-     * test will fail. For best results always pass the expected value
-     * as the first parameter.
-     *
-     * @param expected first array
-     * @param supplied second array
-     * @return true if arrays equal, false otherwise.
-     */
-    public static boolean constantTimeAreEqual(
-        byte[]  expected,
-        byte[]  supplied)
-    {
-        if (expected == null || supplied == null)
-        {
-            return false;
-        }
-
-        if (expected == supplied)
-        {
-            return true;
-        }
-
-        int len = (expected.length < supplied.length) ? expected.length : supplied.length;
-
-        int nonEqual = expected.length ^ supplied.length;
-
-        for (int i = 0; i != len; i++)
-        {
-            nonEqual |= (expected[i] ^ supplied[i]);
-        }
-        for (int i = len; i < supplied.length; i++)
-        {
-            nonEqual |= (supplied[i] ^ ~supplied[i]);
+            nonEqual |= (a[i] ^ b[i]);
         }
 
         return nonEqual == 0;
@@ -274,44 +235,6 @@ public final class Arrays
         return true;
     }
 
-    public static int compareUnsigned(byte[] a, byte[] b)
-    {
-        if (a == b)
-        {
-            return 0;
-        }
-        if (a == null)
-        {
-            return -1;
-        }
-        if (b == null)
-        {
-            return 1;
-        }
-        int minLen = Math.min(a.length, b.length);
-        for (int i = 0; i < minLen; ++i)
-        {
-            int aVal = a[i] & 0xFF, bVal = b[i] & 0xFF;
-            if (aVal < bVal)
-            {
-                return -1;
-            }
-            if (aVal > bVal)
-            {
-                return 1;
-            }
-        }
-        if (a.length < b.length)
-        {
-            return -1;
-        }
-        if (a.length > b.length)
-        {
-            return 1;
-        }
-        return 0;
-    }
-
     public static boolean contains(short[] a, short n)
     {
         for (int i = 0; i < a.length; ++i)
@@ -347,18 +270,6 @@ public final class Arrays
     }
 
     public static void fill(
-        byte[] array,
-        int start,
-        int finish,
-        byte value)
-    {
-        for (int i = start; i < finish; i++)
-        {
-            array[i] = value;
-        }
-    }
-
-    public static void fill(
         char[] array,
         char value)
     {
@@ -379,7 +290,7 @@ public final class Arrays
     }
 
     public static void fill(
-        short[] array,
+        short[] array, 
         short value)
     {
         for (int i = 0; i < array.length; i++)
@@ -397,63 +308,7 @@ public final class Arrays
             array[i] = value;
         }
     }
-
-    public static void fill(
-        byte[] array,
-        int out,
-        byte value)
-    {
-        if(out < array.length)
-        {
-            for (int i = out; i < array.length; i++)
-            {
-                array[i] = value;
-            }
-        }
-    }
-
-    public static void fill(
-        int[] array,
-        int out,
-        int value)
-    {
-        if(out < array.length)
-        {
-            for (int i = out; i < array.length; i++)
-            {
-                array[i] = value;
-            }
-        }
-    }
-
-    public static void fill(
-        short[] array,
-        int out,
-        short value)
-    {
-        if(out < array.length)
-        {
-            for (int i = out; i < array.length; i++)
-            {
-                array[i] = value;
-            }
-        }
-    }
-
-    public static void fill(
-        long[] array,
-        int out,
-        long value)
-    {
-        if(out < array.length)
-        {
-            for (int i = out; i < array.length; i++)
-            {
-                array[i] = value;
-            }
-        }
-    }
-
+    
     public static int hashCode(byte[] data)
     {
         if (data == null)
@@ -472,7 +327,7 @@ public final class Arrays
 
         return hc;
     }
-
+    
     public static int hashCode(byte[] data, int off, int len)
     {
         if (data == null)
@@ -556,28 +411,6 @@ public final class Arrays
         {
             hc *= 257;
             hc ^= data[off + i];
-        }
-
-        return hc;
-    }
-
-    public static int hashCode(long[] data)
-    {
-        if (data == null)
-        {
-            return 0;
-        }
-
-        int i = data.length;
-        int hc = i + 1;
-
-        while (--i >= 0)
-        {
-            long di = data[i];
-            hc *= 257;
-            hc ^= (int)di;
-            hc *= 257;
-            hc ^= (int)(di >>> 32);
         }
 
         return hc;
@@ -680,19 +513,6 @@ public final class Arrays
         return copy;
     }
 
-    public static char[] clone(char[] data)
-    {
-        if (data == null)
-        {
-            return null;
-        }
-        char[] copy = new char[data.length];
-
-        System.arraycopy(data, 0, copy, 0, data.length);
-
-        return copy;
-    }
-
     public static byte[] clone(byte[] data, byte[] existing)
     {
         if (data == null)
@@ -761,9 +581,9 @@ public final class Arrays
             return null;
         }
         long[] copy = new long[data.length];
-
+        
         System.arraycopy(data, 0, copy, 0, data.length);
-
+        
         return copy;
     }
 
@@ -1024,22 +844,6 @@ public final class Arrays
         return result;
     }
 
-    public static String[] append(String[] a, String b)
-    {
-        if (a == null)
-        {
-            return new String[]{ b };
-        }
-
-        int length = a.length;
-        String[] result = new String[length + 1];
-        System.arraycopy(a, 0, result, 0, length);
-        result[length] = b;
-        return result;
-    }
-
-
-
     public static byte[] concatenate(byte[] a, byte[] b)
     {
         if (a != null && b != null)
@@ -1118,26 +922,6 @@ public final class Arrays
         }
     }
 
-    public static byte[] concatenate(byte[][] arrays)
-    {
-        int size = 0;
-        for (int i = 0; i != arrays.length; i++)
-        {
-            size += arrays[i].length;
-        }
-
-        byte[] rv = new byte[size];
-
-        int offSet = 0;
-        for (int i = 0; i != arrays.length; i++)
-        {
-            System.arraycopy(arrays[i], 0, rv, offSet, arrays[i].length);
-            offSet += arrays[i].length;
-        }
-
-        return rv;
-    }
-
     public static int[] concatenate(int[] a, int[] b)
     {
         if (a == null)
@@ -1206,7 +990,7 @@ public final class Arrays
 
         int p1 = 0, p2 = a.length;
         byte[] result = new byte[p2];
-
+        
         while (--p2 >= 0)
         {
             result[p2] = a[p1++];
@@ -1231,6 +1015,26 @@ public final class Arrays
         }
 
         return result;
+    }
+
+    public static byte[] concatenate(byte[][] arrays)
+    {
+        int size = 0;
+        for (int i = 0; i != arrays.length; i++)
+        {
+            size += arrays[i].length;
+        }
+
+        byte[] rv = new byte[size];
+
+        int offSet = 0;
+        for (int i = 0; i != arrays.length; i++)
+        {
+            System.arraycopy(arrays[i], 0, rv, offSet, arrays[i].length);
+            offSet += arrays[i].length;
+        }
+
+        return rv;
     }
 
     /**
@@ -1267,29 +1071,12 @@ public final class Arrays
             {
                 throw new NoSuchElementException("Out of elements: " + position);
             }
-
             return dataArray[position++];
         }
 
         public void remove()
         {
             throw new UnsupportedOperationException("Cannot remove element from an Array.");
-        }
-    }
-
-    /**
-     * Fill input array by zeros
-     *
-     * @param array input array
-     */
-    public static void clear(byte[] array)
-    {
-        if (array != null)
-        {
-            for (int i = 0; i < array.length; i++)
-            {
-                array[i] = 0;
-            }
         }
     }
 }

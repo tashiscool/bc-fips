@@ -1,3 +1,6 @@
+/***************************************************************/
+/******    DO NOT EDIT THIS CLASS bc-java SOURCE FILE     ******/
+/***************************************************************/
 package org.bouncycastle.asn1.x509.sigi;
 
 import java.math.BigInteger;
@@ -55,13 +58,14 @@ public class PersonalData
             return new PersonalData((ASN1Sequence)obj);
         }
 
-        throw new IllegalArgumentException("illegal object in getInstance: " + obj.getClass().getName());
+        throw new IllegalArgumentException("Illegal object in getInstance: " + obj.getClass().getName());
     }
 
     /**
      * Constructor from ASN1Sequence.
-     * <p>
+     * <p/>
      * The sequence is of type NameOrPseudonym:
+     * <p/>
      * <pre>
      *     PersonalData ::= SEQUENCE {
      *       nameOrPseudonym NameOrPseudonym,
@@ -72,7 +76,7 @@ public class PersonalData
      *       postalAddress [4] DirectoryString OPTIONAL
      *       }
      * </pre>
-     * </p>
+     *
      * @param seq The ASN.1 sequence.
      */
     private PersonalData(ASN1Sequence seq)

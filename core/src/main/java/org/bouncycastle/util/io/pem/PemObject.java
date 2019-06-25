@@ -1,8 +1,13 @@
+/***************************************************************/
+/******    DO NOT EDIT THIS CLASS bc-java SOURCE FILE     ******/
+/***************************************************************/
 package org.bouncycastle.util.io.pem;
 
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
+
+import org.bouncycastle.util.Arrays;
 
 /**
  * A generic PEM object - type, header properties, and byte content.
@@ -38,7 +43,7 @@ public class PemObject
     {
         this.type = type;
         this.headers = Collections.unmodifiableList(headers);
-        this.content = content;
+        this.content = Arrays.clone(content);
     }
 
     public String getType()
@@ -53,7 +58,7 @@ public class PemObject
 
     public byte[] getContent()
     {
-        return content;
+        return Arrays.clone(content);
     }
 
     public PemObject generate()

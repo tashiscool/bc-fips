@@ -1,3 +1,6 @@
+/***************************************************************/
+/******    DO NOT EDIT THIS CLASS bc-java SOURCE FILE     ******/
+/***************************************************************/
 package org.bouncycastle.asn1.x509;
 
 import org.bouncycastle.asn1.ASN1EncodableVector;
@@ -67,10 +70,7 @@ public class V2Form
         this.objectDigestInfo = objectDigestInfo;
     }
 
-    /**
-     * @deprecated use getInstance().
-     */
-    public V2Form(
+    private V2Form(
         ASN1Sequence seq)
     {
         if (seq.size() > 3)

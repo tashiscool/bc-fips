@@ -1,3 +1,6 @@
+/***************************************************************/
+/******    DO NOT EDIT THIS CLASS bc-java SOURCE FILE     ******/
+/***************************************************************/
 package org.bouncycastle.asn1.x509.qualified;
 
 import org.bouncycastle.asn1.ASN1Choice;
@@ -21,13 +24,12 @@ public class Iso4217CurrencyCode
     extends ASN1Object
     implements ASN1Choice
 {
-    final int ALPHABETIC_MAXSIZE = 3;
-    final int NUMERIC_MINSIZE = 1;
-    final int NUMERIC_MAXSIZE = 999;
+    private static final int ALPHABETIC_MAXSIZE = 3;
+    private static final int NUMERIC_MINSIZE = 1;
+    private static final int NUMERIC_MAXSIZE = 999;
     
-    ASN1Encodable obj;
-    int          numeric;
-    
+    private final ASN1Encodable obj;
+
     public static Iso4217CurrencyCode getInstance(
         Object obj)
     {

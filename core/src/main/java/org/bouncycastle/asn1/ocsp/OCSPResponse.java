@@ -1,3 +1,6 @@
+/***************************************************************/
+/******    DO NOT EDIT THIS CLASS bc-java SOURCE FILE     ******/
+/***************************************************************/
 package org.bouncycastle.asn1.ocsp;
 
 import org.bouncycastle.asn1.ASN1EncodableVector;
@@ -7,17 +10,6 @@ import org.bouncycastle.asn1.ASN1Sequence;
 import org.bouncycastle.asn1.ASN1TaggedObject;
 import org.bouncycastle.asn1.DERSequence;
 import org.bouncycastle.asn1.DERTaggedObject;
-
-/**
- * OCSP RFC 2560, RFC 6960
- * <pre>
- * OCSPResponse ::= SEQUENCE {
- *     responseStatus         OCSPResponseStatus,
- *     responseBytes          [0] EXPLICIT ResponseBytes OPTIONAL }
- * </pre>
- * @see OCSPResponseStatus
- * @see ResponseBytes
- */
 
 public class OCSPResponse
     extends ASN1Object

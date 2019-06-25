@@ -1,3 +1,6 @@
+/***************************************************************/
+/******    DO NOT EDIT THIS CLASS bc-java SOURCE FILE     ******/
+/***************************************************************/
 package org.bouncycastle.asn1;
 
 import java.io.IOException;
@@ -7,38 +10,15 @@ import org.bouncycastle.util.Strings;
 
 /**
  * DER PrintableString object.
- * <p>
- * X.680 section 37.4 defines PrintableString character codes as ASCII subset of following characters:
- * </p>
- * <ul>
- * <li>Latin capital letters: 'A' .. 'Z'</li>
- * <li>Latin small letters: 'a' .. 'z'</li>
- * <li>Digits: '0'..'9'</li>
- * <li>Space</li>
- * <li>Apostrophe: '\''</li>
- * <li>Left parenthesis: '('</li>
- * <li>Right parenthesis: ')'</li>
- * <li>Plus sign: '+'</li>
- * <li>Comma: ','</li>
- * <li>Hyphen-minus: '-'</li>
- * <li>Full stop: '.'</li>
- * <li>Solidus: '/'</li>
- * <li>Colon: ':'</li>
- * <li>Equals sign: '='</li>
- * <li>Question mark: '?'</li>
- * </ul>
- * <p>
- * Explicit character set escape sequences are not allowed.
- * </p>
  */
 public class DERPrintableString
     extends ASN1Primitive
     implements ASN1String
 {
-    private final byte[]  string;
+    private byte[]  string;
 
     /**
-     * Return a printable string from the passed in object.
+     * return a printable string from the passed in object.
      *
      * @param obj a DERPrintableString or an object that can be converted into one.
      * @exception IllegalArgumentException if the object cannot be converted.
@@ -64,11 +44,11 @@ public class DERPrintableString
             }
         }
 
-        throw new IllegalArgumentException("illegal object in getInstance: " + obj.getClass().getName());
+        throw new IllegalArgumentException("Illegal object in getInstance: " + obj.getClass().getName());
     }
 
     /**
-     * Return a Printable String from a tagged object.
+     * return a Printable String from a tagged object.
      *
      * @param obj the tagged object holding the object we want
      * @param explicit true if the object is meant to be explicitly
@@ -94,7 +74,7 @@ public class DERPrintableString
     }
 
     /**
-     * Basic constructor - byte encoded string.
+     * basic constructor - byte encoded string.
      */
     DERPrintableString(
         byte[]   string)
@@ -103,7 +83,7 @@ public class DERPrintableString
     }
 
     /**
-     * Basic constructor - this does not validate the string
+     * basic constructor - this does not validate the string
      */
     public DERPrintableString(
         String   string)

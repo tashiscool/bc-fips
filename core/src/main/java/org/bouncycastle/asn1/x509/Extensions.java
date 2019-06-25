@@ -1,3 +1,6 @@
+/***************************************************************/
+/******    DO NOT EDIT THIS CLASS bc-java SOURCE FILE     ******/
+/***************************************************************/
 package org.bouncycastle.asn1.x509;
 
 import java.util.Enumeration;
@@ -13,16 +16,6 @@ import org.bouncycastle.asn1.ASN1Sequence;
 import org.bouncycastle.asn1.ASN1TaggedObject;
 import org.bouncycastle.asn1.DERSequence;
 
-/**
- * <pre>
- *     Extensions        ::=   SEQUENCE SIZE (1..MAX) OF Extension
- *
- *     Extension         ::=   SEQUENCE {
- *        extnId            EXTENSION.&amp;id ({ExtensionSet}),
- *        critical          BOOLEAN DEFAULT FALSE,
- *        extnValue         OCTET STRING }
- * </pre>
- */
 public class Extensions
     extends ASN1Object
 {
@@ -53,9 +46,8 @@ public class Extensions
 
     /**
      * Constructor from ASN1Sequence.
-     * <p>
-     * The extensions are a list of constructed sequences, either with (OID, OctetString) or (OID, Boolean, OctetString)
-     * </p>
+     * <p/>
+     * the extensions are a list of constructed sequences, either with (OID, OctetString) or (OID, Boolean, OctetString)
      */
     private Extensions(
         ASN1Sequence seq)
@@ -66,11 +58,6 @@ public class Extensions
         {
             Extension ext = Extension.getInstance(e.nextElement());
 
-            if (extensions.containsKey(ext.getExtnId()))
-            {
-                throw new IllegalArgumentException("repeated extension found: " + ext.getExtnId());
-            }
-            
             extensions.put(ext.getExtnId(), ext);
             ordering.addElement(ext.getExtnId());
         }

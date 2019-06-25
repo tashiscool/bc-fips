@@ -1,8 +1,9 @@
+/***************************************************************/
+/******    DO NOT EDIT THIS CLASS bc-java SOURCE FILE     ******/
+/***************************************************************/
 package org.bouncycastle.math.ec;
 
 import java.math.BigInteger;
-
-import org.bouncycastle.math.raw.Nat;
 
 public class FixedPointCombMultiplier extends AbstractECMultiplier
 {
@@ -22,35 +23,38 @@ public class FixedPointCombMultiplier extends AbstractECMultiplier
             throw new IllegalStateException("fixed-point comb doesn't support scalars larger than the curve order");
         }
 
-        FixedPointPreCompInfo info = FixedPointUtil.precompute(p);
-        ECLookupTable lookupTable = info.getLookupTable();
+        int minWidth = getWidthForCombSize(size);
+
+        FixedPointPreCompInfo info = FixedPointUtil.precompute(p, minWidth);
+        ECPoint[] lookupTable = info.getPreComp();
         int width = info.getWidth();
 
         int d = (size + width - 1) / width;
 
         ECPoint R = c.getInfinity();
 
-        int fullComb = d * width;
-        int[] K = Nat.fromBigInteger(fullComb, k);
-
-        int top = fullComb - 1; 
+        int top = d * width - 1; 
         for (int i = 0; i < d; ++i)
         {
-            int secretIndex = 0;
+            int index = 0;
 
             for (int j = top - i; j >= 0; j -= d)
             {
-                int secretBit = K[j >>> 5] >>> (j & 0x1F);
-                secretIndex ^= secretBit >>> 1;
-                secretIndex <<= 1;
-                secretIndex ^= secretBit;
+                index <<= 1;
+                if (k.testBit(j))
+                {
+                    index |= 1;
+                }
             }
 
-            ECPoint add = lookupTable.lookup(secretIndex);
-
-            R = R.twicePlus(add);
+            R = R.twicePlus(lookupTable[index]);
         }
 
-        return R.add(info.getOffset());
+        return R;
+    }
+
+    protected int getWidthForCombSize(int combSize)
+    {
+        return combSize > 257 ? 6 : 5;
     }
 }

@@ -1,3 +1,6 @@
+/***************************************************************/
+/******    DO NOT EDIT THIS CLASS bc-java SOURCE FILE     ******/
+/***************************************************************/
 package org.bouncycastle.asn1;
 
 import java.io.EOFException;
@@ -6,9 +9,6 @@ import java.io.InputStream;
 
 import org.bouncycastle.util.io.Streams;
 
-/**
- * Parse data stream of expected ASN.1 data expecting definite-length encoding..
- */
 class DefiniteLengthInputStream
         extends LimitedInputStream
 {

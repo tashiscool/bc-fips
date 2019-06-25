@@ -1,3 +1,6 @@
+/***************************************************************/
+/******    DO NOT EDIT THIS CLASS bc-java SOURCE FILE     ******/
+/***************************************************************/
 package org.bouncycastle.asn1.x500;
 
 import java.util.Enumeration;
@@ -39,10 +42,7 @@ public class X500Name
     private X500NameStyle style;
     private RDN[] rdns;
 
-    /**
-     * @deprecated use the getInstance() method that takes a style.
-     */
-    public X500Name(X500NameStyle style, X500Name name)
+    private X500Name(X500NameStyle style, X500Name name)
     {
         this.rdns = name.rdns;
         this.style = style;
@@ -130,7 +130,7 @@ public class X500Name
         X500NameStyle style,
         RDN[]         rDNs)
     {
-        this.rdns = copy(rDNs);
+        this.rdns = rDNs.clone();
         this.style = style;
     }
 
@@ -243,15 +243,6 @@ public class X500Name
         RDN[] tmp = new RDN[count];
 
         System.arraycopy(res, 0, tmp, 0, tmp.length);
-
-        return tmp;
-    }
-
-    private RDN[] copy(RDN[] rdns)
-    {
-        RDN[] tmp = new RDN[rdns.length];
-
-        System.arraycopy(rdns, 0, tmp, 0, tmp.length);
 
         return tmp;
     }

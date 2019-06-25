@@ -1,3 +1,6 @@
+/***************************************************************/
+/******    DO NOT EDIT THIS CLASS bc-java SOURCE FILE     ******/
+/***************************************************************/
 package org.bouncycastle.asn1;
 
 import java.io.IOException;
@@ -38,7 +41,11 @@ public abstract class ASN1Primitive
         }
         catch (ClassCastException e)
         {
-            throw new IOException("cannot recognise object in stream");
+            throw new IOException("Cannot recognize object in stream");
+        }
+        finally
+        {
+            aIn.close();
         }
     }
 
@@ -79,23 +86,11 @@ public abstract class ASN1Primitive
 
     public abstract int hashCode();
 
-    /**
-     * Return true if this objected is a CONSTRUCTED one, false otherwise.
-     * @return true if CONSTRUCTED bit set on object's tag, false otherwise.
-     */
     abstract boolean isConstructed();
 
-    /**
-     * Return the length of the encoding this object will produce.
-     * @return the length of the object's encoding.
-     * @throws IOException if the encoding length cannot be calculated.
-     */
     abstract int encodedLength() throws IOException;
 
     abstract void encode(ASN1OutputStream out) throws IOException;
 
-    /**
-     * Equality (similarity) comparison for two ASN1Primitive objects.
-     */
     abstract boolean asn1Equals(ASN1Primitive o);
 }

@@ -1,3 +1,6 @@
+/***************************************************************/
+/******    DO NOT EDIT THIS CLASS bc-java SOURCE FILE     ******/
+/***************************************************************/
 package org.bouncycastle.asn1.isismtt.x509;
 
 import org.bouncycastle.asn1.ASN1Object;
@@ -33,12 +36,13 @@ public class Restriction
 
     /**
      * Constructor from DirectoryString.
-     * <p>
+     * <p/>
      * The DirectoryString is of type RestrictionSyntax:
+     * <p/>
      * <pre>
      *      RestrictionSyntax ::= DirectoryString (SIZE(1..1024))
      * </pre>
-     * </p>
+     *
      * @param restriction A DirectoryString.
      */
     private Restriction(DirectoryString restriction)

@@ -1,15 +1,15 @@
+/***************************************************************/
+/******    DO NOT EDIT THIS CLASS bc-java SOURCE FILE     ******/
+/***************************************************************/
 package org.bouncycastle.asn1.x9;
 
-import java.math.BigInteger;
-
 import org.bouncycastle.asn1.ASN1Object;
-import org.bouncycastle.asn1.ASN1OctetString;
 import org.bouncycastle.asn1.ASN1Primitive;
 import org.bouncycastle.asn1.DEROctetString;
 import org.bouncycastle.math.ec.ECFieldElement;
 
 /**
- * class for processing an FieldElement as a DER object.
+ * Class for processing an FieldElement as a DER object.
  */
 public class X9FieldElement
     extends ASN1Object
@@ -21,22 +21,6 @@ public class X9FieldElement
     public X9FieldElement(ECFieldElement f)
     {
         this.f = f;
-    }
-
-    /**
-     * @deprecated Will be removed
-     */
-    public X9FieldElement(BigInteger p, ASN1OctetString s)
-    {
-        this(new ECFieldElement.Fp(p, new BigInteger(1, s.getOctets())));
-    }
-
-    /**
-     * @deprecated Will be removed
-     */
-    public X9FieldElement(int m, int k1, int k2, int k3, ASN1OctetString s)
-    {
-        this(new ECFieldElement.F2m(m, k1, k2, k3, new BigInteger(1, s.getOctets())));
     }
 
     public ECFieldElement getValue()

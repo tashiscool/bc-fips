@@ -1,14 +1,17 @@
+/***************************************************************/
+/******    DO NOT EDIT THIS CLASS bc-java SOURCE FILE     ******/
+/***************************************************************/
 package org.bouncycastle.asn1;
 
 import java.util.Enumeration;
 import java.util.Vector;
 
 /**
- * Mutable class for building ASN.1 constructed objects such as SETs or SEQUENCEs.
+ * Mutable class for building ASN.1 constructed objects.
  */
 public class ASN1EncodableVector
 {
-    private final Vector v = new Vector();
+    Vector v = new Vector();
 
     /**
      * Base constructor.

@@ -1,8 +1,8 @@
 package org.bouncycastle.math.ec;
 
-import org.bouncycastle.util.Arrays;
-
 import java.math.BigInteger;
+
+import org.bouncycastle.util.Arrays;
 
 class LongArray implements Cloneable
 {
@@ -371,11 +371,6 @@ class LongArray implements Cloneable
             }
             m_ints[iarrJ] = temp;
         }
-    }
-
-    void copyTo(long[] z, int zOff)
-    {
-        System.arraycopy(m_ints, 0, z, zOff, m_ints.length);
     }
 
     public boolean isOne()

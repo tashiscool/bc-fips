@@ -1,3 +1,6 @@
+/***************************************************************/
+/******    DO NOT EDIT THIS CLASS bc-java SOURCE FILE     ******/
+/***************************************************************/
 package org.bouncycastle.asn1.cms;
 
 import org.bouncycastle.asn1.ASN1EncodableVector;
@@ -51,10 +54,7 @@ public class PasswordRecipientInfo
         this.encryptedKey = encryptedKey;
     }
 
-    /**
-     * @deprecated use getInstance() method.
-     */
-    public PasswordRecipientInfo(
+    private PasswordRecipientInfo(
         ASN1Sequence seq)
     {
         version = (ASN1Integer)seq.getObjectAt(0);

@@ -1,3 +1,6 @@
+/***************************************************************/
+/******    DO NOT EDIT THIS CLASS bc-java SOURCE FILE     ******/
+/***************************************************************/
 package org.bouncycastle.asn1.isismtt.x509;
 
 import java.util.Enumeration;
@@ -49,13 +52,14 @@ public class Admissions
             return new Admissions((ASN1Sequence)obj);
         }
 
-        throw new IllegalArgumentException("illegal object in getInstance: " + obj.getClass().getName());
+        throw new IllegalArgumentException("Illegal object in getInstance: " + obj.getClass().getName());
     }
 
     /**
      * Constructor from ASN1Sequence.
-     * <p>
+     * <p/>
      * The sequence is of type ProcurationSyntax:
+     * <p/>
      * <pre>
      *            Admissions ::= SEQUENCE
      *            {
@@ -64,7 +68,7 @@ public class Admissions
      *              professionInfos SEQUENCE OF ProfessionInfo
      *            }
      * </pre>
-     * </p>
+     *
      * @param seq The ASN.1 sequence.
      */
     private Admissions(ASN1Sequence seq)

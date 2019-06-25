@@ -16,7 +16,6 @@ public interface ISOIECObjectIdentifiers
     ASN1ObjectIdentifier whirlpool = hash_algorithms.branch("55");
 
 
-
     /**
      *   -- ISO/IEC 18033-2 arc
 

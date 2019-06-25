@@ -1,13 +1,16 @@
+/***************************************************************/
+/******    DO NOT EDIT THIS CLASS bc-java SOURCE FILE     ******/
+/***************************************************************/
 package org.bouncycastle.math.ec.custom.sec;
 
 import java.math.BigInteger;
 
 import org.bouncycastle.math.ec.ECFieldElement;
-import org.bouncycastle.math.raw.Nat;
-import org.bouncycastle.math.raw.Nat192;
+import org.bouncycastle.math.internal.Nat;
+import org.bouncycastle.math.internal.Nat192;
 import org.bouncycastle.util.Arrays;
 
-public class SecT131FieldElement extends ECFieldElement.AbstractF2m
+class SecT131FieldElement extends ECFieldElement.AbstractF2m
 {
     protected long[] x;
 
@@ -174,9 +177,7 @@ public class SecT131FieldElement extends ECFieldElement.AbstractF2m
 
     public ECFieldElement sqrt()
     {
-        long[] z = Nat192.create64();
-        SecT131Field.sqrt(x, z);
-        return new SecT131FieldElement(z);
+        return squarePow(getM() - 1);
     }
 
     public int getRepresentation()

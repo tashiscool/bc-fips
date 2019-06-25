@@ -15,7 +15,7 @@ public class TestRandomData
      */
     public TestRandomData(String encoding)
     {
-        super(new Source[] { new FixedSecureRandom.Data(Hex.decode(encoding)) });
+        super(new FixedSecureRandom.Data(Hex.decode(encoding)));
     }
 
     /**
@@ -25,6 +25,6 @@ public class TestRandomData
      */
     public TestRandomData(byte[] encoding)
     {
-        super(new Source[] { new FixedSecureRandom.Data(encoding) });
+        super(new FixedSecureRandom.Data(encoding));
     }
 }

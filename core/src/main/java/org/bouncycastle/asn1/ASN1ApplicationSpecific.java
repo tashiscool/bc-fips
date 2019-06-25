@@ -1,12 +1,14 @@
+/***************************************************************/
+/******    DO NOT EDIT THIS CLASS bc-java SOURCE FILE     ******/
+/***************************************************************/
 package org.bouncycastle.asn1;
 
 import java.io.IOException;
 
 import org.bouncycastle.util.Arrays;
-import org.bouncycastle.util.encoders.Hex;
 
 /**
- * Base class for an ASN.1 ApplicationSpecific object
+ * Base class for an application specific object
  */
 public abstract class ASN1ApplicationSpecific
     extends ASN1Primitive
@@ -195,19 +197,25 @@ public abstract class ASN1ApplicationSpecific
         //
         if (tagNo == 0x1f)
         {
+            tagNo = 0;
+
             int b = input[index++] & 0xff;
 
             // X.690-0207 8.1.2.4.2
             // "c) bits 7 to 1 of the first subsequent octet shall not all be zero."
             if ((b & 0x7f) == 0) // Note: -1 will pass
             {
-                throw new IOException("corrupted stream - invalid high tag number found");
+                throw new ASN1ParsingException("corrupted stream - invalid high tag number found");
             }
 
-            while ((b & 0x80) != 0)
+            while ((b >= 0) && ((b & 0x80) != 0))
             {
+                tagNo |= (b & 0x7f);
+                tagNo <<= 7;
                 b = input[index++] & 0xff;
             }
+
+//            tagNo |= (b & 0x7f);
         }
 
         byte[] tmp = new byte[input.length - index + 1];
@@ -217,30 +225,5 @@ public abstract class ASN1ApplicationSpecific
         tmp[0] = (byte)newTag;
 
         return tmp;
-    }
-
-    public String toString()
-    {
-        StringBuffer sb = new StringBuffer();
-        sb.append("[");
-        if (isConstructed())
-        {
-            sb.append("CONSTRUCTED ");
-        }
-        sb.append("APPLICATION ");
-        sb.append(Integer.toString(getApplicationTag()));
-        sb.append("]");
-        // @todo content encoding somehow?
-        if (this.octets != null)
-        {
-            sb.append(" #");
-            sb.append(Hex.toHexString(this.octets));
-        }
-        else
-        {
-            sb.append(" #null");
-        }
-        sb.append(" ");
-        return sb.toString();
     }
 }

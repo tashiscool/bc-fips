@@ -1,9 +1,12 @@
+/***************************************************************/
+/******    DO NOT EDIT THIS CLASS bc-java SOURCE FILE     ******/
+/***************************************************************/
 package org.bouncycastle.asn1;
 
 import java.io.IOException;
 
 /**
- * Interface to parse ASN.1 ApplicationSpecific objects.
+ * Interface to parse ASN.1 application specific objects.
  */
 public interface ASN1ApplicationSpecificParser
     extends ASN1Encodable, InMemoryRepresentable
